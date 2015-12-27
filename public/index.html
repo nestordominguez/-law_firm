@@ -17,7 +17,6 @@
   <![endif]-->
 </head>
 <body>
-{{links}}
 <div class="container-fluid">
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -27,10 +26,11 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#/estudio">{{links.$last()}}</a>
+        <a class="navbar-brand" href="#/estudio">{{links | priority}}</a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
+          <li ng-if="!$first" ng-repeat="obj in links" ><a ng-href="">{{obj.link}} {{obj.priority}}</a></li>
           <li class="active"><a href="#/staff" name="staff" link-section>Staff</a></li>
           <li><a href="#/publications" name="publications" link-section >Publications</a></li>
           <li><a href="#/links">Links</a></li>

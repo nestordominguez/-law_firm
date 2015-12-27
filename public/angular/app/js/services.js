@@ -16,13 +16,12 @@ angular.module('myApp.services', []).
         }).then(function(response) {
           var links = [];
           for (var i = response.data.length - 1; i >= 0; i--) {
-            links.push(response.data[i].link) ;
+            links.push(response.data[i]) ;
           };
           return links;
         });
         return promise;
         }
       }
-
     return pagesService;
   }]);
