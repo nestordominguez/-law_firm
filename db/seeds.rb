@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+links = %w[estudio links publicaciones staff areas]
+links.each do |link|
+  Page.new(link: link, title: link, content: link).save
+end
