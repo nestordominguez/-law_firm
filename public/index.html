@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="myApp">
+<html lang="en" ng-app="myApp" ng-controller="appController">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,6 +17,7 @@
   <![endif]-->
 </head>
 <body>
+{{links}}
 <div class="container-fluid">
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -26,7 +27,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#/estudio">Estudio</a>
+        <a class="navbar-brand" href="#/estudio">{{links.$last()}}</a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
@@ -73,6 +74,7 @@
   <script src="angular/app/js/controllers.js"></script>
   <script src="angular/app/js/filters.js"></script>
   <script src="angular/app/js/directives.js"></script>
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
