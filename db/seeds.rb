@@ -7,6 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 links = %w[estudio links publicaciones staff areas]
-links.each do |link|
-  Page.new(link: link, title: link, content: link).save
+links.each_with_index do |link, index|
+  Page.new(link: link, title: link, content: link, priority: index).save
 end
