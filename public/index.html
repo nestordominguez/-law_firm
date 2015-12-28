@@ -30,7 +30,8 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li ng-if="!$first" ng-repeat="obj in links" ><a ng-href="">{{obj.link}}</a></li>
+          <li ng-if="!$first" ng-repeat="obj in links" ><a ng-href="#/{{obj.link}}">{{obj.link}}</a></li>
+
           <li class="active"><a href="#/staff" name="staff" link-section>Staff</a></li>
           <li><a href="#/publications" name="publications" link-section >Publications</a></li>
           <li><a href="#/links">Links</a></li>

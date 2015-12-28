@@ -27,6 +27,9 @@ class Api::V1::PagesController < Api::V1::CoreController
   end
 
   def update
+    @page_one = Page.find_by_priority(params[:priority])
+    @page_one[:priority] = @page.priority
+    @page_one.save
     respond_with do |format|
       if @page.update(page_params)
         format.json { head :no_content }
