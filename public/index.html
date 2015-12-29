@@ -26,7 +26,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#/estudio">{{links | priority}}</a>
+        <a class="navbar-brand" ng-href="#/pages?page_link={{links | priority}}">{{links | priority}}</a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
@@ -55,7 +55,7 @@
 
   <div class="row">
     <div class="col-md-9 background">
-      <div ng-view ></div>
+      <div class="top-in" ng-view ></div>
     </div>
   </div>
 </div>
@@ -65,6 +65,7 @@
   -->
   <script src="angular/app/lib/angular/angular.js"></script>
   <script src="angular/app/lib/angular/angular-route.js"></script>
+  <script src="angular/app/lib/angular/angular-animate.js"></script>
   <script src="angular/app/js/app.js"></script>
   <script src="angular/app/js/services.js"></script>
   <script src="angular/app/js/controllers.js"></script>

@@ -50,3 +50,28 @@ a::selection { color: #fa8b5f;}
   overflow: auto;
   width: 700px;
 }
+h1 {
+  text-align: center;
+}
+p {
+  text-align: justify;
+}
+
+
+/**************************Animate****************************************/
+
+.top-in {
+  transition: 1s linear all;
+  -webkit-transition: 1s linear all;
+  position: absolute;
+  width: 97%;
+}
+
+.top-in.ng-enter,
+.top-in.ng-leave.ng-leave-active {
+  top: -300px;
+}
+.top-in.ng-enter.ng-enter-active,
+.top-in.ng-leave {
+  top: 0px;
+}

@@ -13,6 +13,13 @@ angular.module('myApp.controllers', []).
       }
     });
   }])
-  .controller('showController', [function() {
-
+  .controller('showController', ['$scope', '$http', '$routeParams',
+    function($scope, $http, $routeParams) {
+      $http({
+        method: 'GET',
+        url: '/api/v1/pages/' + $routeParams.page_link.toLowerCase()
+      }).then(function(response) {
+        $scope.title = response.data.title;
+        $scope.content = response.data.content;
+      })
   }]);
