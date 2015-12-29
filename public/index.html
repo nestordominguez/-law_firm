@@ -30,12 +30,7 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li ng-if="!$first" ng-repeat="obj in links" ><a ng-href="#/{{obj.link}}">{{obj.link}}</a></li>
-
-          <li class="active"><a href="#/staff" name="staff" link-section>Staff</a></li>
-          <li><a href="#/publications" name="publications" link-section >Publications</a></li>
-          <li><a href="#/links">Links</a></li>
-          <li><a href="#/areas">Areas</a></li>
+          <li ng-class="select('{{obj.slug}}')" ng-if="!$first" ng-repeat="obj in links"><a ng-href="#/pages?page_link={{obj.slug}}">{{obj.link}}</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="#"><span class="glyphicon glyphicon-user"></span> Crear Cuenta</a></li>
