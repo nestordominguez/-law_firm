@@ -21,40 +21,32 @@
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <button type="button" class="navbar-toggle light" data-toggle="collapse" data-target="#myNavbar">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" ng-href="#/pages?page_link={{links | priority}}">{{links | priority}}</a>
+        <a class="navbar-brand light" ng-href="#/pages?page_link={{links | priority}}">{{links | priority}}</a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li ng-class="select('{{obj.slug}}')" ng-if="!$first" ng-repeat="obj in links"><a ng-href="#/pages?page_link={{obj.slug}}">{{obj.link}}</a></li>
+          <li ng-class="select('{{obj.slug}}')" ng-if="!$first" ng-repeat="obj in links"><a ng-href="#/pages?page_link={{obj.slug}}" class="light">{{obj.link}}</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Crear Cuenta</a></li>
-          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Iniciar Sesion</a></li>
+          <li><a href="#" class="light"><span class="glyphicon glyphicon-user"></span> Crear Cuenta</a></li>
+          <li><a href="#" class="light"><span class="glyphicon glyphicon-log-in"></span> Iniciar Sesion</a></li>
         </ul>
       </div>
     </div>
   </nav>
   <div class="col-md-2">
-  <%if user_signed_in?%>
     <ul class="nav nav-pills nav-stacked control-panel" id="panel">
     <h4 class="text-center" id="flip">Panel de control</h4>
-    <% if current_user.admin?%>
-      <% links.each do |key, value|%>
-        <li class="pane"><%= link_to key, value%></li>
-      <%end%>
-    <%end%>
-    <li class="pane"> <%= link_to 'Editar usuario', edit_user_registration_path %></li>
-  <%end%>
-  </ul>
-</div>
+    </ul>
+  </div>
 
   <div class="row">
-    <div class="col-md-9 background">
+    <div class="col-md-9 col-xs-12 background">
       <div class="top-in" ng-view ></div>
     </div>
   </div>

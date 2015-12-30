@@ -46,8 +46,9 @@ a::selection { color: #fa8b5f;}
   border-radius: 15px;
   height: 480px;
 }
-.show-msj {
-  overflow: auto;
+.background {
+  overflow-x: hidden;
+  overflow-y: auto;
   width: 700px;
 }
 h1 {
@@ -57,14 +58,18 @@ p {
   text-align: justify;
 }
 
+.light:hover {
+  text-shadow: 0px 0px 13px yellow;
+}
+
 
 /**************************Animate****************************************/
 
 .top-in {
-  transition: 1s linear all;
-  -webkit-transition: 1s linear all;
+  transition: 1.1s linear all;
+  -webkit-transition: 1.1s linear all;
   position: absolute;
-  width: 97%;
+  width: 100%;
 }
 
 .top-in.ng-enter,
