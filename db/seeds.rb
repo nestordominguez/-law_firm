@@ -8,5 +8,5 @@
 
 links = %w[estudio links publicaciones staff areas]
 links.each_with_index do |link, index|
-  Page.new(link: link, title: link, content: link, priority: index).save
+  Page.new(link: link, title: link, content: link, priority: index + 1).save
 end

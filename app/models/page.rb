@@ -4,7 +4,7 @@ class Page < ActiveRecord::Base
   validates :link, :title, :content, :priority, :presence => true
   validates :link, :uniqueness   =>  true
   before_create :validate_priority
-  #before_update :change_priority_between_object solve dist when view its ready
+  before_update :change_priority_between_object #solve this when the view its ready
 
   private
 
@@ -14,14 +14,18 @@ class Page < ActiveRecord::Base
   end
 
   def switch_priority_to(page)
+    return false if priority < Page.all.count  && priority > 0
     available_priorities = (1..500).to_a - Page.pluck(:priority)
     page.update_column(:priority, available_priorities.first)
   end
 
   def change_priority_between_object
-    # page = Page.find_by_priority(priority)
-    # pages = Page.find_all {|page| page.priority == }
-    # new_priority =  Page.pluck(:priority)
-    # page.update_column(:priority, new_priority.first)
+    return false if priority > Page.all.count && priority > 0
+    change_priority
+  end
+  def change_priority
+    new_priority = Page.find(id).priority
+    page = Page.find_by_priority(priority)
+    page.update_column(:priority, new_priority)
   end
 end
