@@ -5,7 +5,8 @@ class Api::V1::PagesController < Api::V1::CoreController
   end
 
   def show
-    respond_with @page = Page.friendly.find(params[:id])
+    return respond_with @page = Page.find_by_priority(1) if params[:id] == "undefined"
+    respond_with @page = Page.friendly.find(params[:id].downcase)
   end
 
   def new
@@ -27,8 +28,6 @@ class Api::V1::PagesController < Api::V1::CoreController
   end
 
   def update
-    @page_one = Page.find_by_priority(params[:priority])
-    @page_one[:priority] = @page.priority
     @page_one.save
     respond_with do |format|
       if @page.update(page_params)

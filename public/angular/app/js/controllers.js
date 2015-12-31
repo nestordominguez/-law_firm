@@ -17,7 +17,7 @@ angular.module('myApp.controllers', []).
     function($scope, $http, $routeParams) {
       $http({
         method: 'GET',
-        url: '/api/v1/pages/' + $routeParams.page_link.toLowerCase()
+        url: '/api/v1/pages/' + $routeParams.page_link
       }).then(function(response) {
         $scope.title = response.data.title;
         $scope.content = response.data.content;
