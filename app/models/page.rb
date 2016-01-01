@@ -3,10 +3,14 @@ class Page < ActiveRecord::Base
   friendly_id :link, use: :slugged
   validates :link, :title, :content, :priority, :presence => true
   validates :link, :uniqueness   =>  true
-  before_create :include_in_range_for_create, :validate_priority
+  before_create :include_in_range_for_create, :check_if_there_are_15_rows_or_less, :validate_priority
   before_update :include_in_renge_for_update, :change_priority_between_object
 
   private
+
+  def check_if_there_are_15_rows_or_less
+    Page.all.count < 15
+  end
 
   def validate_priority
     return true unless page = Page.find_by_priority(priority)
