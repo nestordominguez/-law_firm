@@ -1,5 +1,5 @@
 class Api::V1::PagesController < Api::V1::CoreController
-  before_action :set_page, only: [:edit, :update]
+  before_action :set_page, only: [:edit, :update, :destroy]
 
   def index
     respond_with Page.all.sort_by {|page| page.priority }.reverse
@@ -12,10 +12,12 @@ class Api::V1::PagesController < Api::V1::CoreController
 
   def create
     @page = Page.new(page_params)
-    if @page.save
-      respond_with(:api, :v1, @page, status: :created)
-    else
-      render json: {errors: @page.errors}, status: :unprocessable_entity, head: :no_content
+    respond_to do |format|
+      if @page.save
+        format.json { render json: @page, status: :created }
+      else
+        format.json { render json: @page.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -24,11 +26,22 @@ class Api::V1::PagesController < Api::V1::CoreController
   end
 
   def update
+    respond_to do |format|
+      if @page.update_attributes(page_params)
+        format.json { head :no_content, status: :ok }
+      else
+        format.json { render json: @page.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
-    if @page.update_attributes(page_params)
-      render json:  @page, status: :ok
-    else
-      render json: { errors: @page.errors }, status: :unprocessable_entity
+  def destroy
+    respond_to do |format|
+      if @page.destroy
+        format.json { head :no_content, status: :ok }
+      else
+        format.json { render json: @page.errors, status: :unprocessable_entity }
+      end
     end
   end
 
