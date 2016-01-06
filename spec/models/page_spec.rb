@@ -9,83 +9,60 @@ describe Page do
       expect(Page.all).to be_empty
     end
     it "without link" do
-      page = Page.create(title: "title", content: "content", priority: 1)
+      page = build(:page, link: "").save
       expect(Page.all).to be_empty
     end
     it "without content" do
-      page = Page.create(title: "title", link: "link", priority: 1)
+      page = build(:page, content: "").save
       expect(Page.all).to be_empty
     end
     it "without title" do
-      page = Page.create(link: "link", content: "content", priority: 1)
+      page = build(:page, title: "").save
       expect(Page.all).to be_empty
     end
     it "without priority" do
-      page = Page.create(title: "title", content: "content", link: "link")
+      page = build(:page, priority: "").save
       expect(Page.all).to be_empty
     end
     it "with a link that exist" do
       page = create(:page)
-      page_not_saved = Page.create(link: "link",
-        title: "title",
-        content: "content",
-        priority: 2)
+      page_not_saved = build(:page, priority: 2).save
       expect(Page.all.count).to eq(1)
     end
     it "with a priority lower than 1" do
-      page = Page.create(link: "first",
-        title: "title", content:
-        "content", priority: 0)
+      page = build(:page, priority: 0).save
       expect(Page.all).to be_empty
     end
     it "with a priority higher than the cuantity of rows plus 1" do
       create(:page)
-      page = build(:page)
-      page.priority = 3
-      page.link = "link1"
-      page.save
+      page = build(:page, link: "link1", priority: 3).save
       expect(Page.all.count).to eq(1)
     end
     it "if there are higher than 15 rows in db" do
-      16.times do |n|
-        Page.create(link: "#{n}",
-          title: "title",
-          content: "content",
-          priority: n + 1 )
-      end
+      16.times {|n| build(:page, link: "#{n}", priority: "#{n +1}").save}
       expect(Page.all.count).to eq(15)
     end
   end
 
   context "should be saved" do
     it "with all params" do
+      expect(Page.all).to be_empty
       create(:page)
       expect(Page.all).not_to be_empty
     end
     it "with a priority in range and not is in db" do
       create(:page)
-      Page.create(link: "link1",
-        title: "title",
-        content: "content",
-        priority: 2)
+      build(:page, link: "link1", priority: 2).save
       expect(Page.all.count).to eq(2)
     end
     it "with a priority in range and is in db" do
       create(:page)
-      Page.create(link: "link1",
-        title: "title",
-        content: "content",
-        priority: 1)
+      build(:page, link: "link1").save
       expect(Page.find(1).priority).to eq(2)
       expect(Page.find(2).priority).to eq(1)
     end
     it "if there are less than 15 rows" do
-      15.times do |n|
-        Page.create(link: "#{n}",
-          title: "title",
-          content: "content",
-          priority: n + 1 )
-      end
+      15.times {|n| build(:page, link: "#{n}", priority: "#{n +1}").save}
       expect(Page.all.count).to eq(15)
     end
 
@@ -99,10 +76,7 @@ describe Page do
       expect(page.save).to be false
     end
     it "if priority are out of de range" do
-      Page.create(link: "link2",
-        title: "title",
-        content: "content",
-        priority: 2)
+      build(:page, link: "link1", priority: 2).save
       page = Page.find(1)
       page.priority = 3
       page.save
@@ -118,10 +92,7 @@ describe Page do
   context "whould update" do
     it "if priority of the page change between they" do
       create(:page)
-      Page.create(link: "second",
-        title: "title",
-        content: "content",
-        priority: 2)
+      build(:page, link: "link1", priority: 2).save
       page = Page.find(1)
       page.priority = 2
       page.save
