@@ -1,0 +1,22 @@
+{
+  "name": "law_firm",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Nestor Oscar Dominguez Diaz <oscardom80@hotmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/nestordominguez/-law_firm",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "mocha": "~2.3.4",
+    "chai": "~3.4.2"
+  }
+}
