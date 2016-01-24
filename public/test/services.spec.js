@@ -9,7 +9,7 @@ describe("Services", function() {
         pagesService = $injector.get("pagesService");
       });
 
-      expect(pagesService.async().then(function(response) {
+      expect(pagesService.then(function(response) {
         // body...
       })).to.be.an('object');
     })

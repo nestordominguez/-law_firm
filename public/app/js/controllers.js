@@ -6,7 +6,11 @@ angular.module('myApp.controllers', []).
   controller('appController', ['$scope', '$routeParams', 'pagesService',
     function($scope, $routeParams, pagesService) {
       pagesService.then(function(response) {
-        $scope.links = response.data;
+        var links = [];
+          for (var i = response.data.length - 1; i >= 0; i--) {
+            links.push(response.data[i]);
+          };
+        $scope.links = links;
         $scope.page_link = $routeParams.page_link;
         $scope.select = function(link) {
           return link === $routeParams.page_link ? 'active' : '';
