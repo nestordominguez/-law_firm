@@ -4,4 +4,6 @@ Rails.application.routes.draw do
       resources :pages
     end
   end
+
+  get '/angular', :to => redirect('/index.html')
 end

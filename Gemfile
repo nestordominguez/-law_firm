@@ -14,6 +14,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 gem 'friendly_id', '~> 5.1.0'
+gem 'rack-cors', :require => 'rack/cors'
 
 group :production do
   gem 'pg',             '0.17.1'
