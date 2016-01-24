@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "mocha": "~2.3.4",
-    "chai": "~3.4.2"
+    "chai": "~3.4.2",
+    "angular-mocks": "~1.4.9"
   }
 }

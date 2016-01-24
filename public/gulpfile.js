@@ -1,14 +1,17 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
 var Server = require('karma').Server;
-var server = require('gulp-live-server');
+var shell = require('gulp-shell');
+var exec = require('child_process').exec;
 
-gulp.task('server', function() {
+/*gulp.task('server', function() {
   var live = new server('server.js');
   live.start();
-})
+})*/
 
-gulp.task('serve', ['server'], function() {
+gulp.task('server-rails',  shell.task('bundle exec rails s'))
+
+gulp.task('serve', function() {
   browserSync.init({
     browser: 'google-chrome',
     notify:false,

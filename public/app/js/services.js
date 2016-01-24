@@ -6,8 +6,8 @@
 // Demonstrate how to register services
 // In this case it is a simple value service.
 angular.module('myApp.services', [])
-  .factory('pagesService', ["$http", function($http) {
-    var pagesService = {
+  .service('pagesService', ["$http", function($http) {
+    /*var pagesService = {
       async: function() {
         var promise = $http({
           method: 'GET',
@@ -22,5 +22,11 @@ angular.module('myApp.services', [])
         return promise;
         }
       }
-    return pagesService;
+    return pagesService;*/
+
+    var promise = $http({
+      method: 'GET',
+      url: 'http://localhost:3000/api/v1/pages'
+    });
+    return promise;
   }]);
