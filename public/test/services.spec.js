@@ -3,15 +3,24 @@ var expect = chai.expect;
 
 describe("Services", function() {
   describe("when page services", function() {
-    it("have a property page as object response", function() {
+    beforeEach(function() {
       module('myApp');
       inject(function($injector) {
-        pagesService = $injector.get("pagesService");
+        pageService = $injector.get("pageService");
+        $httpBackend = $injector.get("$httpBackend");
       });
+    })
+    it("have a property page as object response", function() {
 
-      expect(pagesService.then(function(response) {
+      expect(pageService.show().then(function(response) {
         // body...
       })).to.be.an('object');
+    })
+
+    it("have to call to backend", function() {
+      $httpBackend.expectGET('http://localhost:3000/api/v1/pages')
+        .respond(200, []);
+      $httpBackend.flush();
     })
   })
 });

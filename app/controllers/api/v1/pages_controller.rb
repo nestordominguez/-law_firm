@@ -28,7 +28,7 @@ class Api::V1::PagesController < Api::V1::CoreController
   def update
     respond_to do |format|
       if @page.update_attributes(page_params)
-        format.json { head :no_content, status: :ok }
+        format.json { render json: @page, status: :ok }
       else
         format.json { render json: @page.errors, status: :unprocessable_entity }
       end

@@ -13,7 +13,7 @@ angular.module('myApp', [
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/pages', {
     templateUrl: 'views/pages/show.html',
-    controller: 'showController'
+    controller: 'showPageController'
   });
   $routeProvider.otherwise({redirectTo: '/pages'});
 }]);

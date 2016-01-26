@@ -5,5 +5,5 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/angular', :to => redirect('/index.html')
+  get '/angular', :to => redirect('/app/index.html')
 end

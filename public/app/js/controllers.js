@@ -6,12 +6,12 @@ angular.module('myApp.controllers', []).
   controller('appController', ['$scope', '$routeParams', 'pageService',
     function($scope, $routeParams, pageService) {
 
-      pageService.show("").then(function(response) {
+      pageService.index().then(function(response) {
 
         var links = [];
-          for (var i = response.data.length - 1; i >= 0; i--) {
-            links.push(response.data[i]);
-          };
+        for (var i = response.data.length - 1; i >= 0; i--) {
+          links.push(response.data[i]);
+        };
 
         $scope.links = links;
         $scope.page_link = $routeParams.page_link;
@@ -22,10 +22,10 @@ angular.module('myApp.controllers', []).
       });
 
   }])
-  .controller('showController', ['$scope', '$routeParams', 'pageService',
+  .controller('showPageController', ['$scope', '$routeParams', 'pageService',
     function($scope, $routeParams, pageService) {
 
-      pageService.show("/" + $routeParams.page_link)
+      pageService.show($routeParams.page_link)
       .then(function(response) {
 
         $scope.title = response.data.title;

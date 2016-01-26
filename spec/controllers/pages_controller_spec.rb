@@ -89,8 +89,8 @@ RSpec.describe Api::V1::PagesController, type: :controller do
         subject.reload
       end
 
-      it "have status 204" do
-        expect(response).to have_http_status(204)
+      it "have status 200" do
+        expect(response).to have_http_status(200)
       end
 
       it "have new title hola" do
