@@ -34,13 +34,13 @@ gulp.task('test-browser', function(done) {
   }, done).start();
 })
 
-gulp.task('server-test', function() {
+gulp.task('test', function() {
   browserSync.init({
     browser: 'google-chrome',
     notify:false,
     port:8081,
     server:{
-      baseDir:["test", "app"],
+      baseDir:["test/unit", "app"],
       routes:{
         "/bower_components": "bower_components"
       }

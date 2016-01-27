@@ -6,7 +6,8 @@
   <link rel="stylesheet" href="bower_components/mocha/mocha.css">
 </head>
 <body ng-app="myApp">
-  <dic id="mocha"></dic>
+
+  <dic id="mocha"><h1>Unit-test:</h1></dic>
   <script src="bower_components/mocha/mocha.js"></script>
   <script src="bower_components/chai/chai.js"></script>
   <script>
@@ -19,11 +20,14 @@
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
   <script src="js/services.js"></script>
+
   <script src="main.spec.js"></script>
   <script src="controllers.spec.js"></script>
   <script src="filters.spec.js"></script>
   <script src="directives.spec.js"></script>
   <script src="services.spec.js"></script>
+  <script src="templates.spec.js"></script>
+  <script src="routes.spec.js"></script>
   <script>
     mocha.run();
   </script>

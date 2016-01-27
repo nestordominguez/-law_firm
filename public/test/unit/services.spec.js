@@ -10,15 +10,21 @@ describe("Services", function() {
         $httpBackend = $injector.get("$httpBackend");
       });
     })
-    it("have a property page as object response", function() {
 
-      expect(pageService.show().then(function(response) {
-        // body...
-      })).to.be.an('object');
+    it("have a property page as object response", function() {
+      expect(pageService.index()).to.be.an('object');
     })
 
-    it("have to call to backend", function() {
-      $httpBackend.expectGET('http://localhost:3000/api/v1/pages')
+    it("have index response", function() {
+      pageService.index();
+      $httpBackend.expectGET("http://localhost:3000/api/v1/pages/")
+        .respond(200, []);
+      $httpBackend.flush();
+    })
+
+    it("have show response", function() {
+      pageService.show("link");
+      $httpBackend.expectGET("http://localhost:3000/api/v1/pages/link")
         .respond(200, []);
       $httpBackend.flush();
     })

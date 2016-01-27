@@ -1,5 +1,5 @@
 describe("Law Firm", function() {
-  it("should work ", function() {
+  it("have to work ", function() {
     chai.assert.isArray([]);
   });
 });
