@@ -12,20 +12,26 @@
     "express": "^4.13.4",
     "gulp": "^3.9.0",
     "gulp-live-server": "0.0.29",
+    "gulp-protractor": "^2.1.0",
+    "istanbul": "^0.4.2",
     "karma": "^0.13.19",
+    "karma-coverage": "^0.5.3",
     "karma-mocha": "^0.2.1",
-    "mocha": "^2.3.4"
+    "mocha": "^2.3.4",
+    "protractor": "^3.0.0"
   },
   "directories": {
     "test": "test"
   },
   "description": "",
   "devDependencies": {
+    "gulp-protractor": "^2.1.0",
     "gulp-run": "^1.6.12",
     "gulp-shell": "^0.5.2",
     "karma-chrome-launcher": "^0.2.2",
     "karma-mocha": "^0.2.1",
     "karma-mocha-reporter": "^1.1.5",
+    "protractor": "^3.0.0",
     "run-sequence": "^1.1.5"
   }
 }

@@ -3,6 +3,7 @@ var browserSync = require('browser-sync').create();
 var Server = require('karma').Server;
 var shell = require('gulp-shell');
 var exec = require('child_process').exec;
+var protractor = require('gulp-protractor').protractor;
 
 /*gulp.task('server', function() {
   var live = new server('server.js');
@@ -28,10 +29,26 @@ gulp.task('serve', function() {
     .on('change', browserSync.reload);
 })
 
+gulp.task('coverage', ['test-browser'], function() {
+  browserSync.init({
+    browser: 'google-chrome',
+    notify:false,
+    port:8084,
+    server:{
+      baseDir:["test/coverage"]
+    }
+  })
+
+  gulp.watch(['app/**/*.*'])
+    .on('change', browserSync.reload);
+})
+
 gulp.task('test-browser', function(done) {
   new Server({
-    configFile:__dirname + '/karma.conf.js'
-  }, done).start();
+    configFile:__dirname + '/karma.conf.js',
+    singleRun: false,
+    reporters:['mocha','coverage']
+  }, function() { done();} ).start();
 })
 
 gulp.task('test', function() {
@@ -49,4 +66,13 @@ gulp.task('test', function() {
 
   gulp.watch(['app/**/*.*', 'test/**/*.*'])
     .on('change', browserSync.reload);
+})
+
+gulp.task('protractor',['serve'], function(done) {
+  gulp.src(["test/e2e/*.js"])
+  .pipe(protractor({
+    configFile: "test/protractor.config.js",
+    args: ['--baseUrl', 'http://localhost:8000']
+  }))
+  .on('error', function(e) { throw e });
 })
