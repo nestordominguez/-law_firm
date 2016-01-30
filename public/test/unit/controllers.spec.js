@@ -1,6 +1,6 @@
 var assert = chai.assert;
 var expect = chai.expect;
-
+var baseDir = "https://localhost:3000/api/v1/pages/"
 describe("Controllers", function() {
   describe("When app controller", function() {
     beforeEach(function() {
@@ -11,7 +11,7 @@ describe("Controllers", function() {
         $httpBackend = $injector.get("$httpBackend");
         $controller = $injector.get("$controller");
         $routeParams = $injector.get("$routeParams");
-        $httpBackend.when("GET", "http://localhost:3000/api/v1/pages/")
+        $httpBackend.when("GET", baseDir)
           .respond(200, {})
         $routeParams.page_link = "estudio";
         $controller("appController", {$scope:$scope, pageService:pageService});
@@ -46,7 +46,7 @@ describe("Controllers", function() {
         $httpBackend = $injector.get("$httpBackend");
         $controller = $injector.get("$controller");
         $routeParams = $injector.get("$routeParams");
-        $httpBackend.when("GET", "http://localhost:3000/api/v1/pages/estudio")
+        $httpBackend.when("GET", baseDir + "estudio")
           .respond(200, {
             id: 1,
             title: "estudios",

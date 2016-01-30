@@ -68,7 +68,7 @@ gulp.task('test', function() {
     .on('change', browserSync.reload);
 })
 
-gulp.task('protractor',['serve'], function(done) {
+gulp.task('protractor', function(done) {
   gulp.src(["test/e2e/*.js"])
   .pipe(protractor({
     configFile: "test/protractor.config.js",

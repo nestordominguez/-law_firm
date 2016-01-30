@@ -1,8 +1,9 @@
 var assert = chai.assert;
-var expect = chai.expect;
+var baseDir = "https://localhost:3000/api/v1/pages/"
 
 describe("Services", function() {
   describe("when page services", function() {
+    var expect = chai.expect;
     beforeEach(function() {
       module('myApp');
       inject(function($injector) {
@@ -17,14 +18,14 @@ describe("Services", function() {
 
     it("have index response", function() {
       pageService.index();
-      $httpBackend.expectGET("http://localhost:3000/api/v1/pages/")
+      $httpBackend.expectGET(baseDir)
         .respond(200, []);
       $httpBackend.flush();
     })
 
     it("have show response", function() {
       pageService.show("link");
-      $httpBackend.expectGET("http://localhost:3000/api/v1/pages/link")
+      $httpBackend.expectGET(baseDir + "link")
         .respond(200, []);
       $httpBackend.flush();
     })

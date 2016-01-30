@@ -15,6 +15,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 gem 'friendly_id', '~> 5.1.0'
 gem 'rack-cors', :require => 'rack/cors'
+gem 'thin'
 
 group :production do
   gem 'pg',             '0.17.1'
