@@ -16,6 +16,8 @@ gem 'devise'
 gem 'friendly_id', '~> 5.1.0'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'thin'
+gem 'devise'
+gem 'angular_rails_csrf'
 
 group :production do
   gem 'pg',             '0.17.1'

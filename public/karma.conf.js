@@ -5,7 +5,8 @@ module.exports = function(config) {
     singleRun: false,
     reporters:['mocha','coverage'],
     preprocessors:{
-      'app/**/*.js':['coverage']
+      'app/**/*.js':['coverage']/*,
+      'test/unit/*.js':['coverage']*/
     },
     coverageReporter:{
       includeAllSources:true,

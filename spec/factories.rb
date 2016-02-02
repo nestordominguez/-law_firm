@@ -1,4 +1,7 @@
-FactoryGirl.define do
+FactoryGirl.define do  factory :user do
+    
+  end
+
   factory :page do
     link "link"
     title "title to link 1"

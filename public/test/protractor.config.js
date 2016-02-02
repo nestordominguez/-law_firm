@@ -1,5 +1,5 @@
 exports.config = {
-  seleniumAdress: 'http://localhost:4444/hd/hub',
+  seleniumAdress: 'https://localhost:4444/hd/hub',
   capabilities: {
     'browserName': 'chrome'
   },

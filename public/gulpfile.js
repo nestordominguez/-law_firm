@@ -46,7 +46,7 @@ gulp.task('coverage', ['test-browser'], function() {
 gulp.task('test-browser', function(done) {
   new Server({
     configFile:__dirname + '/karma.conf.js',
-    singleRun: false,
+    singleRun: true,
     reporters:['mocha','coverage']
   }, function() { done();} ).start();
 })
@@ -72,7 +72,7 @@ gulp.task('protractor', function(done) {
   gulp.src(["test/e2e/*.js"])
   .pipe(protractor({
     configFile: "test/protractor.config.js",
-    args: ['--baseUrl', 'http://localhost:8000']
+    args: ['--baseUrl', 'https://localhost:8000']
   }))
   .on('error', function(e) { throw e });
 })

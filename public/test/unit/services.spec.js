@@ -1,11 +1,11 @@
 var assert = chai.assert;
-var baseDir = "https://localhost:3000/api/v1/pages/"
+var expect = chai.expect;
 
 describe("Services", function() {
-  describe("when page services", function() {
-    var expect = chai.expect;
+  beforeEach(module('myApp'));
+  describe("When page services", function() {
+    var baseDir = "https://localhost:3000/api/v1/pages/"
     beforeEach(function() {
-      module('myApp');
       inject(function($injector) {
         pageService = $injector.get("pageService");
         $httpBackend = $injector.get("$httpBackend");
@@ -29,5 +29,18 @@ describe("Services", function() {
         .respond(200, []);
       $httpBackend.flush();
     })
+  })
+
+  describe("When linkLogIn", function() {
+    beforeEach(function() {
+      inject(function($injector) {
+        linkLogIn = $injector.get("linkLogIn");
+      })
+    });
+
+    it("respond with an array", function() {
+      expect(linkLogIn).to.be.an('array');
+    })
+
   })
 });

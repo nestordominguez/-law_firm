@@ -33,8 +33,7 @@
           <li ng-class="select('{{obj.slug}}')" ng-if="!$first" ng-repeat="obj in links"><a ng-href="#/pages?page_link={{obj.slug}}" class="light">{{obj.link}}</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#" class="light"><span class="glyphicon glyphicon-user"></span> Crear Cuenta</a></li>
-          <li><a href="#" class="light"><span class="glyphicon glyphicon-log-in"></span> Iniciar Sesion</a></li>
+          <li ng-repeat="sign in signs"><a href="#/{{sign.link}}" class="light" ><span class="glyphicon glyphicon-{{sign.symbol}}"></span> {{sign.value}}</a></li>
         </ul>
       </div>
     </div>
@@ -58,6 +57,7 @@
   <script src="bower_components/angular/angular.js"></script>
   <script src="/bower_components/angular-route/angular-route.js"></script>
   <script src="/bower_components/angular-animate/angular-animate.js"></script>
+  <script src="/bower_components/angular-devise/lib/devise-min.js"></script>
   <script src="js/main.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/filters.js"></script>

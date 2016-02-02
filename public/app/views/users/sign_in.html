@@ -1,0 +1,28 @@
+<form novalidate class="form" name="form" ng-submit="logIn(user)">
+  <fieldset class="col-md-offset-3 col-md-6">
+    <legend>Iniciar Sesión</legend>
+    <br/>
+    <div>
+      <label class="col-md-3">E-mail:</label>
+      <input type="email" ng-model="user.email" class="col-md-4 col-xs-5" required="" name="uEmail" autofocus/>
+      <div ng-show="form.$submitted || form.uEmail.$touched">
+        <p ng-show="form.uEmail.$error.required" class="col-md-5"> Falta su E-mail.</p>
+        <p ng-show="form.uEmail.$error.email" class="col-md-5">No es un E-mail válido.</p>
+      </div>
+    </div>
+    <br />
+    <br/>
+    <div>
+      <label class="col-md-3 ">Contraseña:</label>
+      <input type="password" ng-model="user.password" class="col-md-4 col-xs-5" name="uPassword" required="" ng-minlength="8"/>
+      <div ng-show="form.$submitted || form.uPassword.$touched">
+        <p ng-show="form.uPassword.$error.required" class="col-md-5"> Falta su contraseña.</p>
+        <p ng-show="form.uPassword.$error.minlength" class="col-md-5"> Debe tener 8 caracteres al menos.</p>
+      </div>
+    </div>
+    <br />
+    <br/>
+    <br/>
+    <input type="submit" value="Entrar" class="btn col-md-offset-10 col-xs-offset-10" />
+  </fieldset>
+</form>

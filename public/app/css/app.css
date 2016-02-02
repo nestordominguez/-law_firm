@@ -7,6 +7,13 @@ body {
   -o-background-size: cover;
   background-size: cover;
 }
+form {
+  padding-top: 70px;
+}
+
+p, label{
+  color: #343536;
+}
 p::-webkit-selection {color: #fa8b5f;}
 p::-moz-selection { color: #fa8b5f;}
 p::-o-selection { color: #fa8b5f;}
@@ -23,6 +30,39 @@ a::-webkit-selection {color: #fa8b5f;}
 a::-moz-selection { color: #fa8b5f;}
 a::-o-selection { color: #fa8b5f;}
 a::selection { color: #fa8b5f;}
+span::-webkit-selection {color:red;}
+span::-moz-selection { color:red;}
+span::-o-selection { color:red;}
+span::selection { color:red;}
+label::-webkit-selection {color:red;}
+label::-moz-selection { color:red;}
+label::-o-selection { color:red;}
+label::selection { color:red;}
+legend::-webkit-selection {color:red;}
+legend::-moz-selection { color:red;}
+legend::-o-selection { color:red;}
+legend::selection { color:red;}
+.form input[type="email"], .form input[type="password"] {
+        color: #343536;
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        background-color: transparent;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        -o-border-radius: 15px;
+        border-radius: 15px;
+}
+input:focus{
+  outline: none;
+  -webkit-box-shadow: 7px 7px 20px black;
+  -moz-box-shadow: 7px 7px 20px black;
+  -o-box-shadow: 7px 7px 20px black;
+  box-shadow: 7px 7px 20px black;
+}
+.btn {
+  color: #343536;
+}
 .control-panel {
   padding: 20px;
   background-color: rgba(169, 169, 169, 0.6);
@@ -37,9 +77,9 @@ a::selection { color: #fa8b5f;}
  text-decoration: none;
 }
 .background {
-  color: #ccc;
+  color: #343536;
   overflow: auto;
-  background-color: rgba(169, 169, 169, 0.4);
+  background-color: rgba(169, 169, 169, 0.7);
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   -o-border-radius: 15px;
@@ -52,6 +92,7 @@ a::selection { color: #fa8b5f;}
   width: 700px;
 }
 h1 {
+  color: #505152 !important;
   text-align: center;
 }
 p {
@@ -65,17 +106,17 @@ p {
 /**************************Animate****************************************/
 
 .top-in {
-  transition: 1.1s linear all;
-  -webkit-transition: 1.1s linear all;
+  transition: 1.5s linear all;
+  -webkit-transition: 1.5s linear all;
   position: absolute;
   width: 100%;
 }
 
 .top-in.ng-enter,
 .top-in.ng-leave.ng-leave-active {
-  top: -300px;
+  right: -2000px;
 }
 .top-in.ng-enter.ng-enter-active,
 .top-in.ng-leave {
-  top: 0px;
+  right: 0px;
 }

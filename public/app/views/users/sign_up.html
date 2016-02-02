@@ -1,0 +1,47 @@
+<div class="table">
+<h2>Crear Cuenta</h2>
+
+<div id="sign_up">
+    <form name="f1" method="post" action="login" id="f1">
+      <fieldset class="col-md-offset-3 col-md-5" >
+        <legend>Iniciar Sesión:</legend>
+        <table class="col-md-offset-2 col-md-5 col-xs-12">
+            </br>
+            </br>
+            </br>
+            </br>
+            <tr>
+                <td class="f1_label">Nombre :</td><td><input type="text" name="username" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td class="f1_label">Contraseña  :</td><td><input type="password" name="password" value=""  />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" class="btn" name="login" value="Ingresar" style="font-size:18px; " />
+                </td>
+            </tr>
+        </table>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div><%= f.label :email, "E-mail" %><br />
+  <%= f.email_field :email, autofocus: true %></div>
+
+  <div><%= f.label :password, "Contraseña" %> <% if @validatable %><i>(<%= @minimum_password_length %> caracteres mínimo)</i><% end %><br />
+    <%= f.password_field :password, autocomplete: "off" %></div>
+
+  <div><%= f.label :password_confirmation, "Confirmar contraseña" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+
+  <div><%= f.submit "Crear cuenta", :class => 'btn btn-sample btn-sm' %></div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+</div>
+      </fieldset>
+    </form>
+</div>
