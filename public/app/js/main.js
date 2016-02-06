@@ -12,60 +12,28 @@ angular.module('myApp', [
   'Devise'
 ])
 .config(function($httpProvider){
-  /*$httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');*/
 
-        var interceptor = ['$location', '$rootScope', '$q', function($location, $rootScope, $q) {
-            function success(response) {
-                return response
-            };
-
-            function error(response) {
-                if (response.status == 401) {
-                    $rootScope.$broadcast('event:unauthorized');
-                    $location.path('/users/login');
-                    return response;
-                };
-                return $q.reject(response);
-            };
-
-            return function(promise) {
-                return promise.then(success, error);
-            };
-        }];
-        $httpProvider.interceptors.push(interceptor);
-  })
-.config(function($httpProvider) {
-  /*var interceptor = function($q, $rootScope, Auth) {
-    return {
-      'response': function(resp) {
-        if (resp.config.url == '/users/sign_in') {
-          Auth.setToken(resp.data.token);
+    var interceptor = ['$location', '$rootScope', '$q', function($location, $rootScope, $q) {
+        function success(response) {
+            return response
         };
-      },
-      'responseError': function(rejection) {
-        switch(rejection.status) {
-          case 401:
-            if (rejection.config.url !== '/users/sign_in') {
-              $rootScope.$broadcast('auth:loginRequired');
+
+        function error(response) {
+            if (response.status == 401) {
+                $rootScope.$broadcast('event:unauthorized');
+                $location.path('/users/login');
+                return response;
             };
-            break;
-          case 403:
-            $rootScope.$broadcast('auth:forbidden');
-            break;
-          case 404:
-            $rootScope.$broadcast('page:notFound');
-            break;
-          case 500:
-            $rootScope.$broadcast('server:error');
-            break;
-        }
-        return $q.reject(rejection);
-      }
-    }
-  }
-  $httpProvider.interceptors.push(interceptor);*/
-  /*$httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');*/
-})
+            return $q.reject(response);
+        };
+
+        return function(promise) {
+            return promise.then(success, error);
+        };
+    }];
+    $httpProvider.interceptors.push(interceptor);
+    $httpProvider.defaults.withCredentials = true;
+  })
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when('/pages', {
@@ -88,12 +56,12 @@ angular.module('myApp', [
         AuthProvider.loginPath('https://localhost:3000/users/sign_in');
 
         // Customize logout
-        // AuthProvider.logoutMethod('POST');
-        // AuthProvider.logoutPath('/user/logout.json');
+        AuthProvider.logoutMethod('DELETE');
+        AuthProvider.logoutPath('https://localhost:3000/users/sign_out');
 
         // Customize register
-        /*AuthProvider.registerMethod('PATCH');
-        AuthProvider.registerPath('/user/sign_up.json');*/
+        // AuthProvider.registerMethod('PATCH');
+        AuthProvider.registerPath('https://localhost:3000/users');
 
         // Customize the resource name data use namespaced under
         // Pass false to disable the namespace altogether.
@@ -108,4 +76,4 @@ angular.module('myApp', [
         // Intercept 401 Unauthorized everywhere
         // Enables `devise:unauthorized` interceptor
         // AuthInterceptProvider.interceptAuth(true);
-    });
+    })

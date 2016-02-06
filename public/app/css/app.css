@@ -63,6 +63,12 @@ input:focus{
 .btn {
   color: #343536;
 }
+.btn:hover {
+  -webkit-box-shadow: 7px 7px 20px black;
+  -moz-box-shadow: 7px 7px 20px black;
+  -o-box-shadow: 7px 7px 20px black;
+  box-shadow: 7px 7px 20px black;
+}
 .control-panel {
   padding: 20px;
   background-color: rgba(169, 169, 169, 0.6);

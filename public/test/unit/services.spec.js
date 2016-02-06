@@ -31,16 +31,16 @@ describe("Services", function() {
     })
   })
 
-  describe("When linkLogIn", function() {
-    beforeEach(function() {
-      inject(function($injector) {
-        linkLogIn = $injector.get("linkLogIn");
-      })
-    });
+  // describe("When linkLogIn", function() {
+  //   beforeEach(function() {
+  //     inject(function($injector) {
+  //       linkLogIn = $injector.get("linkLogIn");
+  //     })
+  //   });
 
-    it("respond with an array", function() {
-      expect(linkLogIn).to.be.an('array');
-    })
+  //   it("respond with an array", function() {
+  //     expect(linkLogIn).to.be.an('array');
+  //   })
 
-  })
+  // })
 });
