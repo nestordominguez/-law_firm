@@ -9,7 +9,8 @@ angular.module('myApp', [
   'myApp.services',
   'myApp.directives',
   'myApp.controllers',
-  'Devise'
+  'Devise',
+  'ngScrollbars'
 ])
 .config(function($httpProvider){
 
@@ -77,3 +78,22 @@ angular.module('myApp', [
         // Enables `devise:unauthorized` interceptor
         // AuthInterceptProvider.interceptAuth(true);
     })
+.config(function (ScrollBarsProvider) {
+    // the following settings are defined for all scrollbars unless the
+    // scrollbar has local scope configuration
+    ScrollBarsProvider.defaults = {
+        autoHideScrollbar: true,
+        scrollButtons: {
+            scrollAmount: 'auto', // scroll amount when button pressed
+            enable: true // enable scrolling buttons by default
+        },
+        advanced:{
+            updateOnContentResize: true
+        },
+        scrollInertia: 400, // adjust however you want
+        axis: 'yx', // enable 2 axis scrollbars by default,
+        theme: 'dark-thick',
+        autoHideScrollbar: true,
+        setHeight: 500
+    };
+});

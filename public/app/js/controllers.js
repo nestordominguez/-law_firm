@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-  controller('appController', ['$scope', '$routeParams', 'pageService', 'Auth',
-    function($scope, $routeParams, pageService, Auth ) {
+  controller('appController', ['$scope', '$routeParams', '$timeout', 'pageService', 'Auth',
+    function($scope, $routeParams, $timeout, pageService, Auth) {
 
       Auth.currentUser().then(function(user) {
         $scope.isAuthenticated = function() {
