@@ -100,7 +100,7 @@ angular.module('myApp.controllers', []).
 
   .controller('signUpUserController', ['$scope', '$location', 'Auth',
     function($scope, $location, Auth) {
-    $scope.signUp = function(user) {
+      $scope.signUp = function(user) {
       var credentials = {
             email: user.email,
             password: user.password,

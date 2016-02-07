@@ -1,34 +1,42 @@
 <form novalidate class="form" name="form">
-  <fieldset class="col-md-offset-2 col-md-8">
+  <fieldset class="col-md-offset-1 col-md-10">
     <legend>Crear Cuenta</legend>
-    <h3>{{msj}}</h3>
+    <h4>{{msj}}</h4>
     <br/>
     <div>
-      <label class="col-md-2">E-mail:</label>
-      <input type="email" ng-model="user.email" class="col-md-5 col-xs-5" required="" name="uEmail" autofocus/>
+      <label class="col-md-4 col-xs-4">E-mail: <span ng-show="form.uEmail.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span></label>
+      <input type="email" ng-model="user.email" class="col-md-3 col-xs-5" required="" name="uEmail" autofocus/>
       <div ng-show="form.$submitted || form.uEmail.$touched">
-        <p ng-show="form.uEmail.$error.required" class="col-md-5"> Falta su E-mail.</p>
-        <p ng-show="form.uEmail.$error.email" class="col-md-5">No es un E-mail válido.</p>
+        <span ng-show="form.uEmail.$error.required" class="col-md-5 col-xs-3"> Falta su E-mail.</span>
+        <span ng-show="form.uEmail.$error.email" class="col-md-5 col-xs-3">No es un E-mail válido.</span>
       </div>
     </div>
     <br />
     <br/>
     <div>
-      <label class="col-md-2 ">Contraseña:</label>
-      <input type="password" ng-model="user.password" class="col-md-5 col-xs-5" name="uPassword" required="" ng-minlength="8"/>
+      <label class="col-md-4 col-xs-4">Contraseña: <span ng-show="form.uPassword.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span></label>
+
+      <input id="password" type="password" ng-model="user.password" class="col-md-3 col-xs-5" name="uPassword" required="" ng-minlength="8"/>
       <div ng-show="form.$submitted || form.uPassword.$touched">
-        <p ng-show="form.uPassword.$error.required" class="col-md-5"> Falta su contraseña.</p>
-        <p ng-show="form.uPassword.$error.minlength" class="col-md-5"> Debe tener 8 caracteres al menos.</p>
+        <span ng-show="form.uPassword.$error.required" class="col-md-5 col-xs-3"> Falta su contraseña.</span>
+        <span ng-show="form.uPassword.$error.minlength" class="col-md-5 col-xs-3"> Debe tener 8 caracteres al menos.</span>
       </div>
     </div>
     <br />
     <br/>
-    <label class="col-md-2 ">Contraseña:</label>
-    <input type="password" ng-model="user.password_confirmation" class="col-md-5 col-xs-5" name="uPassword" required="" ng-minlength="8"/>
+
+    <label class="col-md-4 col-xs-4">Confirmar contraseña: <span ng-show="form.uPassword_confirmation.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span></label>
+
+    <input type="password" ng-model="user.password_confirmation" class="col-md-3 col-xs-5" name="uPassword_confirmation" required="" ng-minlength="8" pw-check="password"/>
+    <div ng-show="form.$submitted || form.uPassword_confirmation.$touched">
+        <span ng-show="form.uPassword_confirmation.$error.required" class="col-md-5 col-xs-3"> Falta confirmar su contraseña.</span>
+        <span ng-show="form.uPassword_confirmation.$error.minlength" class="col-md-5 col-xs-3"> Debe tener 8 caracteres al menos.</span>
+        <span ng-show="form.uPassword_confirmation.$error.pwmatch" class="col-md-5 col-xs-3"> Las contraseñas son distintas.</span>
+    </div>
     <br/>
     <br/>
     <br/>
     <br/>
-    <input type="submit" value="registrar" ng-click="signUp(user)" class="btn col-md-offset-10 col-xs-offset-10" />
+    <input type="submit" value="Registrar" ng-click="signUp(user)" class="btn col-md-offset-10 col-xs-offset-10" ng-disabled="form.$invalid" />
   </fieldset>
 </form>

@@ -10,7 +10,8 @@ angular.module('myApp', [
   'myApp.directives',
   'myApp.controllers',
   'Devise',
-  'ngScrollbars'
+  'ngScrollbars',
+  'ui.validate'
 ])
 .config(function($httpProvider){
 
