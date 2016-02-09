@@ -22,15 +22,17 @@ angular.module('myApp.directives', [])
       restrict:'A',
       require: 'ngModel',
       link: function(scope, element, attrs, ngModel) {
-        element.bind('blur', function(e) {
-          if (!ngModel || !element.val()) { return };
+        element.bind('blur', function() {
+          if (!element.val()) { return };
           var currentValue = element.val();
-          ngModel.$setValidity('unique', true)
           uniqueService.checkUniqueValue(currentValue)
           .then(function(unique) {
-            if (unique.data != null) {
-              return ngModel.$setValidity('unique', false)
+            if (unique.data == true) {
+              ngModel.$setValidity('unique', true)
+            } else{
+              ngModel.$setValidity('unique', false)
             };
+
           })
         })
       }

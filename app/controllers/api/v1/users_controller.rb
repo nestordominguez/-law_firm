@@ -46,13 +46,10 @@ class Api::V1::UsersController < Api::V1::CoreController
     # end
   end
 
-  def unique
-    actual_param = params[:email]
-    if params[:format]
-      actual_param << "." << params[:format]
-    end
-     email = request.original_url.split("/").last
-    render json: User.find_by_email(email)
+  def unique?
+    user = true
+    user = false if find_user
+    render json: user
   end
 
   private
@@ -65,5 +62,20 @@ class Api::V1::UsersController < Api::V1::CoreController
     params[:user].permit(:email, :password, :password_confirmation)
     params.permit(email: [])
     #params.permit(user: [:email, :password, :password_confirmation])
+  end
+
+  def email_param
+    begin
+      actual_param = params[:email]
+      if params[:format]
+        actual_param << "." << params[:format]
+      end
+    rescue TypeError
+      actual_param
+    end
+  end
+
+  def find_user
+    User.find_by_email(email_param)
   end
 end

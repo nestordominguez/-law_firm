@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1, defaults: {format: :json} do
       resources :pages
-      get '/users/unique/*email', to: 'users#unique'
+      get '/users/unique/*email', to: 'users#unique?'
 
     end
   end
