@@ -11,10 +11,28 @@ angular.module('myApp.directives', [])
       var firstPassword = '#' + attrs.pwCheck;
       elem.add(firstPassword).on('keyup', function () {
         scope.$apply(function () {
-          // console.info(elem.val() === $(firstPassword).val());
           ctrl.$setValidity('pwmatch', elem.val() === $(firstPassword).val());
         });
       });
     }
   }
-}]);
+}])
+.directive('unique', ['uniqueService', function(uniqueService) {
+    return {
+      restrict:'A',
+      require: 'ngModel',
+      link: function(scope, element, attrs, ngModel) {
+        element.bind('blur', function(e) {
+          if (!ngModel || !element.val()) { return };
+          var currentValue = element.val();
+          ngModel.$setValidity('unique', true)
+          uniqueService.checkUniqueValue(currentValue)
+          .then(function(unique) {
+            if (unique.data != null) {
+              return ngModel.$setValidity('unique', false)
+            };
+          })
+        })
+      }
+    }
+  }]);

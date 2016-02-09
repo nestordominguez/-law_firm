@@ -5,10 +5,11 @@
     <br/>
     <div>
       <label class="col-md-4 col-xs-4">E-mail: <span ng-show="form.uEmail.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span></label>
-      <input type="email" ng-model="user.email" class="col-md-3 col-xs-5" required="" name="uEmail" autofocus/>
+      <input type="email" ng-model="user.email" class="col-md-3 col-xs-5" required="" name="uEmail" autofocus unique />
       <div ng-show="form.$submitted || form.uEmail.$touched">
         <span ng-show="form.uEmail.$error.required" class="col-md-5 col-xs-3"> Falta su E-mail.</span>
         <span ng-show="form.uEmail.$error.email" class="col-md-5 col-xs-3">No es un E-mail válido.</span>
+        <span ng-show="form.uEmail.$error.unique" class="col-md-5 col-xs-3">Usuario ya registrado.</span>
       </div>
     </div>
     <br />
