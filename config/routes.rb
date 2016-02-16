@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, defaults: {format: :json}
   namespace :api do
     namespace :v1, defaults: {format: :json} do
-      resources :pages
+      resources :pages, :users
       get '/users/unique/*email', to: 'users#unique?'
 
     end
