@@ -4,7 +4,7 @@ class Page < ActiveRecord::Base
   validates :link, :title, :content, :priority, :presence => true
   validates :link, :uniqueness   =>  true
   before_create :include_in_range_for_create, :check_if_there_are_15_rows_or_less, :validate_priority
-  before_update :include_in_renge_for_update, :change_priority_between_object
+  before_update :include_in_range_for_update, :change_priority_between_object
 
   private
 
@@ -26,7 +26,7 @@ class Page < ActiveRecord::Base
     priority > 0 && priority <= Page.all.count + 1
   end
 
-  def include_in_renge_for_update
+  def include_in_range_for_update
     Page.pluck(:priority).include?(priority)
   end
 

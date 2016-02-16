@@ -4,34 +4,41 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # before_create :first_user_do_lawyer
-  # before_destroy :ensure_an_superuser
-  # before_create :not_create_superuser
+  before_create :first_user_do_lawyer, :check_superuser_and_lawyer
+  before_destroy :ensure_an_superuser
+  before_update :not_update_superuser
 
-  # private
-  # def first_user_do_lawyer
-  #   self.abogado = true and self.superuser = true and return true unless User.any?
-  # end
+  private
 
-  # def ensure_an_superuser
-  #   messages("is superuser") and return false if superuser
-  #   messages("not superuser")
-  # end
+  def first_user_do_lawyer
+    self.lawyer = true and self.superuser = true and return true unless User.any?
+  end
 
-  # def not_create_superuser
-  #   if superuser
-  #     unless first_user_do_lawyer
-  #       return false
-  #     end
-  #   end
-  # end
+  def ensure_an_superuser
+    messages("is superuser") and return false if superuser
+    messages("not superuser")
+  end
 
-  # def messages(message)
-  #   msg = if message == "is superuser"
-  #     "No puede borrar el usuario #{email}"
-  #   else
-  #     "El usuario #{email} se borro correctamente"
-  #   end
-  #   errors.add(:base, msg)
-  # end
+  def check_superuser_and_lawyer
+    if User.any?
+      self.lawyer = false
+      self.superuser = false
+    end
+    return true
+  end
+
+  def messages(message)
+    msg = if message == "is superuser"
+      "No puede borrar el usuario #{email}"
+    else
+      "El usuario #{email} se borro correctamente"
+    end
+    errors.add(:base, msg)
+  end
+
+  def not_update_superuser
+    return false if superuser
+    return true
+  end
+
 end

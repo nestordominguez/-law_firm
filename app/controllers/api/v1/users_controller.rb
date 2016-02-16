@@ -1,49 +1,40 @@
 class Api::V1::UsersController < Api::V1::CoreController
-  # before_action :set_page, only: [:edit, :update, :destroy]
-  #skip_before_action :authenticate_user!, only: [:unique]
+  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :authenticate_user!, only: [:index, :show, :update, :destroy]
+  before_action :authorized?, only: [:index, :show, :update, :destroy]
 
-  def index
-    # respond_with Page.all.sort_by {|page| page.priority }.reverse
-  end
+  def index; respond_with User.all; end
+  def show; respond_with @user; end
 
-  def show
-    # return respond_with Page.find_by_priority(1) if params[:id] == "undefined"
-    # respond_with Page.friendly.find(params[:id].downcase)
-  end
-
-  def create
-    # @page = Page.new(page_params)
-    # respond_to do |format|
-    #   if @page.save
-    #     format.json { render json: @page, status: :created }
-    #   else
-    #     format.json { render json: @page.errors, status: :unprocessable_entity }
-    #   end
-    # end
-  end
-
-  def edit
-    # respond_with @page
-  end
+  # def create
+  #   @user = User.new(user_params)
+  #   respond_to do |format|
+  #     if @user.save
+  #       format.json { render json: @user, status: :created }
+  #     else
+  #       format.json { render json: @user.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   def update
-    # respond_to do |format|
-    #   if @page.update_attributes(page_params)
-    #     format.json { render json: @page, status: :ok }
-    #   else
-    #     format.json { render json: @page.errors, status: :unprocessable_entity }
-    #   end
-    # end
+    respond_to do |format|
+      if @user.update_attributes(user_params)
+        format.json { render json: @user, status: :ok }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
-    # respond_to do |format|
-    #   if @page.destroy
-    #     format.json { head :no_content, status: :ok }
-    #   else
-    #     format.json { render json: @page.errors, status: :unprocessable_entity }
-    #   end
-    # end
+    respond_to do |format|
+      if @user.destroy
+        format.json { head :no_content, status: :ok }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def unique?
@@ -54,14 +45,12 @@ class Api::V1::UsersController < Api::V1::CoreController
 
   private
 
-  def set_user
-    @user = User.find(params[:id])
-  end
+  def set_user; @user = User.find(params[:id]); end
 
   def user_params
-    params[:user].permit(:email, :password, :password_confirmation)
     params.permit(email: [])
-    #params.permit(user: [:email, :password, :password_confirmation])
+    params.require(:user).permit(
+      :id, :email, :created_at, :updated_at, :lawyer, :superuser )
   end
 
   def email_param
@@ -77,5 +66,10 @@ class Api::V1::UsersController < Api::V1::CoreController
 
   def find_user
     User.find_by_email(email_param)
+  end
+
+  def authorized?
+    return true if current_user.superuser
+    return false
   end
 end
