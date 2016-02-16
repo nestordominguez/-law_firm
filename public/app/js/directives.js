@@ -37,4 +37,25 @@ angular.module('myApp.directives', [])
         })
       }
     }
-  }]);
+  }])
+.directive('errorMsj', ['$timeout', 'sendMsjServices', 'Auth',
+  function($timeout, sendMsjServices, Auth) {
+  return{
+    restrict: 'A',
+    link: function(scope, element, attrs, signInUserController) {
+
+      scope.$on("$routeChangeStart", function() {
+        if (sendMsjServices.getMsj()) {
+          scope.showMsj = true;
+          scope.error = sendMsjServices.getMsj();
+          $timeout(function() {
+            scope.error = "";
+            scope.showMsj = false;
+            sendMsjServices.setError("");
+          }, 5000);
+        };
+      })
+
+    }
+  }
+}]);

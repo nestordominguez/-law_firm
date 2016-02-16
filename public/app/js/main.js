@@ -43,12 +43,24 @@ angular.module('myApp', [
     controller: 'showPageController'
   })
   .when('/users/sign_in', {
-    templateUrl: 'views/users/sign_in.html',
+    templateUrl: 'views/users/devise/sign_in.html',
     controller: 'signInUserController'
   })
   .when('/users/sign_up', {
-    templateUrl: 'views/users/sign_up.html',
+    templateUrl: 'views/users/devise/sign_up.html',
     controller: 'signUpUserController'
+  })
+  .when('/users/index', {
+    templateUrl: 'views/users/index.html',
+    controller: 'indexUserController'
+  })
+  .when('/users/show', {
+    templateUrl: 'views/users/show.html',
+    controller: 'showUserController'
+  })
+  .when('/users/edit', {
+    templateUrl: 'views/users/edit.html',
+    controller: 'editUserController'
   })
   .otherwise({redirectTo: '/pages'});
 }])

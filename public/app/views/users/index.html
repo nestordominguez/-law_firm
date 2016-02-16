@@ -1,0 +1,44 @@
+<h3>Lista de usuarios</h3>
+<table class="col-md-10">
+  <tr>
+    <td class="col-md-3">usuario</td>
+    <td class="col-md-1">abogado</td>
+    <td class="col-md-1">superusuario</td>
+  </tr>
+  <tr ng-repeat="user in users">
+    <td class="col-md-3">{{user.email}}</td>
+    <td class="col-md-1">{{user.lawyer}}</td>
+    <td class="col-md-1">{{user.superuser}}</td>
+    <td class="col-md-1"><a href="#/users/show?user={{user.id}}">Mostrar</a></td>
+    <td class="col-md-1"><a href="#/users/edit?user={{user.id}}">Editar</a></td>
+    <td class="col-md-1"><a href="" data-toggle="modal" data-target="#myModal" ng-click="id(user.id)">Borrar
+
+    </a>
+  <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Alerta!!!</h4>
+          </div>
+          <div class="modal-body">
+            <p>Seguro que quiere borrar al usuário {{email}}?.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="destroy()">Aceptar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </td>
+    <td>
+
+    </td>
+
+  </tr>
+</table>
