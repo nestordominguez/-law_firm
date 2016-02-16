@@ -11,5 +11,13 @@ require 'lorem'
 links = %w[estudio links publicaciones staff areas]
 content = Lorem::Base.new('paragraphs', 5).output
 links.each_with_index do |link, index|
-  Page.new(link: link, title: link, content: content, priority: index + 1).save
+  Page.create(link: link, title: link, content: content, priority: index + 1)
+end
+users = %W(oscardom80 oscar 1 2 3 4 5)
+users.each do |user|
+  User.create(
+    email: user + "@hotmail.com",
+    password: "magoloco",
+    password_confirmation: "magoloco"
+  )
 end
