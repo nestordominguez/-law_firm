@@ -46,7 +46,7 @@ angular.module('myApp.services', [])
     }
   }])
   .service('sendMsjServices', [function() {
-     var msjData = {};
+     var msjData
 
     function getMsj() {
         return msjData;
