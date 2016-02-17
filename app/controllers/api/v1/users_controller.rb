@@ -3,8 +3,21 @@ class Api::V1::UsersController < Api::V1::CoreController
   before_action :authenticate_user!, only: [:index, :show, :update, :destroy]
   before_action :authorized?, only: [:index, :show, :update, :destroy]
 
-  def index; respond_with User.all; end
-  def show; respond_with @user; end
+  def index
+    if authorized?
+      respond_with body: User.all
+    else
+      respond_with error: unauthorized
+    end
+  end
+
+  def show
+    if authorized?
+      respond_with body: @user
+    else
+      respond_with error: unauthorized
+    end
+  end
 
   # def create
   #   @user = User.new(user_params)
@@ -20,7 +33,7 @@ class Api::V1::UsersController < Api::V1::CoreController
   def update
     respond_to do |format|
       if @user.update_attributes(user_params)
-        format.json { render json: @user, status: :ok }
+        format.json { render json: @user, status: :ok}
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -30,7 +43,7 @@ class Api::V1::UsersController < Api::V1::CoreController
   def destroy
     respond_to do |format|
       if @user.destroy
-        format.json { head :no_content, status: :ok }
+        format.json { render json: @user.errors, status: :ok }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -71,5 +84,9 @@ class Api::V1::UsersController < Api::V1::CoreController
   def authorized?
     return true if current_user.superuser
     return false
+  end
+
+  def unauthorized
+    return "No esta autorizado a entrar a esta sección."
   end
 end

@@ -15,8 +15,13 @@ class User < ActiveRecord::Base
   end
 
   def ensure_an_superuser
-    messages("is superuser") and return false if superuser
-    messages("not superuser")
+    if superuser
+      messages("is superuser")
+      return false
+    else
+      messages("not superuser")
+      return true
+    end
   end
 
   def check_superuser_and_lawyer
