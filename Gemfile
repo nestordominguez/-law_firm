@@ -18,6 +18,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'thin'
 gem 'angular_rails_csrf'
 gem 'lorem'
+gem 'devise-i18n', '~> 0.12.1'
 
 group :production do
   gem 'pg',             '0.17.1'
