@@ -1,11 +1,11 @@
+<h4 ng-show="msj" class="animate-show border-radius">{{msj}}</h4>
 <form novalidate class="form" name="form">
   <fieldset class="col-md-offset-1 col-md-10">
     <legend>Iniciar Sesión</legend>
-    <h3>{{msj}}</h3>
     <br/>
     <div>
       <label class="col-md-3 col-xs-4">E-mail: <span ng-show="form.uEmail.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span></label>
-      <input type="email" ng-model="user.email" class="col-md-4 col-xs-5" required="" name="uEmail" autofocus/>
+      <input type="email" ng-model="user.email" class="col-md-4 col-xs-5 border-radius" required="" name="uEmail" autofocus/>
       <div ng-show="form.$submitted || form.uEmail.$touched">
         <p ng-show="form.uEmail.$error.required" class="col-md-5 col-xs-3"> Falta su E-mail.</p>
         <p ng-show="form.uEmail.$error.email" class="col-md-5 col-xs-3">No es un E-mail válido.</p>
@@ -15,7 +15,7 @@
     <br/>
     <div>
       <label class="col-md-3 col-xs-4">Contraseña: <span ng-show="form.uPassword.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span></label>
-      <input type="password" ng-model="user.password" class="col-md-4 col-xs-5" name="uPassword" required="" ng-minlength="8"/>
+      <input type="password" ng-model="user.password" class="col-md-4 col-xs-5 border-radius" name="uPassword" required="" ng-minlength="8"/>
       <div ng-show="form.$submitted || form.uPassword.$touched">
         <p ng-show="form.uPassword.$error.required" class="col-md-5 col-xs-3"> Falta su contraseña.</p>
         <p ng-show="form.uPassword.$error.minlength" class="col-md-5 col-xs-3"> Debe tener 8 caracteres al menos.</p>

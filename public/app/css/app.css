@@ -50,15 +50,11 @@ legend::selection { color:red;}
   height: 500px;
 }
 .form input[type="email"], .form input[type="password"] {
-        color: #343536;
-        border-top: none;
-        border-right: none;
-        border-left: none;
-        background-color: transparent;
-        -webkit-border-radius: 15px;
-        -moz-border-radius: 15px;
-        -o-border-radius: 15px;
-        border-radius: 15px;
+  color: #343536;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  background-color: transparent;
 }
 input:focus{
   outline: none;
@@ -79,11 +75,13 @@ input:focus{
 .control-panel {
   padding: 20px;
   background-color: rgba(169, 169, 169, 0.6);
+  z-index: -10;
+}
+.border-radius {
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   -o-border-radius: 15px;
   border-radius: 15px;
-  z-index: -10;
 }
  a:link, a:visited, a:hover {
  color: #191970;
@@ -93,10 +91,6 @@ input:focus{
   color: #343536;
   overflow: hidden;
   background-color: rgba(169, 169, 169, 0.7);
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  -o-border-radius: 15px;
-  border-radius: 15px;
   height: 540px;
   width: 700px;
 }
@@ -135,7 +129,6 @@ p {
 
 .animate-show {
   line-height: 20px;
-  opacity: 1;
   padding: 10px;
   background-color: rgba(188, 48, 44, 0.5);
   text-align: center;

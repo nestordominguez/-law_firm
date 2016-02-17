@@ -1,11 +1,11 @@
+<h4 ng-show="msj" class="animate-show border-radius">{{msj}}</h4>
 <form novalidate class="form" name="form">
   <fieldset class="col-md-offset-1 col-md-10">
     <legend>Crear Cuenta</legend>
-    <h4>{{msj}}</h4>
     <br/>
     <div>
       <label class="col-md-4 col-xs-4">E-mail: <span ng-show="form.uEmail.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span></label>
-      <input type="email" ng-model="user.email" class="col-md-3 col-xs-5" required="" name="uEmail" autofocus unique />
+      <input type="email" ng-model="user.email" class="col-md-3 col-xs-5 border-radius" required="" name="uEmail" autofocus unique />
       <div ng-show="form.$submitted || form.uEmail.$touched">
         <span ng-show="form.uEmail.$error.required" class="col-md-5 col-xs-3"> Falta su E-mail.</span>
         <span ng-show="form.uEmail.$error.email" class="col-md-5 col-xs-3">No es un E-mail válido.</span>
@@ -17,7 +17,7 @@
     <div>
       <label class="col-md-4 col-xs-4">Contraseña: <span ng-show="form.uPassword.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span></label>
 
-      <input id="password" type="password" ng-model="user.password" class="col-md-3 col-xs-5" name="uPassword" required="" ng-minlength="8"/>
+      <input id="password" type="password" ng-model="user.password" class="col-md-3 col-xs-5 border-radius" name="uPassword" required="" ng-minlength="8"/>
       <div ng-show="form.$submitted || form.uPassword.$touched">
         <span ng-show="form.uPassword.$error.required" class="col-md-5 col-xs-3"> Falta su contraseña.</span>
         <span ng-show="form.uPassword.$error.minlength" class="col-md-5 col-xs-3"> Debe tener 8 caracteres al menos.</span>
@@ -28,7 +28,7 @@
 
     <label class="col-md-4 col-xs-4">Confirmar contraseña: <span ng-show="form.uPassword_confirmation.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span></label>
 
-    <input type="password" ng-model="user.password_confirmation" class="col-md-3 col-xs-5" name="uPassword_confirmation" required="" ng-minlength="8" pw-check="password"/>
+    <input type="password" ng-model="user.password_confirmation" class="col-md-3 col-xs-5 border-radius" name="uPassword_confirmation" required="" ng-minlength="8" pw-check="password"/>
     <div ng-show="form.$submitted || form.uPassword_confirmation.$touched">
         <span ng-show="form.uPassword_confirmation.$error.required" class="col-md-5 col-xs-3"> Falta confirmar su contraseña.</span>
         <span ng-show="form.uPassword_confirmation.$error.minlength" class="col-md-5 col-xs-3"> Debe tener 8 caracteres al menos.</span>

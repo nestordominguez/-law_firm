@@ -46,35 +46,23 @@ angular.module('myApp.services', [])
     }
   }])
   .service('sendMsjServices', [function() {
-    var msj = {
-      error: {
-        unautorized: "No esta autorizado a entrar a esta seccion",
-        unlogued: "Por favor ingrese a su cuenta para continuar",
-        errorLoguin: "Ha ocurrido un error y no se pudo ingresar a su cuenta"
-      },
-      success: {
-
-      }
-
-    }
-
-     var msjData;
+     var msjData = {};
 
     function getMsj() {
         return msjData;
     }
 
-    function setError (data) {
-      msjData = msj.error[data];
+    function setHostError (data) {
+      msjData = data;
     }
 
     function setSuccess(data) {
-      msjData = msj.success[data]
+      msjData = data;
     }
 
     return {
         getMsj: getMsj,
-        setError: setError,
-        setSuccess: setSuccess
+        setSuccess: setSuccess,
+        setHostError: setHostError
     }
-  }])
+  }]);

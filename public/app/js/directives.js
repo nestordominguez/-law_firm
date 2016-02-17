@@ -21,6 +21,7 @@ angular.module('myApp.directives', [])
     return {
       restrict:'A',
       require: 'ngModel',
+
       link: function(scope, element, attrs, ngModel) {
         element.bind('blur', function() {
           if (!element.val()) { return };
@@ -32,30 +33,28 @@ angular.module('myApp.directives', [])
             } else{
               ngModel.$setValidity('unique', false)
             };
-
           })
         })
       }
+
     }
   }])
-.directive('errorMsj', ['$timeout', 'sendMsjServices', 'Auth',
-  function($timeout, sendMsjServices, Auth) {
+.directive('msj', ['$timeout', 'Auth', 'sendMsjServices',
+  function($timeout, Auth, sendMsjServices) {
   return{
     restrict: 'A',
-    link: function(scope, element, attrs, signInUserController) {
 
+    link: function(scope, element, attrs) {
       scope.$on("$routeChangeStart", function() {
         if (sendMsjServices.getMsj()) {
-          scope.showMsj = true;
           scope.error = sendMsjServices.getMsj();
           $timeout(function() {
             scope.error = "";
-            scope.showMsj = false;
-            sendMsjServices.setError("");
+            sendMsjServices.setHostError("");
           }, 5000);
         };
       })
-
     }
+
   }
 }]);
