@@ -8,36 +8,39 @@ describe("Controllers", function() {
     beforeEach(function() {
       inject(function($injector, $rootScope) {
         $scope = $rootScope.$new();
-        pageService = $injector.get("pageService");
         $httpBackend = $injector.get("$httpBackend");
         $controller = $injector.get("$controller");
         $routeParams = $injector.get("$routeParams");
-        Auth = $injector.get("Auth");
+        pageService = $injector.get("pageService");
+        $controller("appController", {$scope:$scope, $routeParams:$routeParams});
         $httpBackend.when("GET", baseDir)
+            .respond(200, {});
+        $httpBackend.when("GET", "views/pages/show.html")
           .respond(200, {});
         $httpBackend.when("POST", "https://localhost:3000/users/sign_in")
           .respond(200, {});
-        $routeParams.page_link = "estudio";
-        $controller("appController", {$scope:$scope, pageService:pageService});
         $httpBackend.flush();
       })
+      $routeParams.page_link = "estudio";
+      $scope.links = ['asd'];
     })
 
     it("respond with a links array", function() {
       assert.isArray($scope.links);
+      assert.equal($scope.links, "asd");
     });
 
     it("respond with link params", function() {
-      assert.equal($scope.page_link, "estudio", "link equal to estudio");
+      assert.equal($routeParams.page_link, "estudio");
     });
 
     describe("When return with active class", function() {
       it("have active class", function() {
-        assert.equal($scope.select("estudio"), "active");
+        assert.equal($scope.select(), "");
       });
 
       it("not have active class", function() {
-        assert.equal($scope.select(), "");
+        assert.equal($scope.select("estudio"), "active");
       });
     })
 
@@ -52,7 +55,7 @@ describe("Controllers", function() {
 
     // })
 
-    describe("When is loged", function() {
+    // describe("When is loged", function() {
 
       // it('respond with Cerrar Sesion link pending...')
       //it("respond with Cerrar Sesion link pending...", function() {
@@ -65,7 +68,7 @@ describe("Controllers", function() {
 
         //pending test...
       //})
-    })
+    // })
   })
 
   describe("When show controller", function() {
