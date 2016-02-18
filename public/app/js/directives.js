@@ -47,10 +47,10 @@ angular.module('myApp.directives', [])
     link: function(scope, element, attrs) {
       scope.$on("$routeChangeStart", function() {
         if (sendMsjServices.getMsj()) {
-          scope.error = sendMsjServices.getMsj();
+          scope.classMsj = sendMsjServices.getMsj().error;
+          scope.message = sendMsjServices.getMsj().data;
           $timeout(function() {
-            scope.error = "";
-            sendMsjServices.setHostError("");
+            scope.message = "";
           }, 5000);
         };
       })

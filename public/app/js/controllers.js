@@ -19,11 +19,11 @@ angular.module('myApp.controllers', []).
         };
       })
 
-      $scope.logout = function(user) {
+      $scope.logout = function() {
         Auth.logout().then(function(oldUser) {
-            Auth.currentUser().then(function(user) {
-              $scope.isAuthenticated();
-            })
+          sendMsjServices.setLocalSuccess("signed_out", oldUser.email);
+          $scope.isAuthenticated();
+          $route.reload();
         }, function(error) {
             sendMsjServices.setHostError(error.data.error);
             $route.reload();
@@ -40,6 +40,7 @@ angular.module('myApp.controllers', []).
         $scope.links = links;
         $scope.page_link = $routeParams.page_link;
         $scope.select = function(link) {
+          $scope.page_link = $routeParams.page_link;
           return link === $routeParams.page_link ? 'active' : '';
         }
       });
@@ -67,6 +68,7 @@ angular.module('myApp.controllers', []).
       };
 
       Auth.login(credentials).then(function(user) {
+          sendMsjServices.setLocalSuccess("signed_in", user.email);
           $location.path("/pages");
         }, function(error) {
           sendMsjServices.setHostError(error.data.error);

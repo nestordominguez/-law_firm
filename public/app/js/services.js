@@ -46,23 +46,42 @@ angular.module('myApp.services', [])
     }
   }])
   .service('sendMsjServices', [function() {
-     var msjData
+    var obj = {
+      signed_in: "Ha iniciado sesión satisfactoriamente.",
+      signed_out: "Ha cerrado la sesión satisfactoriamente.",
+      already_signed_out: "Ha cerrado la sesión satisfactoriamente."
+    };
+    var msjData = {};
 
     function getMsj() {
         return msjData;
     }
 
     function setHostError (data) {
-      msjData = data;
+      msjData.error = true;
+      msjData.data = data;
+      return msjData;
     }
 
     function setSuccess(data) {
-      msjData = data;
+      msjData.error = false;
+      msjData.data = data;
+      return msjData;
+    }
+
+    function setLocalSuccess(msj, data) {
+      msjData.error = false;
+      if (data) {
+        msjData.data = data + " " + obj[msj]
+      } else{
+        msjData.data = obj[msj]
+      };
     }
 
     return {
         getMsj: getMsj,
         setSuccess: setSuccess,
+        setLocalSuccess: setLocalSuccess,
         setHostError: setHostError
     }
   }]);
