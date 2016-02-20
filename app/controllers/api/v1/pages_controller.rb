@@ -1,8 +1,9 @@
 class Api::V1::PagesController < Api::V1::CoreController
   before_action :set_page, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:create, :update, :destroy]
 
   def index
-    respond_with Page.all.sort_by {|page| page.priority }.reverse
+    respond_with body: Page.all.sort_by {|page| page.priority }.reverse
   end
 
   def show
@@ -11,38 +12,47 @@ class Api::V1::PagesController < Api::V1::CoreController
   end
 
   def create
-    @page = Page.new(page_params)
-    respond_to do |format|
-      if @page.save
-        format.json { render json: @page, status: :created }
-      else
-        format.json { render json: @page.errors, status: :unprocessable_entity }
-      end
+    if authorized?
+      @page = Page.new(page_params)
+        respond_to do |format|
+          if @page.save
+            format.json { render json: @page, status: :created }
+          else
+            format.json { render json: @page.errors, status: :unprocessable_entity }
+          end
+        end
+    else
+      respond_with error: unauthorized
     end
   end
 
-  def edit
-    respond_with @page
-  end
-
   def update
-    respond_to do |format|
-      if @page.update_attributes(page_params)
-        format.json { render json: @page, status: :ok }
-      else
-        format.json { render json: @page.errors, status: :unprocessable_entity }
+    if authorized?
+      respond_to do |format|
+        if @page.update_attributes(page_params)
+          format.json { render json: @page, status: :ok }
+        else
+          format.json { render json: @page.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      respond_with error: unauthorized
     end
   end
 
   def destroy
-    respond_to do |format|
-      if @page.destroy
-        format.json { head :no_content, status: :ok }
-      else
-        format.json { render json: @page.errors, status: :unprocessable_entity }
+    if authorized?
+      respond_to do |format|
+        if @page.destroy
+          format.json { head :no_content, status: :ok }
+        else
+          format.json { render json: @page.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      respond_with error: unauthorized
     end
+
   end
 
   private

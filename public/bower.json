@@ -19,6 +19,7 @@
     "mocha": "~2.3.4",
     "chai": "~3.4.2",
     "angular-mocks": "~1.4.9",
-    "AngularDevise": "angular-devise#~1.1.0"
+    "AngularDevise": "angular-devise#~1.1.0",
+    "angular-ui-tinymce": "latest"
   }
 }

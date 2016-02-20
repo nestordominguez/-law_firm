@@ -1,17 +1,18 @@
-<h3>Lista de usuarios</h3>
-<table class="col-md-10">
-  <tr>
-    <td class="col-md-3">usuario</td>
-    <td class="col-md-1">rol</td>
-  </tr>
-  <tr ng-repeat="user in users">
-    <td class="col-md-3">{{user.email}}</td>
-    <td class="col-md-1">{{user.role}}</td>
-    <td class="col-md-1"><a href="#/users/show?user={{user.id}}">Mostrar</a></td>
-    <td class="col-md-1"><a href="#/users/edit?user={{user.id}}">Editar</a></td>
-    <td class="col-md-1"><a href="" data-toggle="modal" data-target="#myModal" ng-click="id(user.id)">Borrar
-
-    </a>
+<div >
+  <h1>Index</h1>
+  </br>
+  <a href="#/pages/create">Nueva Página</a>
+  <table>
+    <tr>
+      <td class="col-md-2">Link</td>
+      <td class="col-md-2">Prioridad</td>
+    </tr>
+    <tr ng-repeat="page in pages">
+    </br>
+      <td>{{page.link}}</td>
+      <td>{{page.priority}}</td>
+      <td><a href="#/pages/edit?page={{page.id}}">Editar</a></td>
+      <td class="col-md-1"><a href="" data-toggle="modal" data-target="#myModal" ng-click="id(page.id)">Borrar</a>
   <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
@@ -23,7 +24,7 @@
             <h4 class="modal-title">Alerta!!!</h4>
           </div>
           <div class="modal-body">
-            <p>Seguro que quiere borrar al usuário {{email}}?.</p>
+            <p>Seguro que quiere borrar el link {{link}} y todo su contenido?.</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -34,5 +35,6 @@
       </div>
     </div>
     </td>
-  </tr>
-</table>
+    </tr>
+  </table>
+</div>

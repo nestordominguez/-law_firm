@@ -51,6 +51,9 @@ angular.module('myApp.directives', [])
           scope.message = sendMsjServices.getMsj().data;
           $timeout(function() {
             scope.message = "";
+            sendMsjServices.setSuccess("");
+            sendMsjServices.setLocalSuccess("");
+            sendMsjServices.setHostError("");
           }, 5000);
         };
       })

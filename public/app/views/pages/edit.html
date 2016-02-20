@@ -1,0 +1,38 @@
+<form novalidate class="form" name="form">
+  <fieldset class="fieldset">
+    <legend>Editar página: {{page.link}}</legend>
+    <div>
+      <label for="Link"> Link:
+        <input type="text"
+         ng-model="page.link"
+         [name="link"]
+         >
+      </label>
+      <label for="title"> Título:
+        <input type="text"
+         ng-model="page.title"
+         [name="title"]
+         >
+      </label>
+      <label for="priority"> Prioridad:
+        <input type="select"
+         ng-model="page.priority"
+         [name="priority"]
+         >
+      </label></br>
+      <label for="content"> Contenido:
+      </label></br>
+      <textarea name="content" rows="30" ui-tinymce ng-model="page.content">{{page.content}}</textarea>
+      </br>
+
+    </div>
+
+    <input type="submit" value="Actualizar" ng-click="update(page)" class="btn col-md-offset-10 col-xs-offset-10"/>
+    </br>
+    </br>
+    <p>
+      <a href="#/pages/index">Volver</a>
+    </p>
+  </fieldset>
+</form>
+

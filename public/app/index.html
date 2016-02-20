@@ -43,14 +43,15 @@
   <div class="col-md-2">
     <ul class="nav nav-pills nav-stacked control-panel border-radius" id="panel">
     <h4 class="text-center" id="flip">Panel de control</h4>
-    <li><a href="#/users/index">Mostrar usuarios</a></li>
+    <li><a href="#/users/index">Mostrar Usuarios</a></li>
+    <li><a href="#/pages/index">Mostrar Páginas</a></li>
     </ul>
   </div>
 
   <div class="row">
     <div class="col-md-9 col-xs-12 background border-radius">
       <h4 ng-show="message" class="animate-show border-radius" msj ng-class="{ true: 'error', false: 'success' }[classMsj]">{{message}}</h4>
-      <div class="col-md-offset-1 col-md-11 ">
+      <div class="col-md-12 ">
         <div class="top-in int" ng-scrollbars ng-scrollbars-config="config" ng-view></div>
       </div>
     </div>
@@ -69,6 +70,8 @@
   <script src="/bower_components/angular-route/angular-route.js"></script>
   <script src="/bower_components/angular-animate/angular-animate.js"></script>
   <script src="/bower_components/angular-devise/lib/devise-min.js"></script>
+  <script src="/bower_components/tinymce-dist/tinymce.js"></script>
+  <script src="/bower_components/angular-ui-tinymce/src/tinymce.js"></script>
   <script src="js/main.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/filters.js"></script>

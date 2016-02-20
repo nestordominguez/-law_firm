@@ -2,7 +2,7 @@ class Api::V1::UsersController < Api::V1::CoreController
   before_action :set_user, only: [:show, :update, :destroy]
   before_action :authenticate_user!, only: [:index, :show, :update, :destroy]
   before_action :authorized?, only: [:index, :show, :update, :destroy]
-
+## role 1 = user role 2 = lawyer role 3 = superuser
   def index
     if authorized?
       respond_with body: User.all
@@ -63,7 +63,7 @@ class Api::V1::UsersController < Api::V1::CoreController
   def user_params
     params.permit(email: [])
     params.require(:user).permit(
-      :id, :email, :created_at, :updated_at, :lawyer, :superuser )
+      :id, :email, :created_at, :updated_at, :role )
   end
 
   def email_param
@@ -79,14 +79,5 @@ class Api::V1::UsersController < Api::V1::CoreController
 
   def find_user
     User.find_by_email(email_param)
-  end
-
-  def authorized?
-    return true if current_user.superuser
-    return false
-  end
-
-  def unauthorized
-    return "No esta autorizado a entrar a esta sección."
   end
 end

@@ -13,6 +13,7 @@ angular.module('myApp.controllers', []).
       }
 
       Auth.currentUser().then(function(user) {
+
         $scope.isAuthenticated();
         $scope.reload = function() {
           $scope.isAuthenticated();
@@ -34,8 +35,8 @@ angular.module('myApp.controllers', []).
 
       pageService.index().then(function(response) {
         var links = [];
-        for (var i = response.data.length - 1; i >= 0; i--) {
-          links.push(response.data[i]);
+        for (var i = response.data.body.length - 1; i >= 0; i--) {
+          links.push(response.data.body[i]);
         };
         $scope.links = links;
         $scope.page_link = $routeParams.page_link;
@@ -46,13 +47,76 @@ angular.module('myApp.controllers', []).
       });
   }])
 
-  .controller('showPageController', ['$scope', '$routeParams', 'pageService',
-    function($scope, $routeParams, pageService) {
+// page controller...
+
+  .controller('indexPageController', ['$scope', 'pageService',
+    function($scope, pageService) {
+    pageService.index().then(function(response) {
+      $scope.pages = response.data.body;
+    });
+
+    $scope.id = function(id) {
+      pageService.show(id).then(function(response) {
+        $scope.link = response.data.link;
+      });
+      $scope.destroy = function() {
+        pageService.destroy(id).then(function(response) {
+          // sendMsjServices.setSuccess("response.data.base[0]");
+          pageService.index().then(function(response) {
+            $scope.pages = response.data.body;
+          });
+        }, function(error) {
+          // sendMsjServices.setHostError("error.data.base[0]");
+          $route.reload();
+        })
+      }
+    }
+
+  }])
+
+  .controller('createPageController', ['$scope', '$location', 'Auth',
+    'pageService', 'sendMsjServices',
+    function($scope, $location, Auth, pageService, sendMsjServices) {
+      Auth.currentUser().then(function(user) {
+        if (user.role == 3 ) {
+          $scope.create = function(page) {
+            pageService.create(page).then(function(user) {
+              $location.path("/pages/index");
+            });
+          }
+        } else{
+          sendMsjServices.setLocalError("unauthorized");
+          $location.path("/pages");
+        };
+      }, function(error) {
+        sendMsjServices.setHostError(error.data.error);
+        $location.path("/users/sign_in");
+      });
+  }])
+
+  .controller('showPageController', ['$scope', '$routeParams', '$sce', 'pageService',
+    function($scope, $routeParams, $sce, pageService) {
       pageService.show($routeParams.page_link)
       .then(function(response) {
           $scope.title = response.data.title;
-          $scope.content = response.data.content;
+          $scope.content = $sce.trustAsHtml(response.data.content);
       })
+  }])
+
+  .controller('editPageController', ['$scope', '$routeParams', '$location',
+    'pageService', 'sendMsjServices',
+    function($scope, $routeParams, $location, pageService, sendMsjServices) {
+      pageService.show($routeParams.page).then(function(response) {
+        $scope.page = response.data;
+      });
+
+      $scope.update = function(page) {
+        pageService.edit(page).then(function(response) {
+          sendMsjServices.setLocalSuccess("page_updated", response.data.link);
+          $location.path("/pages/index");
+        });
+      };
+
   }])
 
 // login system
@@ -170,7 +234,7 @@ angular.module('myApp.controllers', []).
       Auth.currentUser().then(function(user) {
         usersService.show($routeParams.user).then(function(response) {
           if (!response.data.error) {
-            $scope.user = response.data;
+            $scope.user = response.data.body;
           } else{
             sendMsjServices.setHostError(response.data.error);
             $location.path("/pages");

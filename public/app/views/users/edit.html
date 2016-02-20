@@ -1,20 +1,12 @@
 <form novalidate class="form" name="form">
-  <fieldset class="col-md-offset-1 col-md-10">
+  <fieldset class="col-md-11">
     <legend>Editar: {{user.email}}</legend>
     <div>
       <label for="lawyer"> Abogado:
         <input type="checkbox"
-         ng-model="user.lawyer"
+         ng-model="user.role"
          [name="lawyer"]
          >
-      </label></br>
-      <label for="lawyer"> Super usuário:
-        <input type="checkbox"
-         ng-model="user.superuser"
-         [name="lawyer"]
-         ng-disabled="true"
-         >
-         <strong> (NO sepuede editar)</strong>
       </label></br>
     </div>
 
