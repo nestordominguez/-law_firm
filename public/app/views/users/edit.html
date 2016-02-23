@@ -2,11 +2,15 @@
   <fieldset class="col-md-11">
     <legend>Editar: {{user.email}}</legend>
     <div>
-      <label for="lawyer"> Abogado:
-        <input type="checkbox"
+      <label for="lawyer"> Tipo de accesos:
+        <select name="singleSelect" ng-model="user.role">
+          <option value="1">usuario</option>
+          <option value="2">abogado</option>
+        </select><br>
+        <!-- <input type="text"
          ng-model="user.role"
          [name="lawyer"]
-         >
+         > -->
       </label></br>
     </div>
 
@@ -19,4 +23,3 @@
     </p>
   </fieldset>
 </form>
-

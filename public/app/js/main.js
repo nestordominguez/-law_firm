@@ -11,7 +11,7 @@ angular.module('myApp', [
   'myApp.controllers',
   'Devise',
   'ngScrollbars',
-  'ui.validate',
+  // 'ui.validate',
   'ui.tinymce'
 ])
 .config(function($httpProvider){
@@ -24,7 +24,7 @@ angular.module('myApp', [
         function error(response) {
             if (response.status == 401) {
                 $rootScope.$broadcast('event:unauthorized');
-                $location.path('/users/login');
+                $location.path('/users/sign_in');
                 return response;
             };
             return $q.reject(response);
@@ -41,39 +41,48 @@ angular.module('myApp', [
   $routeProvider
   .when('/pages/index', {
     templateUrl: 'views/pages/index.html',
-    controller: 'indexPageController'
+    controller: 'indexPageController',
+    data: {authorized: [3]}
   })
   .when('/pages', {
     templateUrl: 'views/pages/show.html',
-    controller: 'showPageController'
+    controller: 'showPageController',
+    data: {authorized: [3, 2, 1, 0]}
   })
   .when('/pages/create', {
     templateUrl: 'views/pages/create.html',
-    controller: 'createPageController'
+    controller: 'createPageController',
+    data: {authorized: [3]}
   })
   .when('/pages/edit', {
     templateUrl: 'views/pages/edit.html',
-    controller: 'editPageController'
+    controller: 'editPageController',
+    data: {authorized: [3]}
   })
   .when('/users/sign_in', {
     templateUrl: 'views/users/devise/sign_in.html',
-    controller: 'signInUserController'
+    controller: 'signInUserController',
+    data: {authorized: [3,2,1,0]}
   })
   .when('/users/sign_up', {
     templateUrl: 'views/users/devise/sign_up.html',
-    controller: 'signUpUserController'
+    controller: 'signUpUserController',
+    data: {authorized: [3,2,1,0]}
   })
   .when('/users/index', {
     templateUrl: 'views/users/index.html',
-    controller: 'indexUserController'
+    controller: 'indexUserController',
+    data: {authorized: [3]}
   })
   .when('/users/show', {
     templateUrl: 'views/users/show.html',
-    controller: 'showUserController'
+    controller: 'showUserController',
+    data: {authorized: [3]}
   })
   .when('/users/edit', {
     templateUrl: 'views/users/edit.html',
-    controller: 'editUserController'
+    controller: 'editUserController',
+    data: {authorized: [3]}
   })
   .otherwise({redirectTo: '/pages'});
 }])
@@ -104,6 +113,46 @@ angular.module('myApp', [
         // Enables `devise:unauthorized` interceptor
         // AuthInterceptProvider.interceptAuth(true);
     })
+.run(['$rootScope', '$location', 'rolesService', '$timeout', 'Auth',
+  function($rootScope, $location, rolesService, $timeout, Auth) {
+    $rootScope.$on('$routeChangeStart', function(event ,next) {
+      Auth.currentUser().then(function(user) {
+        rolesService.setRol(user);
+          var authorized;
+          function set(next) {
+            authorized = false;
+            if (next.data) {
+              for (var i = 0; i < next.data.authorized.length; i++) {
+                if (next.data.authorized[i] == rolesService.getRol()) {
+                  authorized = true;
+                }
+              }
+            }
+          }
+
+          function get() {
+            return authorized;
+          }
+
+          set(next);
+          if (!get()) {
+            switch(rolesService.getRol()) {
+              case 0:
+                $location.path("/users/sign_in");
+                break;
+              case 1:
+              case 2:
+              default:
+                $location.path("/pages");
+                break;
+            }
+          }
+        });
+
+      });
+
+
+}])
 .config(function (ScrollBarsProvider) {
     // the following settings are defined for all scrollbars unless the
     // scrollbar has local scope configuration
@@ -122,29 +171,4 @@ angular.module('myApp', [
         autoHideScrollbar: true,
         setHeight: 500
     };
-
-      tinymce.init({
-        selector: 'textarea',
-        height: 300,
-        theme: 'modern',
-        mode: 'textarea',
-        language : "es",
-        plugins: [
-          'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-          'searchreplace wordcount visualblocks visualchars code fullscreen',
-          'insertdatetime media nonbreaking save table contextmenu directionality',
-          'emoticons template paste textcolor colorpicker textpattern imagetools'
-        ],
-        toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-        toolbar2: 'print preview media | forecolor backcolor emoticons',
-        image_advtab: false,
-        templates: [
-          { title: 'Test template 1', content: 'Test 1' },
-          { title: 'Test template 2', content: 'Test 2' }
-        ],
-        content_css: [
-          '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
-          '//www.tinymce.com/css/codepen.min.css'
-        ]
-       });
 });

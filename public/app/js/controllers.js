@@ -4,18 +4,20 @@
 
 angular.module('myApp.controllers', []).
   controller('appController', ['$scope', '$routeParams', '$route',
-    'pageService', 'Auth', 'sendMsjServices',
+    'pageService', 'Auth', 'sendMsjServices', 'rolesService',
     function($scope, $routeParams, $route, pageService, Auth,
-      sendMsjServices) {
+      sendMsjServices, rolesService) {
+      // rolesService.setRol();
 
       $scope.isAuthenticated = function() {
         return Auth.isAuthenticated();
       }
 
       Auth.currentUser().then(function(user) {
-
+        rolesService.setRol(user);
         $scope.isAuthenticated();
         $scope.reload = function() {
+          rolesService.setRol(user);
           $scope.isAuthenticated();
         };
       })
@@ -24,7 +26,7 @@ angular.module('myApp.controllers', []).
         Auth.logout().then(function(oldUser) {
           sendMsjServices.setLocalSuccess("signed_out", oldUser.email);
           $scope.isAuthenticated();
-          $route.reload();
+          rolesService.setRol();
         }, function(error) {
             sendMsjServices.setHostError(error.data.error);
             $route.reload();
@@ -75,8 +77,18 @@ angular.module('myApp.controllers', []).
   }])
 
   .controller('createPageController', ['$scope', '$location', 'Auth',
-    'pageService', 'sendMsjServices',
-    function($scope, $location, Auth, pageService, sendMsjServices) {
+    'pageService', 'sendMsjServices', 'tinymce',
+    function($scope, $location, Auth, pageService, sendMsjServices, tinymce) {
+
+      $scope.tinymceOptions = tinymce;
+
+      $scope.create = function(page) {
+        pageService.ccreate(page).then(function(response) {
+          sendMsjServices.setLocalSuccess("page_created");
+          $location.path("/pages/index");
+        });
+      }
+
       Auth.currentUser().then(function(user) {
         if (user.role == 3 ) {
           $scope.create = function(page) {
@@ -104,8 +116,11 @@ angular.module('myApp.controllers', []).
   }])
 
   .controller('editPageController', ['$scope', '$routeParams', '$location',
-    'pageService', 'sendMsjServices',
-    function($scope, $routeParams, $location, pageService, sendMsjServices) {
+    'pageService', 'sendMsjServices', 'tinymce',
+    function($scope, $routeParams, $location, pageService, sendMsjServices, tinymce) {
+
+      $scope.tinymceOptions = tinymce;
+
       pageService.show($routeParams.page).then(function(response) {
         $scope.page = response.data;
       });
@@ -122,8 +137,8 @@ angular.module('myApp.controllers', []).
 // login system
 
   .controller('signInUserController', ['$scope', '$location', 'Auth',
-    '$route', 'sendMsjServices',
-    function($scope, $location, Auth, $route, sendMsjServices) {
+    '$route', 'sendMsjServices', 'rolesService',
+    function($scope, $location, Auth, $route, sendMsjServices, rolesService) {
 
     $scope.logIn = function(user) {
       var credentials = {
@@ -133,6 +148,7 @@ angular.module('myApp.controllers', []).
 
       Auth.login(credentials).then(function(user) {
           sendMsjServices.setLocalSuccess("signed_in", user.email);
+          rolesService.setRol(user);
           $location.path("/pages");
         }, function(error) {
           sendMsjServices.setHostError(error.data.error);
@@ -147,8 +163,8 @@ angular.module('myApp.controllers', []).
   }])
 
   .controller('signUpUserController', ['$scope', '$location', '$route', 'Auth',
-    'sendMsjServices',
-    function($scope, $location, $route, Auth, sendMsjServices) {
+    'sendMsjServices', 'rolesService',
+    function($scope, $location, $route, Auth, sendMsjServices, rolesService) {
       $scope.signUp = function(user) {
       var credentials = {
             email: user.email,
@@ -157,7 +173,8 @@ angular.module('myApp.controllers', []).
         };
 
         Auth.register(credentials).then(function(registeredUser) {
-            $location.path("/pages");
+          rolesService.setRol(registeredUser);
+          $location.path("/pages");
         }, function(error) {
           sendMsjServices.setHostError(error.data.error);
           $route.reload();

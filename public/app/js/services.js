@@ -45,7 +45,8 @@ angular.module('myApp.services', [])
       signed_in: "ha iniciado sesión satisfactoriamente.",
       signed_out: "ha cerrado la sesión satisfactoriamente.",
       already_signed_out: "ha cerrado la sesión satisfactoriamente.",
-      page_updated: "se actualizo correctamente"
+      page_updated: "se actualizó correctamente",
+      page_created: "se creó correctamente"
     },
     error: {
       unauthorized: "No esta autorizado a entrar a esta sección."
@@ -89,5 +90,48 @@ angular.module('myApp.services', [])
       setLocalSuccess: setLocalSuccess,
       setHostError: setHostError,
       setLocalError: setLocalError
+  }
+}])
+.service('tinymce', [function() {
+  return {
+    selector: 'textarea',
+    height: 300,
+    theme: 'modern',
+    mode: 'textarea',
+    language : "es",
+    plugins: [
+      'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+      'searchreplace wordcount visualblocks visualchars code fullscreen',
+      'insertdatetime media nonbreaking save table contextmenu directionality',
+      'emoticons template paste textcolor colorpicker textpattern imagetools'
+    ],
+    toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+    toolbar2: 'print preview media | forecolor backcolor emoticons',
+    image_advtab: true,
+    templates: [
+      { title: 'Test template 1', content: 'Test 1' },
+      { title: 'Test template 2', content: 'Test 2' }
+    ],
+    content_css: [
+      '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+      '//www.tinymce.com/css/codepen.min.css'
+    ]
+   };
+}])
+.service('rolesService', [function() {
+  var rol;
+  function setRol(user) {
+    if (!user) {
+      rol = 0;
+    } else {
+      rol = user.role;
+    }
+  }
+  function getRol() {
+    return rol;
+  }
+  return {
+    setRol: setRol,
+    getRol: getRol
   }
 }]);
