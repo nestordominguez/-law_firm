@@ -13,12 +13,12 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
+gem 'devise-i18n', '~> 0.12.1'
 gem 'friendly_id', '~> 5.1.0'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'thin'
 gem 'angular_rails_csrf'
 gem 'lorem'
-gem 'devise-i18n', '~> 0.12.1'
 
 group :production do
   gem 'pg',             '0.17.1'

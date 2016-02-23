@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   end
 
   def ensure_an_superuser
-    if superuser
+    if role == 3
       messages("is superuser")
       return false
     else
