@@ -4,9 +4,9 @@
 
 angular.module('myApp.controllers', []).
   controller('appController', ['$scope', '$routeParams', '$route',
-    'pageService', 'Auth', 'sendMsjServices',
+    'pageService', 'Auth', 'sendMsjServices', 'linksService',
     function($scope, $routeParams, $route, pageService, Auth,
-      sendMsjServices) {
+      sendMsjServices, linksService) {
 
       Auth.currentUser().then(function(user) {
         $scope.isAuthenticated();
@@ -30,25 +30,30 @@ angular.module('myApp.controllers', []).
         $scope.$on('devise:logout', function(event, oldCurrentUser) {
         });
       }
+      $scope.$on('$routeChangeStart', function() {
+        pageService.index().then(function(response) {
+          var links = [];
+          for (var i = response.data.body.length - 1; i >= 0; i--) {
+            links.push(response.data.body[i]);
+          };
 
-      pageService.index().then(function(response) {
-        var links = [];
-        for (var i = response.data.body.length - 1; i >= 0; i--) {
-          links.push(response.data.body[i]);
-        };
-        $scope.links = links;
-        $scope.page_link = $routeParams.page_link;
-        $scope.select = function(link) {
+          linksService.setLink(links);
+          $scope.links = linksService.getLink();
           $scope.page_link = $routeParams.page_link;
-          return link === $routeParams.page_link ? 'active' : '';
-        }
+          $scope.select = function(link) {
+            $scope.page_link = $routeParams.page_link;
+            return link === $routeParams.page_link ? 'active' : '';
+          }
+        });
+
       });
   }])
 
 // page controller...
 
   .controller('indexPageController', ['$scope', '$route', 'pageService',
-    function($scope, $route, pageService) {
+    'linksService',
+    function($scope, $route, pageService, linksService) {
     pageService.index().then(function(response) {
       $scope.pages = response.data.body;
     });
@@ -61,6 +66,9 @@ angular.module('myApp.controllers', []).
         pageService.destroy(id).then(function(response) {
           pageService.index().then(function(response) {
             $scope.pages = response.data.body;
+            console.log(response.data.body);
+            $route.reload();
+            // linksService.setLink(response.data.body);
           });
         }, function(error) {
           $route.reload();
@@ -104,8 +112,15 @@ angular.module('myApp.controllers', []).
     function($scope, $routeParams, $sce, pageService) {
       pageService.show($routeParams.page_link)
       .then(function(response) {
+        if (response.data) {
+          $scope.page = response.data;
           $scope.title = response.data.title;
           $scope.content = $sce.trustAsHtml(response.data.content);
+        } else {
+          $scope.page = "";
+          $scope.title = "";
+          $scope.content = "";
+        }
       })
   }])
 

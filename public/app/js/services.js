@@ -139,4 +139,20 @@ angular.module('myApp.services', [])
     getRol: getRol,
     setLocalRol: setLocalRol
   }
+}])
+.service('linksService', [function() {
+  var links = [];
+
+  function setLink(recived) {
+    links = recived;
+  }
+
+  function getLink() {
+    return links;
+  }
+
+  return {
+    setLink: setLink,
+    getLink: getLink
+  }
 }]);
