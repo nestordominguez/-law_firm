@@ -113,16 +113,13 @@ angular.module('myApp', [
         // Enables `devise:unauthorized` interceptor
         // AuthInterceptProvider.interceptAuth(true);
     })
-.run(['$rootScope', '$location', 'rolesService', '$timeout', 'Auth',
-  function($rootScope, $location, rolesService, $timeout, Auth) {
+.run(['$rootScope', '$location', 'rolesService', 'Auth',
+  function($rootScope, $location, rolesService, Auth) {
     $rootScope.$on('$routeChangeStart', function(event ,next) {
 
-      Auth.currentUser().then(function(user) {
-
-        rolesService.setRol(user);
-
+      function config() {
           var authorized;
-          function set(next) {
+          function set() {
             authorized = false;
             if (next.data) {
               for (var i = 0; i < next.data.authorized.length; i++) {
@@ -137,7 +134,7 @@ angular.module('myApp', [
             return authorized;
           }
 
-          set(next);
+          set();
           if (!get()) {
             switch(rolesService.getRol()) {
               case 0:
@@ -149,71 +146,17 @@ angular.module('myApp', [
                 break;
             }
           }
+      }
+
+      Auth.currentUser().then(function(user) {
+        rolesService.setRol(user);
+        config();
       }, function(error) {
         rolesService.setLocalRol(0);
-
-          var authorized;
-          function set(next) {
-            authorized = false;
-            if (next.data) {
-              for (var i = 0; i < next.data.authorized.length; i++) {
-                if (next.data.authorized[i] == rolesService.getRol()) {
-                  authorized = true;
-                }
-              }
-            }
-          }
-
-          function get() {
-            return authorized;
-          }
-
-          set(next);
-          if (!get()) {
-            switch(rolesService.getRol()) {
-              case 0:
-                $location.path("/users/sign_in");
-                break;
-              case 1:
-              case 2:
-                $location.path("/pages");
-                break;
-            }
-          }
+          config();
       });
-
-      var authorized;
-          function set(next) {
-            authorized = false;
-            if (next.data) {
-              for (var i = 0; i < next.data.authorized.length; i++) {
-                if (next.data.authorized[i] == rolesService.getRol()) {
-                  authorized = true;
-                }
-              }
-            }
-          }
-
-          function get() {
-            return authorized;
-          }
-
-          set(next);
-          if (!get()) {
-            switch(rolesService.getRol()) {
-              case 0:
-                $location.path("/users/sign_in");
-                break;
-              case 1:
-              case 2:
-                $location.path("/pages");
-                break;
-            }
-          }
-
+      config();
     });
-
-
 
 }])
 .config(function (ScrollBarsProvider) {
