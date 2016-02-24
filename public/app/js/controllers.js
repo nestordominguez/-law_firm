@@ -51,8 +51,8 @@ angular.module('myApp.controllers', []).
 
 // page controller...
 
-  .controller('indexPageController', ['$scope', 'pageService',
-    function($scope, pageService) {
+  .controller('indexPageController', ['$scope', '$route', 'pageService',
+    function($scope, $route, pageService) {
     pageService.index().then(function(response) {
       $scope.pages = response.data.body;
     });
@@ -245,9 +245,9 @@ angular.module('myApp.controllers', []).
   }])
 
   .controller('editUserController', ['Auth', '$location', '$scope',
-    '$routeParams', 'usersService', 'sendMsjServices', '$rootScope', '$timeout',
+    '$routeParams', 'usersService', 'sendMsjServices', '$rootScope',
     function(Auth, $location, $scope, $routeParams, usersService, sendMsjServices,
-      $rootScope, $timeout) {
+      $rootScope) {
       Auth.currentUser().then(function(user) {
         usersService.show($routeParams.user).then(function(response) {
           if (!response.data.error) {
