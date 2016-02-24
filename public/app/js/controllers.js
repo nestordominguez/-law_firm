@@ -4,29 +4,25 @@
 
 angular.module('myApp.controllers', []).
   controller('appController', ['$scope', '$routeParams', '$route',
-    'pageService', 'Auth', 'sendMsjServices', 'rolesService',
+    'pageService', 'Auth', 'sendMsjServices',
     function($scope, $routeParams, $route, pageService, Auth,
-      sendMsjServices, rolesService) {
-      // rolesService.setRol();
+      sendMsjServices) {
+
+      Auth.currentUser().then(function(user) {
+        $scope.isAuthenticated();
+        $scope.reload = function() {
+          $scope.isAuthenticated();
+        };
+      })
 
       $scope.isAuthenticated = function() {
         return Auth.isAuthenticated();
       }
 
-      Auth.currentUser().then(function(user) {
-        rolesService.setRol(user);
-        $scope.isAuthenticated();
-        $scope.reload = function() {
-          rolesService.setRol(user);
-          $scope.isAuthenticated();
-        };
-      })
-
       $scope.logout = function() {
         Auth.logout().then(function(oldUser) {
           sendMsjServices.setLocalSuccess("signed_out", oldUser.email);
           $scope.isAuthenticated();
-          rolesService.setRol();
         }, function(error) {
             sendMsjServices.setHostError(error.data.error);
             $route.reload();
@@ -63,12 +59,10 @@ angular.module('myApp.controllers', []).
       });
       $scope.destroy = function() {
         pageService.destroy(id).then(function(response) {
-          // sendMsjServices.setSuccess("response.data.base[0]");
           pageService.index().then(function(response) {
             $scope.pages = response.data.body;
           });
         }, function(error) {
-          // sendMsjServices.setHostError("error.data.base[0]");
           $route.reload();
         })
       }
@@ -148,7 +142,6 @@ angular.module('myApp.controllers', []).
 
       Auth.login(credentials).then(function(user) {
           sendMsjServices.setLocalSuccess("signed_in", user.email);
-          rolesService.setRol(user);
           $location.path("/pages");
         }, function(error) {
           sendMsjServices.setHostError(error.data.error);
@@ -165,6 +158,7 @@ angular.module('myApp.controllers', []).
   .controller('signUpUserController', ['$scope', '$location', '$route', 'Auth',
     'sendMsjServices', 'rolesService',
     function($scope, $location, $route, Auth, sendMsjServices, rolesService) {
+
       $scope.signUp = function(user) {
       var credentials = {
             email: user.email,
@@ -173,7 +167,6 @@ angular.module('myApp.controllers', []).
         };
 
         Auth.register(credentials).then(function(registeredUser) {
-          rolesService.setRol(registeredUser);
           $location.path("/pages");
         }, function(error) {
           sendMsjServices.setHostError(error.data.error);

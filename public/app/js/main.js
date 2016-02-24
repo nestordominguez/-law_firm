@@ -116,8 +116,11 @@ angular.module('myApp', [
 .run(['$rootScope', '$location', 'rolesService', '$timeout', 'Auth',
   function($rootScope, $location, rolesService, $timeout, Auth) {
     $rootScope.$on('$routeChangeStart', function(event ,next) {
+
       Auth.currentUser().then(function(user) {
+
         rolesService.setRol(user);
+
           var authorized;
           function set(next) {
             authorized = false;
@@ -142,14 +145,74 @@ angular.module('myApp', [
                 break;
               case 1:
               case 2:
-              default:
                 $location.path("/pages");
                 break;
             }
           }
-        });
+      }, function(error) {
+        rolesService.setLocalRol(0);
 
+          var authorized;
+          function set(next) {
+            authorized = false;
+            if (next.data) {
+              for (var i = 0; i < next.data.authorized.length; i++) {
+                if (next.data.authorized[i] == rolesService.getRol()) {
+                  authorized = true;
+                }
+              }
+            }
+          }
+
+          function get() {
+            return authorized;
+          }
+
+          set(next);
+          if (!get()) {
+            switch(rolesService.getRol()) {
+              case 0:
+                $location.path("/users/sign_in");
+                break;
+              case 1:
+              case 2:
+                $location.path("/pages");
+                break;
+            }
+          }
       });
+
+      var authorized;
+          function set(next) {
+            authorized = false;
+            if (next.data) {
+              for (var i = 0; i < next.data.authorized.length; i++) {
+                if (next.data.authorized[i] == rolesService.getRol()) {
+                  authorized = true;
+                }
+              }
+            }
+          }
+
+          function get() {
+            return authorized;
+          }
+
+          set(next);
+          if (!get()) {
+            switch(rolesService.getRol()) {
+              case 0:
+                $location.path("/users/sign_in");
+                break;
+              case 1:
+              case 2:
+                $location.path("/pages");
+                break;
+            }
+          }
+
+    });
+
 
 
 }])

@@ -46,7 +46,8 @@ angular.module('myApp.services', [])
       signed_out: "ha cerrado la sesión satisfactoriamente.",
       already_signed_out: "ha cerrado la sesión satisfactoriamente.",
       page_updated: "se actualizó correctamente",
-      page_created: "se creó correctamente"
+      page_created: "se creó correctamente",
+      deleted: "se borro correctamente"
     },
     error: {
       unauthorized: "No esta autorizado a entrar a esta sección."
@@ -127,11 +128,15 @@ angular.module('myApp.services', [])
       rol = user.role;
     }
   }
+  function setLocalRol(role) {
+    rol = role;
+  }
   function getRol() {
     return rol;
   }
   return {
     setRol: setRol,
-    getRol: getRol
+    getRol: getRol,
+    setLocalRol: setLocalRol
   }
 }]);
