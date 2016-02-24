@@ -84,7 +84,7 @@ angular.module('myApp', [
     controller: 'editUserController',
     data: {authorized: [3]}
   })
-  .otherwise({redirectTo: '/pages'});
+  .otherwise({redirectTo: '/pages', data: {authorized: [0,1,2,3]}});
 }])
 .config(function(AuthProvider, AuthInterceptProvider) {
         // Customize login
