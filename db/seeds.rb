@@ -21,3 +21,12 @@ users.each do |user|
     password_confirmation: "magoloco"
   )
 end
+
+5.times do |x|
+  Message.create(
+    name: "oscar#{x}" ,
+    email: "oscardom80#{x}@hotmail.com" ,
+    phone: "381432727#{x}",
+    content: Lorem::Base.new('characters', 120).output
+  )
+end

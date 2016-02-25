@@ -1,5 +1,5 @@
 class Api::V1::PagesController < Api::V1::CoreController
-  before_action :set_page, only: [:edit, :update, :destroy]
+  before_action :set_page, only: [:update, :destroy]
   before_action :authenticate_user!, only: [:create, :update, :destroy]
 
   def index

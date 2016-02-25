@@ -84,6 +84,21 @@ angular.module('myApp', [
     controller: 'editUserController',
     data: {authorized: [3]}
   })
+  .when('/messages/index', {
+    templateUrl: 'views/messages/index.html',
+    controller: 'indexMessageController',
+    data: {authorized: [3, 2]}
+  })
+  .when('/messages/show', {
+    templateUrl: 'views/messages/show.html',
+    controller: 'showMessageController',
+    data: {authorized: [3, 2]}
+  })
+  .when('/messages/create', {
+    templateUrl: 'views/messages/create.html',
+    controller: 'createMessageController',
+    data: {authorized: [3, 2, 1 ,0]}
+  })
   .otherwise({redirectTo: '/pages', data: {authorized: [0,1,2,3]}});
 }])
 .config(function(AuthProvider, AuthInterceptProvider) {

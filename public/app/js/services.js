@@ -143,8 +143,8 @@ angular.module('myApp.services', [])
 .service('linksService', [function() {
   var links = [];
 
-  function setLink(recived) {
-    links = recived;
+  function setLink(received) {
+    links = received;
   }
 
   function getLink() {
@@ -154,5 +154,14 @@ angular.module('myApp.services', [])
   return {
     setLink: setLink,
     getLink: getLink
+  }
+}])
+.service('messagesService', ['$http', function($http) {
+  var baseDir = baseUrlPath + '/messages/';
+  return {
+    index: function() {return $http.get(baseDir)},
+    show: function(id) {return $http.get(baseDir + id)},
+    create: function(message) {return $http.post(baseDir, {"message": message})},
+    destroy: function(id) {return $http.delete(baseDir + id)}
   }
 }]);

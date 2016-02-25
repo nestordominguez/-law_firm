@@ -67,7 +67,7 @@ angular.module('myApp.controllers', []).
           pageService.index().then(function(response) {
             $scope.pages = response.data.body;
             console.log(response.data.body);
-            $route.reload();
+            // $route.reload();
             // linksService.setLink(response.data.body);
           });
         }, function(error) {
@@ -84,14 +84,7 @@ angular.module('myApp.controllers', []).
 
       $scope.tinymceOptions = tinymce;
 
-      $scope.create = function(page) {
-        pageService.ccreate(page).then(function(response) {
-          sendMsjServices.setLocalSuccess("page_created");
-          $location.path("/pages/index");
-        });
-      }
-
-      Auth.currentUser().then(function(user) {
+      Auth.currentUser().then(function(user) { // continue changing new validations
         if (user.role == 3 ) {
           $scope.create = function(page) {
             pageService.create(page).then(function(user) {
@@ -274,4 +267,23 @@ angular.module('myApp.controllers', []).
           $location.path("/users/show");
         })
       }
+  }])
+
+// message system
+  .controller('indexMessageController', ['$scope', 'messagesService',
+    function($scope, messagesService) {
+    messagesService.index().then(function(response) {
+      $scope.messages = response.data.body;
+    });
+  }])
+  .controller('showMessageController', ['$scope', '$routeParams',
+    'messagesService',
+    function($scope, $routeParams, messagesService) {
+    messagesService.show($routeParams.id).then(function(response) {
+      $scope.message = response.data.body;
+    });
+  }])
+  .controller('createMessageController', ['$scope', 'messagesService',
+    function($scope, messagesService) {
+    // body...// finish this
   }]);
