@@ -24,7 +24,10 @@ angular.module('myApp.services', [])
     show: function(id) {return $http.get(baseDir + id)},
     create: function(page) {return $http.post(baseDir, {"page": page})},
     edit: function(page) {return $http.put(baseDir + page.id, {"page": page})},
-    destroy: function(id) {return $http.delete(baseDir + id)}
+    destroy: function(id) {return $http.delete(baseDir + id)},
+    priorityAvailable: function() {
+      return $http.get(baseDir + "availability_priority/list")
+    }
   }
 
   }])
@@ -96,7 +99,8 @@ angular.module('myApp.services', [])
 .service('tinymce', [function() {
   return {
     selector: 'textarea',
-    height: 300,
+    resize: false,
+    height: 100,
     theme: 'modern',
     mode: 'textarea',
     language : "es",

@@ -37,6 +37,7 @@ angular.module('myApp.controllers', []).
             links.push(response.data.body[i]);
           };
 
+
           linksService.setLink(links);
           $scope.links = linksService.getLink();
           $scope.page_link = $routeParams.page_link;
@@ -66,9 +67,7 @@ angular.module('myApp.controllers', []).
         pageService.destroy(id).then(function(response) {
           pageService.index().then(function(response) {
             $scope.pages = response.data.body;
-            console.log(response.data.body);
-            // $route.reload();
-            // linksService.setLink(response.data.body);
+            $route.reload();
           });
         }, function(error) {
           $route.reload();
@@ -125,6 +124,10 @@ angular.module('myApp.controllers', []).
 
       pageService.show($routeParams.page).then(function(response) {
         $scope.page = response.data;
+      });
+
+      pageService.priorityAvailable().then(function(response) {
+        $scope.list_available = response.data.body;
       });
 
       $scope.update = function(page) {
@@ -270,11 +273,36 @@ angular.module('myApp.controllers', []).
   }])
 
 // message system
-  .controller('indexMessageController', ['$scope', 'messagesService',
-    function($scope, messagesService) {
-    messagesService.index().then(function(response) {
-      $scope.messages = response.data.body;
-    });
+  .controller('indexMessageController', ['$scope', '$route', 'messagesService',
+    'Auth',
+    function($scope, $route, messagesService, Auth) {
+    Auth.currentUser().then(function(user) {
+          messagesService.index().then(function(response) {
+            if (!response.data.error) {
+              $scope.messages = response.data.body;
+            } else {
+              $location.path("/messages/index");
+            };
+          });
+
+          $scope.id = function(id) {
+            messagesService.show(id).then(function(response) {
+              $scope.name = response.data.body.name;
+            });
+            $scope.destroy = function() {
+              messagesService.destroy(id).then(function(response) {
+                messagesService.index().then(function(response) {
+                  $scope.users = response.data.body;
+                  $route.reload();
+                });
+              }, function(error) {
+                $route.reload();
+              })
+            }
+          }
+
+
+      })
   }])
   .controller('showMessageController', ['$scope', '$routeParams',
     'messagesService',
@@ -283,7 +311,11 @@ angular.module('myApp.controllers', []).
       $scope.message = response.data.body;
     });
   }])
-  .controller('createMessageController', ['$scope', 'messagesService',
-    function($scope, messagesService) {
-    // body...// finish this
+  .controller('createMessageController', ['$scope', '$location', 'messagesService',
+    function($scope, $location, messagesService) {
+    $scope.create = function(message) {
+      messagesService.create(message).then(function(response) {
+        $location.path("/messages/index");
+      })
+    }
   }]);

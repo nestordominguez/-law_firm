@@ -1,6 +1,6 @@
 class Api::V1::PagesController < Api::V1::CoreController
   before_action :set_page, only: [:update, :destroy]
-  before_action :authenticate_user!, only: [:create, :update, :destroy]
+  before_action :authenticate_user!, only: [:create, :update, :destroy, :list_avaliable]
 
   def index
     respond_with body: Page.all.sort_by {|page| page.priority }.reverse
@@ -52,7 +52,10 @@ class Api::V1::PagesController < Api::V1::CoreController
     else
       respond_with error: unauthorized
     end
+  end
 
+  def list_available
+    respond_with body: Page.pluck(:priority)
   end
 
   private

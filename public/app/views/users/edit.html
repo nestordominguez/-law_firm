@@ -3,18 +3,14 @@
     <legend>Editar: {{user.email}}</legend>
     <div>
       <label for="lawyer"> Tipo de accesos:
-        <select name="singleSelect" ng-model="user.role">
-          <option value="1">usuario</option>
-          <option value="2">abogado</option>
+        <select ng-model="user.role" autofocus>
+          <option value="1">Usuario</option>
+          <option value="2">Abogado</option>
         </select><br>
-        <!-- <input type="text"
-         ng-model="user.role"
-         [name="lawyer"]
-         > -->
       </label></br>
     </div>
 
-    <input type="submit" value="Actualizar" ng-click="update(user)" class="btn col-md-offset-10 col-xs-offset-10"/>
+    <input type="submit" value="Actualizar" ng-click="update(user)" class="col-md-offset-10 col-xs-offset-10"/>
     </br>
     </br>
     <p>

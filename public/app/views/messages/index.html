@@ -1,6 +1,35 @@
-Index.html
-<ul ng-repeat="message in messages">
-  <li>{{message.name}}</li>
-  <li>{{message.phone}}</li>
-  <li>{{message.email}}</li>
-</ul>
+<h1>Lista de mensajes</h1>
+<table class="col-md-offset-1 col-md-10">
+  <tr>
+    <td class="col-md-1">Leído</td>
+    <td class="col-md-1">Nombre</td>
+  </tr>
+  <tr ng-repeat="message in messages">
+    <td class="col-md-1">{{message.read}}</td>
+    <td class="col-md-1">{{message.name}}</td>
+    <td class="col-md-1"><a href="#/messages/show?id={{message.id}}">Mostrar mensáje</a></td>
+    <td class="col-md-1"><a href="" data-toggle="modal" data-target="#myModal" ng-click="id(message.id)">borrar</a>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Alerta!!!</h4>
+          </div>
+          <div class="modal-body">
+            <p>Seguro que quiere borrar el mensaje de {{name}} y todo su contenido?.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="destroy()">Aceptar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </td>
+  </tr>
+</table>

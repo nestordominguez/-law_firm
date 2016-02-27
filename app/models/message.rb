@@ -16,6 +16,6 @@ class Message < ActiveRecord::Base
     :format => { with: VALID_PHONE_REGEX,
       :message => "Número inválido"}
   validates :content, :length => {
-    :maximum => 140,
+    :maximum => 500,
     :too_long => "El mensaje tiene mas de 140 caractéres"}
 end

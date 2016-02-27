@@ -15,11 +15,9 @@
          >
       </label>
       <label for="priority"> Prioridad:
-        <input type="select"
-         ng-model="page.priority"
-         [name="priority"]
-         >
+        <select ng-model="page.priority" ng-options="option for option in list_available"></select>
       </label></br>
+
       <label for="content"> Contenido:
       </label></br>
       <textarea name="content" rows="30" ui-tinymce="tinymceOptions" ng-model="page.content"></textarea>

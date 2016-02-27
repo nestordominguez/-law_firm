@@ -1,2 +1,64 @@
-Create.html
+  <div class="col-md-12">
+  <div class="col-md-7">
 
+  </div>
+
+  <form novalidate class="form" name="form">
+    <fieldset class="fieldset">
+      <legend>Enviar mensaje:</legend>
+      <div>
+          <input type="name"
+           ng-model="message.name"
+           name="uName"
+           placeholder="tu nombre"
+           required=""
+           autofocus
+           >
+        <label for="uName"> Nómbre</label></br>
+        <div ng-show="form.$submitted || form.uName.$touched">
+          <p ng-show="form.uName.$error.required" class="col-md-12 col-xs-12"> Falta su nombre.</p>
+        </div>
+          <input type="phone"
+           ng-model="message.phone"
+           name="uPhone"
+           ng-minlength="10"
+           ng-maxlength="12"
+           placeholder="ej: 381-4123456"
+           required=""
+           >
+        <label for="title"> Teléfono</label>
+        <div ng-show="form.$submitted || form.uPhone.$touched">
+          <p ng-show="form.uPhone.$error.required" class="col-md-12 col-xs-12"> Falta su teléfono.</p>
+          <p ng-show="form.uPhone.$error.minlength" class="col-md-12 col-xs-12"> Faltan dígitos a su número.</p>
+          <p ng-show="form.uPhone.$error.maxlength" class="col-md-12 col-xs-12"> Sobran dígitos a su número.</p>
+        </div>
+          <input type="email"
+           ng-model="message.email"
+           name="uEmail"
+           placeholder="ejemplo@ejemplo.com"
+           required=""
+           >
+        <label for="priority"> Email</label></br>
+        <div ng-show="form.$submitted || form.uEmail.$touched">
+          <p ng-show="form.uEmail.$error.required" class="col-md-12 col-xs-12"> Falta su Email.</p>
+          <p ng-show="form.uEmail.$error.email" class="col-md-12 col-xs-12"> No es un email válido.</p>
+        </div>
+        <label for="content"> Mensaje:
+        </label></br>
+        <textarea name="uContent" rows="10" cols="44" ng-model="message.content" required=""></textarea>
+        <div ng-show="form.$submitted || form.uContent.$touched">
+          <p ng-show="form.uContent.$error.required" class="col-md-12 col-xs-12"> Falta su comentario.</p>
+        </div>
+        </br>
+
+      </div>
+
+      <input type="submit" value="Enviar" ng-click="create(page)" class="btn col-md-offset-10 col-xs-offset-10"/>
+      </br>
+      </br>
+      <p>
+        <a href="#/pages/index">Volver</a>
+      </p>
+    </fieldset>
+  </form>
+  </div>

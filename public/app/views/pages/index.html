@@ -1,18 +1,19 @@
 <div >
-  <h1>Index</h1>
+  <h1>Lista de Páginas</h1>
   </br>
-  <a href="#/pages/create">Nueva Página</a>
-  <table>
+  <a href="#/pages/create" class="col-md-offset-1">Nueva Página</a>
+  <table class="col-md-offset-1 col-md-10">
     <tr>
-      <td class="col-md-2">Link</td>
-      <td class="col-md-2">Prioridad</td>
+      <td class="col-md-1">Links</td>
+      <td class="col-md-1">Prioridad</td>
     </tr>
     <tr ng-repeat="page in pages">
     </br>
-      <td>{{page.link}}</td>
-      <td>{{page.priority}}</td>
-      <td><a href="#/pages/edit?page={{page.id}}">Editar</a></td>
-      <td class="col-md-1"><a href="" data-toggle="modal" data-target="#myModal" ng-click="id(page.id)">Borrar</a>
+    </br>
+      <td class="col-md-1">{{page.link}}</td>
+      <td class="col-md-2">{{page.priority}}</td>
+      <td class="col-md-3"><a href="#/pages/edit?page={{page.id}}">Editar</a></td>
+      <td class="col-md-6"><a href="" data-toggle="modal" data-target="#myModal" ng-click="id(page.id)">Borrar</a>
   <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
