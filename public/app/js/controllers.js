@@ -4,9 +4,9 @@
 
 angular.module('myApp.controllers', []).
   controller('appController', ['$scope', '$routeParams', '$route',
-    'pageService', 'Auth', 'sendMsjServices', 'linksService',
+    'pageService', 'Auth', 'sendMsjServices', 'linksService', 'rolesService',
     function($scope, $routeParams, $route, pageService, Auth,
-      sendMsjServices, linksService) {
+      sendMsjServices, linksService, rolesService) {
 
       Auth.currentUser().then(function(user) {
         $scope.isAuthenticated();
@@ -23,6 +23,7 @@ angular.module('myApp.controllers', []).
         Auth.logout().then(function(oldUser) {
           sendMsjServices.setLocalSuccess("signed_out", oldUser.email);
           $scope.isAuthenticated();
+          rolesService.setLocalRol(0);
         }, function(error) {
             sendMsjServices.setHostError(error.data.error);
             $route.reload();
@@ -153,6 +154,7 @@ angular.module('myApp.controllers', []).
 
       Auth.login(credentials).then(function(user) {
           sendMsjServices.setLocalSuccess("signed_in", user.email);
+          rolesService.setRol(user);
           $location.path("/pages");
         }, function(error) {
           sendMsjServices.setHostError(error.data.error);
@@ -178,6 +180,7 @@ angular.module('myApp.controllers', []).
         };
 
         Auth.register(credentials).then(function(registeredUser) {
+          rolesService.setRol(user);
           $location.path("/pages");
         }, function(error) {
           sendMsjServices.setHostError(error.data.error);
@@ -300,8 +303,6 @@ angular.module('myApp.controllers', []).
               })
             }
           }
-
-
       })
   }])
   .controller('showMessageController', ['$scope', '$routeParams',
@@ -311,11 +312,11 @@ angular.module('myApp.controllers', []).
       $scope.message = response.data.body;
     });
   }])
-  .controller('createMessageController', ['$scope', '$location', 'messagesService',
-    function($scope, $location, messagesService) {
+  .controller('createMessageController', ['$scope', 'messagesService', '$route',
+    function($scope, messagesService, $route) {
     $scope.create = function(message) {
       messagesService.create(message).then(function(response) {
-        $location.path("/messages/index");
+        $route.reload();
       })
     }
   }]);

@@ -168,9 +168,8 @@ angular.module('myApp', [
         config();
       }, function(error) {
         rolesService.setLocalRol(0);
-          config();
+        config();
       });
-      config();
     });
 
 }])
