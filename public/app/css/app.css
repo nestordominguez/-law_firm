@@ -43,6 +43,18 @@ p::-webkit-selection {color: #fa8b5f;}
 p::-moz-selection { color: #fa8b5f;}
 p::-o-selection { color: #fa8b5f;}
 p::selection { color: #fa8b5f;}
+h3::-webkit-selection {color: #fa8b5f;}
+h3::-moz-selection { color: #fa8b5f;}
+h3::-o-selection { color: #fa8b5f;}
+h3::selection { color: #fa8b5f;}
+h5::-webkit-selection {color: #fa8b5f;}
+h5::-moz-selection { color: #fa8b5f;}
+h5::-o-selection { color: #fa8b5f;}
+h5::selection { color: #fa8b5f;}
+td::-webkit-selection {color: #fa8b5f;}
+td::-moz-selection { color: #fa8b5f;}
+td::-o-selection { color: #fa8b5f;}
+td::selection { color: #fa8b5f;}
 h1::-webkit-selection {color: #fa8b5f;}
 h1::-moz-selection { color: #fa8b5f;}
 h1::-o-selection { color: #fa8b5f;}
@@ -55,18 +67,18 @@ a::-webkit-selection {color: #fa8b5f;}
 a::-moz-selection { color: #fa8b5f;}
 a::-o-selection { color: #fa8b5f;}
 a::selection { color: #fa8b5f;}
-span::-webkit-selection {color:red;}
-span::-moz-selection { color:red;}
-span::-o-selection { color:red;}
-span::selection { color:red;}
-label::-webkit-selection {color:red;}
-label::-moz-selection { color:red;}
-label::-o-selection { color:red;}
-label::selection { color:red;}
-legend::-webkit-selection {color:red;}
-legend::-moz-selection { color:red;}
-legend::-o-selection { color:red;}
-legend::selection { color:red;}
+span::-webkit-selection {color:#fa8b5f;}
+span::-moz-selection { color:#fa8b5f;}
+span::-o-selection { color:#fa8b5f;}
+span::selection { color:#fa8b5f;}
+label::-webkit-selection {color:#fa8b5f;}
+label::-moz-selection { color:#fa8b5f;}
+label::-o-selection { color:#fa8b5f;}
+label::selection { color:#fa8b5f;}
+legend::-webkit-selection {color:#fa8b5f;}
+legend::-moz-selection { color:#fa8b5f;}
+legend::-o-selection { color:#fa8b5f;}
+legend::selection { color:#fa8b5f;}
 .int {
   padding-top: 30px;
   height: 500px;
@@ -136,8 +148,8 @@ input:hover, button:hover, select:hover, textarea:hover {
  text-decoration: none !important;
 }
 a:hover {
- /*color: rgba(200, 166, 55, 0.9) !important;*/
-  color: #ffffcc !important;
+ color: rgba(200, 166, 55, 0.9) !important;
+  /*color: #ffffcc !important;*/
   -webkit-text-shadow: 2px 2px 5px rgba(255,255,255, 0.8);
   -moz-text-shadow: 2px 2px 5px rgba(255,255,255, 0.8);
   -o-text-shadow: 2px 2px 5px rgba(255,255,255, 0.8);
@@ -240,10 +252,18 @@ p {
 }
 
 .error {
-  background-color: rgba(188, 48, 44, 0.3);
+  -webkit-text-shadow: 1px 1px 9px rgba(188, 48, 44, 0.5);
+  -moz-text-shadow: 1px 1px 9px rgba(188, 48, 44, 0.5);
+  -o-text-shadow: 1px 1px 9px rgba(188, 48, 44, 0.5);
+  text-shadow: 1px 1px 9px rgba(188, 48, 44, 0.5);
+  color: rgba(188, 48, 44, 0.5);
 }
 .success {
-  background-color: rgba(48, 209, 44, 0.3);
+  -webkit-text-shadow: 1px 1px 9px rgba(48, 209, 44, 0.5);
+  -moz-text-shadow: 1px 1px 9px rgba(48, 209, 44, 0.5);
+  -o-text-shadow: 1px 1px 9px rgba(48, 209, 44, 0.5);
+  text-shadow: 1px 1px 9px rgba(48, 209, 44, 0.5);
+  color: rgba(48, 209, 44, 0.5);
 }
 .animate-show {
   line-height: 20px;

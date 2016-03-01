@@ -34,7 +34,7 @@
           <li ng-class="select('{{obj.slug}}')" ng-if="!$first" ng-repeat="obj in links"><a ng-href="#/pages?page_link={{obj.slug}}" class="light">{{obj.link}}</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li ng-show="isAuthenticated()" class="light"><a href="#/users/sign_out" ng-click="logout(); reload()"><span class="glyphicon glyphicon-log-out"></span> Cerrar Sesion</a></li>
+          <li ng-show="isAuthenticated()" class="light"><a href="#/users/sign_out" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Cerrar Sesion</a></li>
           <li ng-hide="isAuthenticated()" class="light"><a href="#/users/sign_up"><span class="glyphicon glyphicon-user"></span> Crear Cuenta</a></li>
           <li ng-hide="isAuthenticated()" class="light"><a href="#/users/sign_in"><span class="glyphicon glyphicon-log-in"></span> Iniciar Sesion</a></li>
         </ul>

@@ -47,6 +47,7 @@ angular.module('myApp.services', [])
     success: {
       signed_in: "ha iniciado sesión satisfactoriamente.",
       signed_out: "ha cerrado la sesión satisfactoriamente.",
+      signed_up: "¡Bienvenido! Usted ha sido identificado.",
       already_signed_out: "ha cerrado la sesión satisfactoriamente.",
       page_updated: "se actualizó correctamente",
       page_created: "se creó correctamente",
@@ -144,19 +145,24 @@ angular.module('myApp.services', [])
     setLocalRol: setLocalRol
   }
 }])
-.service('linksService', [function() {
-  var links = [];
+.service('linksService', ['pageService', function(pageService) {
+  var links;
 
-  function setLink(received) {
-    links = received;
+  function setLink() {
+    links = [];
+    pageService.index().then(function(response) {
+      for (var i = response.data.body.length - 1; i >= 0; i--) {
+        links.push(response.data.body[i]);
+      };
+    });
   }
 
   function getLink() {
+    setLink();
     return links;
   }
 
   return {
-    setLink: setLink,
     getLink: getLink
   }
 }])

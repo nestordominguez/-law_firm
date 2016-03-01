@@ -3,52 +3,41 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-  controller('appController', ['$scope', '$routeParams', '$route',
-    'pageService', 'Auth', 'sendMsjServices', 'linksService', 'rolesService',
-    function($scope, $routeParams, $route, pageService, Auth,
-      sendMsjServices, linksService, rolesService) {
-
-      Auth.currentUser().then(function(user) {
-        $scope.isAuthenticated();
-        $scope.reload = function() {
-          $scope.isAuthenticated();
-        };
-      })
+  controller('appController', ['$scope', '$routeParams', '$route', 'Auth',
+    'sendMsjServices', 'linksService',
+    function($scope, $routeParams, $route, Auth, sendMsjServices,
+      linksService) {
 
       $scope.isAuthenticated = function() {
         return Auth.isAuthenticated();
       }
 
       $scope.logout = function() {
-        Auth.logout().then(function(oldUser) {
+         var config = {
+            headers: {
+                'X-HTTP-Method-Override': 'DELETE'
+            }
+        };
+        Auth.logout(config).then(function(oldUser) {
           sendMsjServices.setLocalSuccess("signed_out", oldUser.email);
-          $scope.isAuthenticated();
-          rolesService.setLocalRol(0);
+          $scope.$broadcast('send-msj', function() {
+          });
+          $route.reload();
         }, function(error) {
-            sendMsjServices.setHostError(error.data.error);
-            $route.reload();
-        });
-        $scope.$on('devise:logout', function(event, oldCurrentUser) {
+          sendMsjServices.setHostError(error.data.error);
+          $route.reload();
         });
       }
-      $scope.$on('$routeChangeStart', function() {
-        pageService.index().then(function(response) {
-          var links = [];
-          for (var i = response.data.body.length - 1; i >= 0; i--) {
-            links.push(response.data.body[i]);
-          };
 
-
-          linksService.setLink(links);
-          $scope.links = linksService.getLink();
-          $scope.page_link = $routeParams.page_link;
-          $scope.select = function(link) {
-            $scope.page_link = $routeParams.page_link;
-            return link === $routeParams.page_link ? 'active' : '';
-          }
-        });
-
-      });
+      $scope.links = linksService.getLink();
+      $scope.$on("update:links", function() {
+        $scope.links = linksService.getLink();
+      })
+      $scope.page_link = $routeParams.page_link;
+      $scope.select = function(link) {
+        $scope.page_link = $routeParams.page_link;
+        return link === $routeParams.page_link ? 'active' : '';
+      }
   }])
 
 // page controller...
@@ -68,6 +57,8 @@ angular.module('myApp.controllers', []).
         pageService.destroy(id).then(function(response) {
           pageService.index().then(function(response) {
             $scope.pages = response.data.body;
+            $scope.$emit("update:links", function() {
+            });
             $route.reload();
           });
         }, function(error) {
@@ -78,27 +69,17 @@ angular.module('myApp.controllers', []).
 
   }])
 
-  .controller('createPageController', ['$scope', '$location', 'Auth',
-    'pageService', 'sendMsjServices', 'tinymce',
-    function($scope, $location, Auth, pageService, sendMsjServices, tinymce) {
-
+  .controller('createPageController', ['$scope', '$location', 'pageService',
+    'tinymce', 'linksService',
+    function($scope, $location, pageService, tinymce, linksService) {
       $scope.tinymceOptions = tinymce;
-
-      Auth.currentUser().then(function(user) { // continue changing new validations
-        if (user.role == 3 ) {
-          $scope.create = function(page) {
-            pageService.create(page).then(function(user) {
-              $location.path("/pages/index");
-            });
-          }
-        } else{
-          sendMsjServices.setLocalError("unauthorized");
-          $location.path("/pages");
-        };
-      }, function(error) {
-        sendMsjServices.setHostError(error.data.error);
-        $location.path("/users/sign_in");
-      });
+      $scope.create = function(page) {
+        pageService.create(page).then(function(page) {
+          $scope.$emit("update:links", function() {
+          });
+          $location.path("/pages/index");
+        });
+      }
   }])
 
   .controller('showPageController', ['$scope', '$routeParams', '$sce', 'pageService',
@@ -134,6 +115,8 @@ angular.module('myApp.controllers', []).
       $scope.update = function(page) {
         pageService.edit(page).then(function(response) {
           sendMsjServices.setLocalSuccess("page_updated", response.data.link);
+          $scope.$emit("update:links", function() {
+          });
           $location.path("/pages/index");
         });
       };
@@ -151,18 +134,21 @@ angular.module('myApp.controllers', []).
         email: user.email,
         password: user.password
       };
+      var config = {
+            headers: {
+                'X-HTTP-Method-Override': 'POST'
+            }
+        };
 
-      Auth.login(credentials).then(function(user) {
+      Auth.login(credentials, config).then(function(user) {
           sendMsjServices.setLocalSuccess("signed_in", user.email);
           rolesService.setRol(user);
           $location.path("/pages");
+          $scope.$emit('send-msj', function() {
+          });
         }, function(error) {
           sendMsjServices.setHostError(error.data.error);
           $route.reload();
-        });
-        $scope.$on('devise:login', function(event, currentUser) {
-        });
-        $scope.$on('devise:new-session', function(event, currentUser) {
         });
     }
 
@@ -179,27 +165,29 @@ angular.module('myApp.controllers', []).
             password_confirmation: user.password_confirmation
         };
 
-        Auth.register(credentials).then(function(registeredUser) {
+      var config = {
+          headers: {
+              'X-HTTP-Method-Override': 'POST'
+          }
+      };
+
+        Auth.register(credentials, config).then(function(registeredUser) {
           rolesService.setRol(user);
+          sendMsjServices.setLocalSuccess("signed_up");
+          $scope.$emit('send-msj', function() {
+          });
           $location.path("/pages");
         }, function(error) {
           sendMsjServices.setHostError(error.data.error);
           $route.reload();
         });
 
-        $scope.$on('devise:new-registration', function(event, user) {
-        });
-        $scope.$on('devise:login', function(event, currentUser) {
-        });
-        $scope.$on('devise:new-session', function(event, currentUser) {
-        });
     }
   }])
 
-  .controller('indexUserController', ['$route', '$location', '$scope', 'Auth',
+  .controller('indexUserController', ['$route', '$location', '$scope',
     'usersService', 'sendMsjServices',
-    function($route, $location, $scope, Auth, usersService, sendMsjServices) {
-      Auth.currentUser().then(function(user) {
+    function($route, $location, $scope, usersService, sendMsjServices) {
           usersService.index().then(function(response) {
             if (!response.data.error) {
               $scope.users = response.data.body;
@@ -208,7 +196,6 @@ angular.module('myApp.controllers', []).
               $location.path("/users/pages");
             };
           });
-
           $scope.id = function(id) {
             usersService.show(id).then(function(response) {
               $scope.email = response.data.body.email;
@@ -226,17 +213,11 @@ angular.module('myApp.controllers', []).
             }
           }
 
-
-      }, function(error) {
-        sendMsjServices.setHostError(error.data.error);
-        $location.path("/users/sign_in");
-      })
   }])
 
   .controller('showUserController', ['$location', '$scope', '$routeParams',
-    'usersService', 'Auth', 'sendMsjServices',
-    function($location, $scope, $routeParams, usersService, Auth, sendMsjServices) {
-      Auth.currentUser().then(function(user) {
+    'usersService', 'sendMsjServices',
+    function($location, $scope, $routeParams, usersService, sendMsjServices) {
         usersService.show($routeParams.user).then(function(response) {
           if (!response.data.error) {
             $scope.user = response.data.body;
@@ -245,17 +226,13 @@ angular.module('myApp.controllers', []).
             $location.path("/users/pages");
           };
         })
-      }, function(error) {
-        sendMsjServices.setHostError(error.data.error);
-        $location.path("/users/sign_in");
-    });
+
   }])
 
-  .controller('editUserController', ['Auth', '$location', '$scope',
+  .controller('editUserController', ['$location', '$scope',
     '$routeParams', 'usersService', 'sendMsjServices', '$rootScope',
-    function(Auth, $location, $scope, $routeParams, usersService, sendMsjServices,
+    function($location, $scope, $routeParams, usersService, sendMsjServices,
       $rootScope) {
-      Auth.currentUser().then(function(user) {
         usersService.show($routeParams.user).then(function(response) {
           if (!response.data.error) {
             $scope.user = response.data.body;
@@ -264,10 +241,6 @@ angular.module('myApp.controllers', []).
             $location.path("/pages");
           };
         });
-      }, function(error) {
-        sendMsjServices.setHostError(error.data.error);
-        $location.path("/users/sign_in");
-      })
       $scope.update = function(user) {
         usersService.edit(user).then(function(response) {
           $location.path("/users/show");
@@ -277,9 +250,7 @@ angular.module('myApp.controllers', []).
 
 // message system
   .controller('indexMessageController', ['$scope', '$route', 'messagesService',
-    'Auth',
-    function($scope, $route, messagesService, Auth) {
-    Auth.currentUser().then(function(user) {
+    function($scope, $route, messagesService) {
           messagesService.index().then(function(response) {
             if (!response.data.error) {
               $scope.messages = response.data.body;
@@ -303,7 +274,7 @@ angular.module('myApp.controllers', []).
               })
             }
           }
-      })
+
   }])
   .controller('showMessageController', ['$scope', '$routeParams',
     'messagesService',

@@ -1,7 +1,7 @@
 <form novalidate class="form" name="form">
   <fieldset class="fieldset">
     <legend>Crear página: {{page.link}}</legend>
-    <div>
+    <p>
       <label for="Link"> Link:
         <input type="text"
          ng-model="page.link"
@@ -25,7 +25,7 @@
       <textarea name="content" rows="30" ui-tinymce="tinymceOptions" ng-model="page.content"></textarea>
       </br>
 
-    </div>
+    </p>
 
     <input type="submit" value="Guardar" ng-click="create(page)" class="btn col-md-offset-10 col-xs-offset-10"/>
     </br>

@@ -107,7 +107,7 @@ angular.module('myApp', [
         AuthProvider.loginPath('https://localhost:3000/users/sign_in');
 
         // Customize logout
-        AuthProvider.logoutMethod('DELETE');
+        // AuthProvider.logoutMethod('DELETE');
         AuthProvider.logoutPath('https://localhost:3000/users/sign_out');
 
         // Customize register
@@ -162,14 +162,18 @@ angular.module('myApp', [
             }
           }
       }
-
-      Auth.currentUser().then(function(user) {
-        rolesService.setRol(user);
-        config();
-      }, function(error) {
-        rolesService.setLocalRol(0);
-        config();
-      });
+      if (Auth.isAuthenticated()) {
+        Auth.currentUser().then(function(user) {
+          rolesService.setRol(user);
+        });
+      } else {
+        Auth.currentUser().then(function(user) {
+          rolesService.setRol(user);
+        }, function(error) {
+          rolesService.setLocalRol(0);
+        });
+      }
+      config();
     });
 
 }])

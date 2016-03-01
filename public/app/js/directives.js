@@ -21,7 +21,6 @@ angular.module('myApp.directives', [])
     return {
       restrict:'A',
       require: 'ngModel',
-
       link: function(scope, element, attrs, ngModel) {
         element.bind('blur', function() {
           if (!element.val()) { return };
@@ -39,13 +38,12 @@ angular.module('myApp.directives', [])
 
     }
   }])
-.directive('msj', ['$timeout', 'Auth', 'sendMsjServices',
-  function($timeout, Auth, sendMsjServices) {
+.directive('msj', ['$timeout', 'sendMsjServices',
+  function($timeout, sendMsjServices) {
   return{
     restrict: 'A',
-
     link: function(scope, element, attrs) {
-      scope.$on("$routeChangeStart", function() {
+      function msj(argument) {
         if (sendMsjServices.getMsj()) {
           scope.classMsj = sendMsjServices.getMsj().error;
           scope.message = sendMsjServices.getMsj().data;
@@ -56,7 +54,11 @@ angular.module('myApp.directives', [])
             sendMsjServices.setHostError("");
           }, 5000);
         };
-      })
+      }
+
+      scope.$on('send-msj', function() {
+        msj();
+      });
     }
 
   }
