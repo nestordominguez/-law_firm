@@ -3,10 +3,10 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
   devise :database_authenticatable, :registerable, :trackable,
-         :recoverable, :validatable, :rememberable
+         :recoverable, :rememberable  #, :validatable,
 
   before_create :first_user_make_lawyer, :transform_in_user
-  before_destroy :ensure_an_superuser
+  # before_destroy :ensure_an_superuser
   before_update :not_update_superuser
 
   private

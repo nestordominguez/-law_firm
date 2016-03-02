@@ -30,8 +30,8 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li ng-class="select('create')"><a href="#/messages/create?page_link=create" class="light">Contáctenos</a ></li>
           <li ng-class="select('{{obj.slug}}')" ng-if="!$first" ng-repeat="obj in links"><a ng-href="#/pages?page_link={{obj.slug}}" class="light">{{obj.link}}</a></li>
+          <li ng-class="select('create')"><a href="#/messages/create?page_link=create" class="light">Contáctenos</a ></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li ng-show="isAuthenticated()" class="light"><a href="#/users/sign_out" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Cerrar Sesion</a></li>

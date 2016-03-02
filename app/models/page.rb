@@ -3,14 +3,16 @@ class Page < ActiveRecord::Base
   friendly_id :link, use: :slugged
   validates :link, :title, :content, :priority, :presence => true
   validates :link, :uniqueness   =>  true
-  before_create :include_in_range_for_create, :check_if_there_are_15_rows_or_less, :validate_priority
+  before_create :include_in_range_for_create, :check_if_there_are_7_rows_or_less, :validate_priority
   before_update :include_in_range_for_update, :change_priority_between_object
   after_destroy :change_priority_to_all
 
   private
 
-  def check_if_there_are_15_rows_or_less
-    Page.all.count < 15
+  def check_if_there_are_7_rows_or_less
+    return true if Page.all.count < 7
+    error_message("not_created")
+    return false
   end
 
   def validate_priority
@@ -24,11 +26,25 @@ class Page < ActiveRecord::Base
   end
 
   def include_in_range_for_create
-    priority > 0 && priority <= Page.all.count + 1
+    return true if priority > 0 && priority <= Page.all.count + 1
+    error_message("out_of_range")
+    return false
+  end
+
+  def error_message(type)
+    case type
+    when "not_created"
+      msj = "no se puede crear mas de 7 páginas"
+    when "out_of_range"
+      msj = "esta fuera de rango la prioridad"
+    end
+    errors.add(:base, msj)
   end
 
   def include_in_range_for_update
-    Page.pluck(:priority).include?(priority)
+    return true if Page.pluck(:priority).include?(priority)
+    error_message("out_of_range")
+    return false
   end
 
   def change_priority_between_object

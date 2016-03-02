@@ -27,9 +27,8 @@ angular.module('myApp.services', [])
     destroy: function(id) {return $http.delete(baseDir + id)},
     priorityAvailable: function() {
       return $http.get(baseDir + "availability_priority/list")
-    }
-  }
-
+    },
+    unique: function(link) { return $http.get(baseDir + 'unique/' + link)}}
   }])
 
 .service('usersService', ['$http', function($http) {
@@ -173,5 +172,44 @@ angular.module('myApp.services', [])
     show: function(id) {return $http.get(baseDir + id)},
     create: function(message) {return $http.post(baseDir, {"message": message})},
     destroy: function(id) {return $http.delete(baseDir + id)}
+  }
+}])
+.service('rolNameService', [function() {
+  var name, role;
+  var options = ["Usuario", "Abogado"];
+
+  function set(rol) {
+    if (rol == 1) {
+      name = "Usuario";
+    } else if (rol == 2 ){
+      name = "Abogado";
+    } else if (rol == 3 ) {
+      name = "Super Usuario";
+    }
+  };
+  function get() {
+    return name;
+  }
+  function setNameToRole(name) {
+    if (name == "Usuario") {
+      role = 1;
+    } else if (name == "Abogado") {
+      role = 2;
+    } else if (name == "Super Usuario") {
+      role = 3;
+    }
+  }
+  function getNameToRole() {
+    return role;
+  }
+  function getOptions() {
+    return options;
+  }
+  return {
+    set: set,
+    get: get,
+    setNameToRole: setNameToRole,
+    getNameToRole: getNameToRole,
+    getOptions: getOptions
   }
 }]);

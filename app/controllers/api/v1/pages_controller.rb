@@ -58,6 +58,11 @@ class Api::V1::PagesController < Api::V1::CoreController
     respond_with body: Page.pluck(:priority)
   end
 
+  def unique?
+    link = true
+    link = false if find_link == nil
+    render json: link
+  end
   private
 
   def set_page
@@ -66,5 +71,9 @@ class Api::V1::PagesController < Api::V1::CoreController
 
   def page_params
     params[:page].permit(:link, :title, :content, :priority)
+  end
+
+  def find_link
+    Page.find_by_link(params[:link])
   end
 end

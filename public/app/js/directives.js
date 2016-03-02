@@ -38,6 +38,26 @@ angular.module('myApp.directives', [])
 
     }
   }])
+.directive('uniquelink', ['pageService', function(pageService) {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModel) {
+      element.bind('blur', function() {
+        if (!element.val()) { return };
+        var currentValue = element.val();
+        pageService.unique(currentValue).then(function(unique) {
+          if (unique.data != true) {
+            ngModel.$setValidity("uniquelink", true)
+          } else {
+            ngModel.$setValidity("uniquelink", false)
+          };
+        });
+      });
+    }
+
+  }
+}])
 .directive('msj', ['$timeout', 'sendMsjServices',
   function($timeout, sendMsjServices) {
   return{

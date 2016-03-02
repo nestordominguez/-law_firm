@@ -86,6 +86,7 @@ legend::selection { color:#fa8b5f;}
 input[type="text"], input[type="email"], .form input[type="password"], select,
   input[type="submit"], input[type="select"], button, input[type="name"],
   input[type="phone"] {
+  text-align: center;
   padding-left: 6px !important;
   color: rgba(200, 166, 55, 0.9) !important;
   border-top: none !important;
@@ -98,7 +99,11 @@ input[type="text"], input[type="email"], .form input[type="password"], select,
   border-radius: 15px !important;
   text-decoration: none !important;
 }
+input[type="submit"] {
+  background-color: #3F3A3A !important;
+}
 textarea {
+  text-align: center;
   color: rgba(200, 166, 55, 0.9) !important;
   background-color: transparent !important;
   -webkit-border-radius: 15px !important;
@@ -109,6 +114,7 @@ textarea {
 option {
   color: #fff;
   background-color: rgba(0,0,0,1);
+  /*background-color: none;*/
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   -o-border-radius: 15px;
@@ -143,17 +149,19 @@ input:hover, button:hover, select:hover, textarea:hover {
   -o-border-radius: 15px;
   border-radius: 15px;
 }
- a:link, a:visited, a:hover{
+ a:link, a:visited{
  color: rgba(200, 166, 55, 0.9);
  text-decoration: none !important;
 }
 a:hover {
- color: rgba(200, 166, 55, 0.9) !important;
+  color: rgba(200, 166, 55, 0.9) !important;
+  text-decoration: none !important;
+
   /*color: #ffffcc !important;*/
-  -webkit-text-shadow: 2px 2px 5px rgba(255,255,255, 0.8);
-  -moz-text-shadow: 2px 2px 5px rgba(255,255,255, 0.8);
-  -o-text-shadow: 2px 2px 5px rgba(255,255,255, 0.8);
-  text-shadow: 2px 2px 5px rgba(255,255,255, 0.8);
+  -webkit-text-shadow: 2px 2px 5px gray;
+  -moz-text-shadow: 2px 2px 5px gray;
+  -o-text-shadow: 2px 2px 5px gray;
+  text-shadow: 2px 2px 5px gray;
 }
 .background {
   overflow: hidden;
@@ -186,7 +194,7 @@ p {
 }
 
 .light:hover {
-  text-shadow: 0px 0px 13px yellow;
+  /*text-shadow: 0px 0px 13px yellow;*/
 }
 .modal-content {
   background-color: #333 !important;

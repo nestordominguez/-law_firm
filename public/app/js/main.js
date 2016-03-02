@@ -1,7 +1,5 @@
 'use strict';
 
-
-// Declare app level module which depends on filters, and services
 angular.module('myApp', [
   'ngRoute',
   'ngAnimate',
@@ -11,7 +9,6 @@ angular.module('myApp', [
   'myApp.controllers',
   'Devise',
   'ngScrollbars',
-  // 'ui.validate',
   'ui.tinymce'
 ])
 .config(function($httpProvider){
@@ -102,34 +99,12 @@ angular.module('myApp', [
   .otherwise({redirectTo: '/pages', data: {authorized: [0,1,2,3]}});
 }])
 .config(function(AuthProvider, AuthInterceptProvider) {
-        // Customize login
-        // AuthProvider.loginMethod('GET');
         AuthProvider.loginPath('https://localhost:3000/users/sign_in');
-
-        // Customize logout
-        // AuthProvider.logoutMethod('DELETE');
         AuthProvider.logoutPath('https://localhost:3000/users/sign_out');
-
-        // Customize register
-        // AuthProvider.registerMethod('PATCH');
         AuthProvider.registerPath('https://localhost:3000/users');
-
-        // Customize the resource name data use namespaced under
-        // Pass false to disable the namespace altogether.
-        // AuthProvider.resourceName('customer');
-
-        // Customize user parsing
-        // NOTE: **MUST** return a truth-y expression
-        /*AuthProvider.parse(function(response) {
-            return response.data.user;
-        });*/
-
-        // Intercept 401 Unauthorized everywhere
-        // Enables `devise:unauthorized` interceptor
-        // AuthInterceptProvider.interceptAuth(true);
     })
-.run(['$rootScope', '$location', 'rolesService', 'Auth',
-  function($rootScope, $location, rolesService, Auth) {
+.run(['$location', '$rootScope', 'rolesService', 'Auth',
+  function($location, $rootScope, rolesService, Auth) {
     $rootScope.$on('$routeChangeStart', function(event ,next) {
 
       function config() {
@@ -162,17 +137,12 @@ angular.module('myApp', [
             }
           }
       }
-      if (Auth.isAuthenticated()) {
-        Auth.currentUser().then(function(user) {
-          rolesService.setRol(user);
-        });
-      } else {
-        Auth.currentUser().then(function(user) {
-          rolesService.setRol(user);
-        }, function(error) {
-          rolesService.setLocalRol(0);
-        });
-      }
+
+      Auth.currentUser().then(function(user) {
+        rolesService.setRol(user);
+      }, function(error) {
+        rolesService.setLocalRol(0);
+      });
       config();
     });
 

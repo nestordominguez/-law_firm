@@ -1,31 +1,48 @@
 <form novalidate class="form" name="form">
   <fieldset class="fieldset">
     <legend>Crear página: {{page.link}}</legend>
-    <p>
+    <div>
+    <div>
       <label for="Link"> Link:
         <input type="text"
          ng-model="page.link"
-         [name="link"]
+         name="uLink"
+         autofocus=""
+         uniquelink
+         required=""
          >
       </label>
       <label for="title"> Título:
         <input type="text"
          ng-model="page.title"
-         [name="title"]
+         name="uTitle"
+         required=""
          >
       </label>
-      <label for="priority"> Prioridad:
-        <input type="select"
-         ng-model="page.priority"
-         [name="priority"]
-         >
+       <label for="priority"> Prioridad:
+        <select ng-model="page.priority" ng-options="option for option in list_available" required="" name="uPriority"></select>
       </label></br>
+        <div ng-show="form.$submitted || form.uLink.$touched">
+          <span ng-show="form.uLink.$error.uniquelink" class="col-md-3">Link ya registrado.</span>
+          <span ng-show="form.uLink.$error.required" class="col-md-2">Falta el link.</span>
+        </div>
+        <div ng-show="form.$submitted || form.uTitle.$touched">
+          <span ng-show="form.uTitle.$error.required" class="col-md-2">Falta el título.</span>
+        </div>
+        <div ng-show="form.$submitted || form.uPriority.$touched">
+          <span ng-show="form.uPriority.$error.required" class="col-md-3">Falta elegir la prioridad.</span>
+        </div>
+        <div ng-show="form.$submitted || form.uContent.$touched">
+          <span ng-show="form.uContent.$error.required" class="col-md-4">Falta agregar el contenido.</span>
+        </div>
+      <br/>
+      <br/>
+    </div>
       <label for="content"> Contenido:
       </label></br>
-      <textarea name="content" rows="30" ui-tinymce="tinymceOptions" ng-model="page.content"></textarea>
+    </div>
+      <textarea name="uContent" rows="30" ui-tinymce="tinymceOptions" ng-model="page.content" required=""></textarea>
       </br>
-
-    </p>
 
     <input type="submit" value="Guardar" ng-click="create(page)" class="btn col-md-offset-10 col-xs-offset-10"/>
     </br>

@@ -1,12 +1,12 @@
 <h3>Lista de usuarios</h3>
 <table class="col-md-10">
   <tr>
-    <td class="col-md-3">usuario</td>
-    <td class="col-md-1">rol</td>
+    <td class="col-md-3">E-mail</td>
+    <td class="col-md-3">Accesos</td>
   </tr>
   <tr ng-repeat="user in users">
     <td class="col-md-3">{{user.email}}</td>
-    <td class="col-md-1">{{user.role}}</td>
+    <td class="col-md-3">{{user.role}}</td>
     <td class="col-md-1"><a href="#/users/show?user={{user.id}}">Mostrar</a></td>
     <td class="col-md-1"><a href="#/users/edit?user={{user.id}}">Editar</a></td>
     <td class="col-md-1"><a href="" data-toggle="modal" data-target="#myModal" ng-click="id(user.id)">Borrar
