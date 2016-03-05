@@ -1,11 +1,5 @@
-class Message < ActiveRecord::Base
-  validates :name, :email, :phone, :content,
-    :presence => {:message => "no esta presente"}
-  validates :name, :length => {
-    :in         => 3..15,
-    :too_short  => "Debe tener mas de %{count} letras",
-    :too_long   => "Debe tener menos de %{count} letras"
-  }
+class Staff < ActiveRecord::Base
+  validates :names, :last_name, :email, :phone, :cel, :cv, :presence => true
   VALID_PHONE_REGEX = /(([0-9]{2})(-|)([0-9]{8}))|(([0-9]{3})(-|)([0-9]{7}))|
     (([0-9]{4})(-|)([0-9]{6}))/
   VALID_EMAIL_REGEX = /((([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|
@@ -16,7 +10,4 @@ class Message < ActiveRecord::Base
     in: 10..11, :message => "No es un número válido"},
     :format => { with: VALID_PHONE_REGEX,
       :message => "Número inválido"}
-  validates :content, :length => {
-    :maximum => 500,
-    :too_long => "El mensaje tiene mas de 140 caractéres"}
 end

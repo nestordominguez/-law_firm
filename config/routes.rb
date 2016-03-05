@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1, defaults: {format: :json} do
       resources :pages, only: [:index, :show, :create, :update, :destroy]
+      resources :staff, only: [:index, :show, :create, :update, :destroy]
       resources :messages, only: [:index, :show, :create, :destroy]
       resources :users, only: [:index, :show, :update, :destroy]
       get '/users/unique/*email', to: 'users#unique?'

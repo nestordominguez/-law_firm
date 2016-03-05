@@ -8,15 +8,6 @@ var baseUrl = protocol + hostname;
 var baseUrlPath = baseUrl + basePath;
 
 angular.module('myApp.services', [])
-
-.service('uniqueService', ['$http', function($http) {
-  var dataFactory = {}
-  dataFactory.checkUniqueValue = function(user) {
-      return  $http.get(baseUrlPath + '/users/unique/' + user);
-  }
-  return dataFactory;
-}])
-
 .service('pageService', ["$http", function ($http) {
   var baseDir = baseUrlPath + '/pages/';
   return {
@@ -37,7 +28,8 @@ angular.module('myApp.services', [])
     index: function() {return $http.get(baseDir)},
     show: function(id) {return $http.get(baseDir + id)},
     edit: function(user) {return $http.put(baseDir + user.id, {"user": user})},
-    destroy: function(id) {return $http.delete(baseDir + id)}
+    destroy: function(id) {return $http.delete(baseDir + id)},
+    uniqueEmail: function(email) {return $http.get(baseDir + "unique/" + email)}
   }
 }])
 
@@ -110,7 +102,9 @@ angular.module('myApp.services', [])
       'insertdatetime media nonbreaking save table contextmenu directionality',
       'emoticons template paste textcolor colorpicker textpattern imagetools'
     ],
-    toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+    toolbar1: 'insertfile undo redo | styleselect | bold italic | ' +
+    'alignleft aligncenter alignright alignjustify | ' +
+    'bullist numlist outdent indent | link image',
     toolbar2: 'print preview media | forecolor backcolor emoticons',
     image_advtab: true,
     templates: [
@@ -211,5 +205,15 @@ angular.module('myApp.services', [])
     setNameToRole: setNameToRole,
     getNameToRole: getNameToRole,
     getOptions: getOptions
+  }
+}])
+.service('staffService', ['$http', function($http) {
+  var baseDir = baseUrlPath + '/staff/';
+  return {
+    index: function() {return $http.get(baseDir)},
+    show: function(id) {return $http.get(baseDir + id)},
+    create: function(person) {return $http.post(baseDir, {"staff": person})},
+    edit: function(person) {return $http.put(baseDir + person.id, {"staff": person})},
+    destroy: function(id) {return $http.delete(baseDir + id)}
   }
 }]);

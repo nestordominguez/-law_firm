@@ -1,70 +1,64 @@
-  <div class="col-md-12">
-  <div class="col-md-7">
+<div class="col-md-5">
 
-  </div>
+</div>
 
-  <form novalidate class="form" name="form">
-    <fieldset class="fieldset">
-      <legend>Enviar mensaje:</legend>
-      <div>
-          <input type="name"
-           ng-model="message.name"
-           name="uName"
-           placeholder="Nómbre"
-           required=""
-           autofocus
-           class="col-md-12"
-           >
-        <div ng-show="form.$submitted || form.uName.$touched">
-          <p ng-show="form.uName.$error.required" class="col-md-12 col-xs-12"> Falta su nombre.</p>
-        </div>
-        <br/>
-        <br/>
-          <input type="phone"
-           ng-model="message.phone"
-           name="uPhone"
-           ng-minlength="10"
-           ng-maxlength="12"
-           placeholder="Teléfonfo ej: 381-4123123"
-           required=""
-           class="col-md-12"
-           >
-        <div ng-show="form.$submitted || form.uPhone.$touched">
-          <p ng-show="form.uPhone.$error.required" class="col-md-12 col-xs-12"> Falta su teléfono.</p>
-          <p ng-show="form.uPhone.$error.minlength" class="col-md-12 col-xs-12"> Faltan dígitos a su número.</p>
-          <p ng-show="form.uPhone.$error.maxlength" class="col-md-12 col-xs-12"> Sobran dígitos a su número.</p>
-        </div>
-        <br/>
-        <br/>
-          <input type="email"
-           ng-model="message.email"
-           name="uEmail"
-           placeholder="E-mail ej: ejemplo@ejemplo.com"
-           required=""
-           class="col-md-12"
-           >
-        <label for="priority"> </label></br>
-        <div ng-show="form.$submitted || form.uEmail.$touched">
-          <p ng-show="form.uEmail.$error.required" class="col-md-12 col-xs-12"> Falta su Email.</p>
-          <p ng-show="form.uEmail.$error.email" class="col-md-12 col-xs-12"> No es un email válido.</p>
-        </div>
-        </label></br>
-        <textarea name="uContent" rows="10" cols="44" ng-model="message.content" required="" class="col-md-12" placeholder="Escriba aquí el mensaje a enviar"></textarea>
-        <div ng-show="form.$submitted || form.uContent.$touched">
-          <p ng-show="form.uContent.$error.required" class="col-md-12 col-xs-12"> Falta su comentario.</p>
-        </div>
-        </br>
-        </br>
-        </br>
-
+<form novalidate class="form" name="form">
+  <fieldset class="fieldset">
+    <legend>Enviar mensaje:</legend>
+    <div>
+        <input type="name"
+         ng-model="message.name"
+         name="uName"
+         placeholder="Nómbre"
+         required=""
+         class="col-md-6"
+         >
+      <div ng-show="form.$submitted || form.uName.$touched">
+        <p ng-show="form.uName.$error.required" class="col-md-6 col-xs-12 error"> Falta su nombre.</p>
       </div>
-
-      <input type="submit" value="Enviar" ng-click="create(message)" class="btn col-md-offset-10 col-xs-offset-10"/>
-      </br>
-      </br>
-      <p>
-        <a href="#/pages/index">Volver</a>
-      </p>
-    </fieldset>
-  </form>
-  </div>
+      <br/>
+      <br/>
+        <input type="phone"
+         ng-model="message.phone"
+         name="uPhone"
+         ng-minlength="10"
+         ng-maxlength="12"
+         placeholder="Teléfonfo ej: 381-4123123"
+         required=""
+         class="col-md-6"
+         >
+      <div ng-show="form.$submitted || form.uPhone.$touched">
+        <p ng-show="form.uPhone.$error.required" class="col-md-6 col-xs-12 error"> Falta su teléfono.</p>
+        <p ng-show="form.uPhone.$error.minlength" class="col-md-6 col-xs-12 error"> Faltan dígitos a su número.</p>
+        <p ng-show="form.uPhone.$error.maxlength" class="col-md-6 col-xs-12 error"> Sobran dígitos a su número.</p>
+      </div>
+      <br/>
+      <br/>
+        <input type="email"
+         ng-model="message.email"
+         name="uEmail"
+         placeholder="E-mail ej: ejemplo@ejemplo.com"
+         required=""
+         class="col-md-6"
+         >
+      <div ng-show="form.$submitted || form.uEmail.$touched">
+        <p ng-show="form.uEmail.$error.required" class="col-md-6 col-xs-12 error"> Falta su Email.</p>
+        <p ng-show="form.uEmail.$error.email" class="col-md-6 col-xs-12 error"> No es un email válido.</p>
+      </div>
+      </label>
+      <br/>
+      <br/>
+      <textarea name="uContent" rows="12" cols="44" ng-model="message.content" required="" class="col-md-12" placeholder="Escriba aquí el mensaje a enviar" maxlength="500"></textarea>
+      <div ng-show="form.$submitted || form.uContent.$touched">
+        <p ng-show="form.uContent.$error.required" class="col-md-6 col-xs-12 error"> Falta su comentario.</p>
+      </div>
+    <br/>
+    <br/>
+    </div>
+    <div class="col-md-offset-10">
+    <input type="submit" value="Enviar" ng-click="create(message)" class="btn col-md-10"/>
+    </div>
+    <br/>
+    <a class=" col-md" href="#/pages/index">Volver</a>
+  </fieldset>
+</form>

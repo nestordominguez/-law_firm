@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224232001) do
+ActiveRecord::Schema.define(version: 20160302031222) do
 
   create_table "messages", force: :cascade do |t|
     t.string   "name"
@@ -34,6 +34,20 @@ ActiveRecord::Schema.define(version: 20160224232001) do
   end
 
   add_index "pages", ["slug"], name: "index_pages_on_slug", unique: true
+
+  create_table "staffs", force: :cascade do |t|
+    t.string   "names"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "cel"
+    t.text     "address"
+    t.integer  "number"
+    t.integer  "code"
+    t.text     "cv"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

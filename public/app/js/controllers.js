@@ -306,4 +306,6 @@ angular.module('myApp.controllers', []).
         $route.reload();
       })
     }
+  }])
+  .controller('indexStaffController', ['$scope',function($scope) {
   }]);

@@ -17,7 +17,7 @@ angular.module('myApp.directives', [])
     }
   }
 }])
-.directive('unique', ['uniqueService', function(uniqueService) {
+.directive('unique', ['usersService', function(usersService) {
     return {
       restrict:'A',
       require: 'ngModel',
@@ -25,7 +25,7 @@ angular.module('myApp.directives', [])
         element.bind('blur', function() {
           if (!element.val()) { return };
           var currentValue = element.val();
-          uniqueService.checkUniqueValue(currentValue)
+          usersService.uniqueEmail(currentValue)
           .then(function(unique) {
             if (unique.data == true) {
               ngModel.$setValidity('unique', true)
@@ -69,10 +69,10 @@ angular.module('myApp.directives', [])
           scope.message = sendMsjServices.getMsj().data;
           $timeout(function() {
             scope.message = "";
-            sendMsjServices.setSuccess("");
-            sendMsjServices.setLocalSuccess("");
-            sendMsjServices.setHostError("");
           }, 5000);
+          sendMsjServices.setSuccess("");
+          sendMsjServices.setLocalSuccess("");
+          sendMsjServices.setHostError("");
         };
       }
 
@@ -81,5 +81,78 @@ angular.module('myApp.directives', [])
       });
     }
 
+  }
+}])
+.directive('staff', ['$timeout', 'staffService', 'rolesService', 'tinymce',
+  function($timeout, staffService, rolesService, tinymce) {
+  return {
+    restrict: 'E',
+    templateUrl: 'views/directives/staff.html',
+    scope: {},
+    link: function(scope, element, attrs) {
+      scope.showUpdate = false;
+
+      staffService.index().then(function(response) {
+        scope.staff = response.data.body;
+      });
+
+      scope.show = function(id) {
+        scope.showing = false;
+        staffService.show(id).then(function(response) {
+          scope.showing = true;
+          scope.lawyer = response.data.body;
+        });
+      }
+      scope.leave = function() {
+        scope.showUpdate = false;
+        scope.showing = false;
+      }
+
+      var create = false;
+      scope.update = function(person) {
+        if (rolesService.getRol() == 3) {
+          create = false;
+          scope.tinymceOptions = tinymce;
+          scope.showUpdate = true;
+          scope.person = person;
+            scope.updateAction = function(edited_person) {
+              if (create) {
+                staffService.create(edited_person).then(function(response) {
+                  staffService.index().then(function(response) {
+                    scope.staff = response.data.body;
+                    scope.leave();
+                  });
+                });
+              } else {
+                staffService.edit(edited_person).then(function(response) {
+                  scope.person = response.data;
+                  scope.showing = false;
+                });
+              }
+
+            }
+        }
+      };
+
+      scope.delete = function(id_person) {
+        staffService.show(id_person).then(function(response) {
+          scope.name = response.data.body.names;
+        });
+        scope.destroy = function() {
+          staffService.destroy(id_person).then(function(response) {
+            staffService.index().then(function(response) {
+              scope.staff = response.data.body;
+              scope.leave();
+            });
+          });
+        }
+      }
+
+      scope.create = function() {
+        scope.person = {};
+        create = true;
+      }
+
+    }
   }
 }]);

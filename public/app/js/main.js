@@ -96,6 +96,11 @@ angular.module('myApp', [
     controller: 'createMessageController',
     data: {authorized: [3, 2, 1 ,0]}
   })
+  .when('/staff/index', {
+    templateUrl: 'views/staff/index.html',
+    controller: 'indexStaffController',
+    data: {authorized: [3, 2, 1 ,0]}
+  })
   .otherwise({redirectTo: '/pages', data: {authorized: [0,1,2,3]}});
 }])
 .config(function(AuthProvider, AuthInterceptProvider) {
@@ -161,7 +166,7 @@ angular.module('myApp', [
         },
         scrollInertia: 400, // adjust however you want
         axis: 'yx', // enable 2 axis scrollbars by default,
-        theme: 'dark-thick',
+        theme: 'thick',
         autoHideScrollbar: true,
         setHeight: 500
     };

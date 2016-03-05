@@ -16,8 +16,8 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body>
-<div class="container-fluid">
+<body class="container">
+<div >
   <nav class="navbar navbar-inverse navbar-fixed-bottom">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -31,9 +31,22 @@
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li ng-class="select('{{obj.slug}}')" ng-if="!$first" ng-repeat="obj in links"><a ng-href="#/pages?page_link={{obj.slug}}" class="light">{{obj.link}}</a></li>
+          <li><a href="#/staff/index">Staff</a></li>
           <li ng-class="select('create')"><a href="#/messages/create?page_link=create" class="light">Contáctenos</a ></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+
+        <li ng-show="isAuthenticated()" class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="">Panel de control
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#/users/index">Mostrar Usuarios</a></li>
+            <li><a href="#/pages/index">Mostrar Páginas</a></li>
+            <li><a href="#/pages/create">Crear Páginas</a></li>
+            <li><a href="#/messages/index">Mostrar Mensajes</a></li>
+          </ul>
+        </li>
+
           <li ng-show="isAuthenticated()" class="light"><a href="#/users/sign_out" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Cerrar Sesion</a></li>
           <li ng-hide="isAuthenticated()" class="light"><a href="#/users/sign_up"><span class="glyphicon glyphicon-user"></span> Crear Cuenta</a></li>
           <li ng-hide="isAuthenticated()" class="light"><a href="#/users/sign_in"><span class="glyphicon glyphicon-log-in"></span> Iniciar Sesion</a></li>
@@ -48,23 +61,10 @@
     <h1>Estúdio Jurídico Antolla Lerma</h1>
   </header>
 
-<!--                           Control panel                                -->
-
-<div class="back">
-  <div class="col-md-3">
-    <ul class=" control-panel border-radius" id="panel">
-    <h1 id="flip">Panel de control</h1>
-    <li><a href="#/users/index">Mostrar Usuarios</a></li>
-    <li><a href="#/pages/index">Mostrar Páginas</a></li>
-    <li><a href="#/pages/create">Crear Páginas</a></li>
-    <li><a href="#/messages/index">Mostrar Mensajes</a></li>
-    </ul>
-  </div>
-
 <!--                             Background                                 -->
 
   <div class="row">
-      <div class="col-md-8 col-xs-12 background border-radius">
+      <div class="col-md-12 col-xs-12 background border-radius">
         <h4 ng-show="message" class="animate-show border-radius" msj ng-class="{ true: 'error', false: 'success' }[classMsj]">{{message}}</h4>
         <div class="col-md-12 ">
           <div class="top-in" ng-scrollbars ng-scrollbars-config="config" ng-view></div>

@@ -10,9 +10,6 @@ body {
   font-size: 16px !important;
   color: #ffffcc !important;
 }
-a {
-  font-size: 16px !important;
-}
 h4 {
   font-size: 26px !important;
 }
@@ -103,6 +100,8 @@ input[type="submit"] {
   background-color: #3F3A3A !important;
 }
 textarea {
+  resize: none;
+  overflow: hidden;
   text-align: center;
   color: rgba(200, 166, 55, 0.9) !important;
   background-color: transparent !important;
@@ -110,6 +109,7 @@ textarea {
   -moz-border-radius: 15px !important;
   -o-border-radius: 15px !important;
   border-radius: 15px !important;
+  margin-bottom: 12px !important;
 }
 option {
   color: #fff;
@@ -139,6 +139,39 @@ input:hover, button:hover, select:hover, textarea:hover {
   -o-box-shadow: 1px 1px 10px white !important;
   box-shadow: 1px 1px 10px white !important;
 }
+
+/* system staff */
+
+.staff {
+  height: 500px;
+}
+.staff span {
+  font-size: 12px !important;
+}
+.people {
+  border: 1px solid red;
+  margin: 5px 0px 5px 0px;
+  padding: 6px;
+  background-color: black;
+}
+.lawyer-background {
+  height: 500px;
+}
+.people:hover {
+  -webkit-box-shadow: 1px 1px 20px red !important;
+  -moz-box-shadow: 1px 1px 20px red !important;
+  -o-box-shadow: 1px 1px 20px red !important;
+  box-shadow: 1px 1px 20px red !important;
+  border: 2px solid red;
+}
+.img {
+  width:80px;
+  height:70px;
+  padding: 0 10px 0 10px;
+  display: inline-block;
+}
+.text-staff {
+}
 .control-panel {
   padding: 20px;
   z-index: -10;
@@ -149,15 +182,16 @@ input:hover, button:hover, select:hover, textarea:hover {
   -o-border-radius: 15px;
   border-radius: 15px;
 }
- a:link, a:visited{
+a {
+  font-size: 16px !important;
+  color: rgba(200, 166, 55, 0.9);
+}
+ a:link, a:visited, a:active, a:hover {
  color: rgba(200, 166, 55, 0.9);
  text-decoration: none !important;
 }
 a:hover {
   color: rgba(200, 166, 55, 0.9) !important;
-  text-decoration: none !important;
-
-  /*color: #ffffcc !important;*/
   -webkit-text-shadow: 2px 2px 5px gray;
   -moz-text-shadow: 2px 2px 5px gray;
   -o-text-shadow: 2px 2px 5px gray;
@@ -168,6 +202,9 @@ a:hover {
   background-color: rgba(0, 0, 0, 0);
   height: 540px;
   width: 700px;
+}
+.padding_bottom {
+  padding-bottom: 24px;
 }
 fieldset {
   height: 100%;
@@ -203,10 +240,10 @@ p {
 /**************************Animate****************************************/
 
 .top-in {
-  -webkit-transition: 1s linear all;
-  -moz-transition: 1s linear all;
-  -o-transition: 1s linear all;
-  transition: 1s linear all;
+  -webkit-transition: 0.3s linear all;
+  -moz-transition: 0.3s linear all;
+  -o-transition: 0.3s linear all;
+  transition: 0.3s linear all;
   position: absolute;
   width: 100%;
   opacity: 1;
@@ -264,7 +301,8 @@ p {
   -moz-text-shadow: 1px 1px 9px rgba(188, 48, 44, 0.5);
   -o-text-shadow: 1px 1px 9px rgba(188, 48, 44, 0.5);
   text-shadow: 1px 1px 9px rgba(188, 48, 44, 0.5);
-  color: rgba(188, 48, 44, 0.5);
+  /*rgba(255, 26, 44, 0.9);*/
+  color: rgba(255, 26, 44, 0.5);
 }
 .success {
   -webkit-text-shadow: 1px 1px 9px rgba(48, 209, 44, 0.5);
@@ -360,3 +398,99 @@ p {
     /* contact ---------------------- */
     .page-contact.ng-leave      { transform-origin: 50% 50%; animation: rotateOutNewspaper .5s both ease-in; }
     .page-contact.ng-enter      { animation:slideInUp 0.5s both ease-in; }
+
+
+.stuff-to-show {
+  position: relative;
+  /*height: 100px;*/
+  -webkit-transition: top linear 0.4s;
+  transition: top linear 0.4s;
+  top: 0;
+}
+.stuff-to-show.ng-hide {
+  /*top: 600px;*/
+}
+.stuff-to-show.ng-hide-add,
+.stuff-to-show.ng-hide-remove {
+  top: 600px;
+  display: block!important;
+}
+
+
+/*animate for show staff*/
+
+.show-staff {
+  margin:10px 0 20px 0;
+  padding:10px;
+}
+
+
+
+
+
+.show-staff.ng-hide-add {
+  -webkit-animation:0.5s hide;
+  animation:0.5s hide;
+}
+
+@keyframes hide {
+  0% {
+    opacity:1;
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity:0;
+    transform: scale(0.5);
+  }
+}
+
+@-webkit-keyframes hide {
+  0% {
+    opacity:1;
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity:0;
+    transform: scale(0.5);
+  }
+}
+
+
+.show-staff.ng-hide-remove {
+  -webkit-animation:0.3s show;
+  animation:0.3s show;
+}
+
+@keyframes show {
+  0% {
+    opacity:0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity:1;
+    transform: scale(1);
+  }
+}
+
+@-webkit-keyframes show {
+  0% {
+    opacity:0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity:1;
+    transform: scale(1);
+  }
+}
