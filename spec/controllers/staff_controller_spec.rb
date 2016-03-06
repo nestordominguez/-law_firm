@@ -1,5 +1,4 @@
 require 'rails_helper'
-
-RSpec.describe StaffController, type: :controller do
+RSpec.describe Api::V1::StaffController, type: :controller do
 
 end

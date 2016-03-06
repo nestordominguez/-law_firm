@@ -193,7 +193,7 @@ angular.module('myApp.controllers', []).
       rolNameService) {
           usersService.index().then(function(response) {
             if (!response.data.error) {
-              var users = response.data.body;
+              var users = response.data;
               for (var i = 0; i < users.length; i++) {
                 rolNameService.set(users[i].role);
                 users[i].role = rolNameService.get();
@@ -206,13 +206,13 @@ angular.module('myApp.controllers', []).
           });
           $scope.id = function(id) {
             usersService.show(id).then(function(response) {
-              $scope.email = response.data.body.email;
+              $scope.email = response.data.email;
             });
             $scope.destroy = function() {
               usersService.destroy(id).then(function(response) {
                 sendMsjServices.setSuccess(response.data.base[0]);
                 usersService.index().then(function(response) {
-                  $scope.users = response.data.body;
+                  $scope.users = response.data;
                 });
               }, function(error) {
                 sendMsjServices.setHostError(error.data.base[0]);
@@ -229,8 +229,8 @@ angular.module('myApp.controllers', []).
       rolNameService) {
         usersService.show($routeParams.user).then(function(response) {
           if (!response.data.error) {
-            rolNameService.set(response.data.body.role);
-            $scope.user = response.data.body;
+            rolNameService.set(response.data.role);
+            $scope.user = response.data;
             $scope.user.role = rolNameService.get();
           } else{
             sendMsjServices.setHostError(response.data.error);
@@ -246,8 +246,8 @@ angular.module('myApp.controllers', []).
       rolNameService) {
         usersService.show($routeParams.user).then(function(response) {
           if (!response.data.error) {
-            $scope.user = response.data.body;
-            rolNameService.set(response.data.body.role);
+            $scope.user = response.data;
+            rolNameService.set(response.data.role);
             $scope.user.role = rolNameService.get();
             $scope.options = rolNameService.getOptions();
           } else{

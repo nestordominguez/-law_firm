@@ -2,11 +2,10 @@ class Api::V1::CoreController < ApplicationController
 
   private
   def authorized?
-    return true if current_user.role == 3
-    return false
+    current_user.role == 3
   end
 
   def unauthorized
-    return "No esta autorizado a entrar a esta sección."
+    { error: "No esta autorizado a entrar a esta sección." }
   end
 end

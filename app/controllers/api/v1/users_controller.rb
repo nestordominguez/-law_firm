@@ -1,30 +1,37 @@
 class Api::V1::UsersController < Api::V1::CoreController
   before_action :set_user, only: [:show, :update, :destroy]
   before_action :authenticate_user!, only: [:index, :show, :update, :destroy]
-  before_action :authorized?, only: [:index, :show, :update, :destroy]
-## role 1 = user role 2 = lawyer role 3 = superuser
+# role 1 = user role 2 = lawyer role 3 = superuser
   def index
-    if authorized?
-      respond_with body: User.all
-    else
-      respond_with error: unauthorized
+    respond_to do |format|
+      if authorized?
+        format.json { render json: User.all }
+      else
+        format.json { render json: unauthorized }
+      end
     end
   end
 
   def show
-    if authorized?
-      respond_with body: @user
-    else
-      respond_with error: unauthorized
+    respond_to do |format|
+      if authorized?
+        format.json { render json: @user }
+      else
+        format.json { render json: unauthorized }
+      end
     end
   end
 
   def update
     respond_to do |format|
-      if @user.update_attributes(user_params)
-        format.json { render json: @user, status: :ok}
+      if authorized?
+        if @user.update_attributes(user_params)
+          format.json { render json: @user, status: :ok}
+        else
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       else
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: unauthorized }
       end
     end
   end

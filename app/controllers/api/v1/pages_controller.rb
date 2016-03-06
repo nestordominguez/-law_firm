@@ -1,6 +1,6 @@
 class Api::V1::PagesController < Api::V1::CoreController
   before_action :set_page, only: [:update, :destroy]
-  before_action :authenticate_user!, only: [:create, :update, :destroy, :list_avaliable]
+  before_action :authenticate_user!, only: [:create, :update, :destroy, :list_available]
 
   def index
     respond_with body: Page.all.sort_by {|page| page.priority }.reverse
@@ -12,57 +12,62 @@ class Api::V1::PagesController < Api::V1::CoreController
   end
 
   def create
-    if authorized?
-      @page = Page.new(page_params)
-        respond_to do |format|
-          if @page.save
-            format.json { render json: @page, status: :created }
-          else
-            format.json { render json: @page.errors, status: :unprocessable_entity }
-          end
+    respond_to do |format|
+      if authorized?
+        @page = Page.new(page_params)
+        if @page.save
+          format.json { render json: @page, status: :created }
+        else
+          format.json { render json: @page.errors, status: :unprocessable_entity }
         end
-    else
-      respond_with error: unauthorized
+      else
+        format.json { render json: unauthorized }
+      end
     end
   end
 
   def update
-    if authorized?
-      respond_to do |format|
+    respond_to do |format|
+      if authorized?
         if @page.update_attributes(page_params)
           format.json { render json: @page, status: :ok }
         else
           format.json { render json: @page.errors, status: :unprocessable_entity }
         end
+      else
+        format.json { render json: unauthorized }
       end
-    else
-      respond_with error: unauthorized
     end
   end
 
   def destroy
-    if authorized?
-      respond_to do |format|
+    respond_to do |format|
+      if authorized?
         if @page.destroy
           format.json { head :no_content, status: :ok }
         else
           format.json { render json: @page.errors, status: :unprocessable_entity }
         end
+      else
+        format.json { render json: unauthorized }
       end
-    else
-      respond_with error: unauthorized
     end
   end
 
   def list_available
-    respond_with body: Page.pluck(:priority)
+    respond_to do |format|
+      if authorized?
+        format.json { render json: {body: Page.pluck(:priority)} }
+      else
+        format.json { render json: unauthorized }
+      end
+    end
   end
 
   def unique?
-    link = true
-    link = false if find_link == nil
-    render json: link
+    respond_with find_link != nil
   end
+
   private
 
   def set_page

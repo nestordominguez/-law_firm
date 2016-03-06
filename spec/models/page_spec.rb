@@ -46,9 +46,9 @@ describe Page do
       expect(Page.all.count).to eq(1)
     end
 
-    it "there are higher than 15 rows in db" do
-      16.times {|n| build(:page, link: "#{n}", priority: "#{n +1}").save}
-      expect(Page.all.count).to eq(15)
+    it "there are higher than 7 rows in db" do
+      8.times {|n| build(:page, link: "#{n}", priority: "#{n +1}").save}
+      expect(Page.all.count).to eq(7)
     end
   end
 
@@ -72,9 +72,9 @@ describe Page do
       expect(Page.find(2).priority).to eq(1)
     end
 
-    it "there are less than 15 rows" do
-      15.times {|n| build(:page, link: "#{n}", priority: "#{n +1}").save}
-      expect(Page.all.count).to eq(15)
+    it "there are less than 7 rows" do
+      7.times {|n| build(:page, link: "#{n}", priority: "#{n +1}").save}
+      expect(Page.all.count).to eq(7)
     end
 
   end

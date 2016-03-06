@@ -1,5 +1,15 @@
-FactoryGirl.define do  factory :user do
-    
+FactoryGirl.define do
+  pass = Faker::Internet.password(8)
+  factory :admin, class: User do
+    email Faker::Internet.email
+    password pass
+    password_confirmation pass
+  end
+
+  factory :user do
+    email Faker::Internet.email
+    password pass
+    password_confirmation pass
   end
 
   factory :page do
@@ -8,5 +18,4 @@ FactoryGirl.define do  factory :user do
     content "content to link 1"
     priority "1"
   end
-
 end
