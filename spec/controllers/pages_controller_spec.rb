@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::PagesController, type: :controller do
-  describe "GET index" do
+  describe "GET action #index" do
     before { get :index, format: :json}
 
     it "respond with a 200 status code" do
@@ -82,8 +82,8 @@ RSpec.describe Api::V1::PagesController, type: :controller do
         post :create, :page => valid_page, format: :json
       end
 
-      it "not have access" do
-        expect(response).to have_http_status(200)
+      it "not have access, error 403" do
+        expect(response).to have_http_status(403)
       end
 
       it "not add a new row to db" do
@@ -165,8 +165,8 @@ RSpec.describe Api::V1::PagesController, type: :controller do
         put :update, id: subject.id, page: valid_page, format: :json
       end
 
-      it "not have access" do
-        expect(response).to have_http_status(200)
+      it "not have access, error 403" do
+        expect(response).to have_http_status(403)
       end
 
       it "not update row in db" do
@@ -218,8 +218,8 @@ RSpec.describe Api::V1::PagesController, type: :controller do
         delete :destroy, id: subject.id, format: :json
       end
 
-      it "have status 200" do
-        expect(response.status).to eq 200
+      it "not have permission with status 403" do
+        expect(response.status).to eq 403
       end
     end
 
@@ -258,8 +258,8 @@ RSpec.describe Api::V1::PagesController, type: :controller do
         get :list_available, format: :json
       end
 
-      it "have status 200" do
-        expect(response.status).to eq 200
+      it "not have permission with status 403" do
+        expect(response.status).to eq 403
       end
     end
 
@@ -285,12 +285,12 @@ RSpec.describe Api::V1::PagesController, type: :controller do
         get :unique?, :link => "linsk", format: :json
       end
 
-      it "have status 200" do
+      it "have permission with status 200" do
         expect(response.status).to eq 200
       end
 
-      it "respond with true" do
-        expect(response.body).to eq "false"
+      it "respond with false" do
+        expect(response.body).to eq false.to_json
       end
     end
 
@@ -304,7 +304,7 @@ RSpec.describe Api::V1::PagesController, type: :controller do
       end
 
       it "respond with true" do
-        expect(response.body).to eq "true"
+        expect(response.body).to eq true.to_json
       end
     end
   end

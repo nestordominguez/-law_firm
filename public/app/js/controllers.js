@@ -19,6 +19,7 @@ angular.module('myApp.controllers', []).
         };
         Auth.logout(config).then(function(oldUser) {
           sendMsjServices.setLocalSuccess("signed_out", oldUser.email);
+          Auth.logout().then(function () {});
           $scope.$broadcast('send-msj', function() {
           });
         }, function(error) {

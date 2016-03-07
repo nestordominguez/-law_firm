@@ -7,7 +7,7 @@ class Api::V1::UsersController < Api::V1::CoreController
       if authorized?
         format.json { render json: User.all }
       else
-        format.json { render json: unauthorized }
+        format.json { render json: unauthorized, status: :forbidden }
       end
     end
   end
@@ -17,7 +17,7 @@ class Api::V1::UsersController < Api::V1::CoreController
       if authorized?
         format.json { render json: @user }
       else
-        format.json { render json: unauthorized }
+        format.json { render json: unauthorized, status: :forbidden }
       end
     end
   end
@@ -31,25 +31,27 @@ class Api::V1::UsersController < Api::V1::CoreController
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       else
-        format.json { render json: unauthorized }
+        format.json { render json: unauthorized, status: :forbidden }
       end
     end
   end
 
   def destroy
     respond_to do |format|
-      if @user.destroy
-        format.json { render json: @user.errors, status: :ok }
+      if authorized?
+        if @user.destroy
+          format.json { render json: @user.errors, status: :ok }
+        else
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       else
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: unauthorized, status: :forbidden }
       end
     end
   end
 
   def unique?
-    user = true
-    user = false if find_user
-    render json: user
+    render json: find_user == nil
   end
 
   private
@@ -71,6 +73,7 @@ class Api::V1::UsersController < Api::V1::CoreController
     rescue TypeError
       actual_param
     end
+    return actual_param
   end
 
   def find_user
