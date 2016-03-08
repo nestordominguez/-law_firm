@@ -79,7 +79,7 @@ describe Page do
 
   end
 
-  context "whould not update" do
+  context "not update" do
 
     before {create(:page)}
 
@@ -97,8 +97,8 @@ describe Page do
     end
   end
 
-  context "whould update" do
-    it "if priority of the page change between they" do
+  context "update" do
+    it "priority of the page change between they" do
       create(:page)
       build(:page, link: "link1", priority: 2).save
       page = Page.find(1)
@@ -106,6 +106,19 @@ describe Page do
       page.save
       expect(Page.find(1).priority).to eq(2)
       expect(Page.find(2).priority).to eq(1)
+    end
+  end
+
+  context "before destroy" do
+    it "all priority haigher than destoyed" do
+      4.times do |x|
+        Page.create(link: "#{x}", title: "#{x}", content: "#{x}", priority: "#{x+1}")
+      end
+      Page.find(2).destroy
+      expect(Page.pluck(:priority)).to eq [1,2,3]
+      expect(Page.all.count).to eq 3
+      Page.all.last.destroy
+      expect(Page.pluck(:priority)).to eq [1,2]
     end
   end
 end

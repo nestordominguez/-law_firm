@@ -10,4 +10,8 @@ class Staff < ActiveRecord::Base
     in: 10..11, :message => "No es un número válido"},
     :format => { with: VALID_PHONE_REGEX,
       :message => "Número inválido"}
+  validates :cel, :length => {
+  in: 10..11, :message => "No es un número válido"},
+  :format => { with: VALID_PHONE_REGEX,
+    :message => "Número inválido"}
 end

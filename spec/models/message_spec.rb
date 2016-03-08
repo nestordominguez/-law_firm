@@ -1,5 +1,10 @@
 require 'rails_helper'
+require 'database_cleaner'
 
-RSpec.describe Message, type: :model do
-  # pending "add some examples to (or delete) #{__FILE__}"
+describe Message do
+  context "validate presence" do
+    it "have all attr" do
+      # continuate here
+    end
+  end
 end

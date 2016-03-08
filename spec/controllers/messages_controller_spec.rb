@@ -79,12 +79,17 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
       email: Faker::Internet.email,
       phone: "3814327271",
       content: Lorem::Base.new('characters', 120).output}}
+    let(:invalid_message) {{
+      name: "",
+      email: Faker::Internet.email,
+      phone: "3814327271",
+      content: Lorem::Base.new('characters', 120).output}}
 
-    before { post :create, :message => valid_message, format: :json}
 
     context "when admin is loged" do
       login_admin
 
+      before { post :create, :message => valid_message, format: :json}
 
       it "respond with a 201 status code create" do
         expect(response.status).to eq 201
@@ -93,8 +98,22 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
       it {expect(response.content_type).to eq("application/json")}
     end
 
+    context "when admin is loged and attr are incorrect" do
+      login_admin
+
+      before { post :create, :message => invalid_message, format: :json}
+
+      it "respond with a 422 status code create" do
+        expect(response.status).to eq 422
+      end
+
+      it {expect(response.content_type).to eq("application/json")}
+    end
+
     context "when user is loged" do
       login_user
+
+      before { post :create, :message => valid_message, format: :json}
 
       it "respond with a 201 status code create" do
         expect(response.status).to eq 201
@@ -104,6 +123,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
     end
 
     context "when there is't loged" do
+      before { post :create, :message => valid_message, format: :json}
 
       it "respond with a 201 status code create" do
         expect(response.status).to eq 201

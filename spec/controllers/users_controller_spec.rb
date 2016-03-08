@@ -79,16 +79,30 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe "action #update" do
-    subject {create(:user)}
-
     context "when admin is loged" do
+      login_admin
+      sign_up
+      let(:valid_user) {{role: 2}}
+
+      before(:each) do
+        put :update, id: 2, user: valid_user, format: :json
+      end
+
+      it "have access" do
+        expect(response).to have_http_status 200
+      end
+
+      it {expect(response.content_type).to eq("application/json")}
+    end
+
+    context "when want update a superuser" do
       login_admin
       let(:valid_user) {{role: 2}}
 
       before { put :update, id: 1, user: valid_user, format: :json }
 
-      it "have access" do
-        expect(response).to have_http_status 200
+      it "not have access" do
+        expect(response).to have_http_status 422
       end
 
       it {expect(response.content_type).to eq("application/json")}
@@ -107,8 +121,9 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
 
     context "when user is not loged" do
+      sign_up
 
-      before { put :update, id: subject.id, format: :json}
+      before { put :update, id: 1, format: :json}
 
       it "not have authorization" do
         expect(response).to have_http_status 401
@@ -190,6 +205,21 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
       before do
         get :unique?, :email => "oscar1@hotmail.com"
+      end
+
+      it "have status 200" do
+        expect(response.status).to eq 200
+      end
+
+      it "return true" do
+        expect(response.body).to eq true.to_json
+      end
+    end
+
+    context "when email have format" do
+
+      before do
+        get :unique?, :email => "oscar.1@hotmail.com", format: [:com, :ar]
       end
 
       it "have status 200" do

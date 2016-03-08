@@ -86,6 +86,7 @@ RSpec.describe Api::V1::StaffController, type: :controller do
       number: "3117",
       code: "4000",
       cv: "asdasd asd asd"}}
+    let(:invalid_staff) {{ names: ""}}
 
 
     context "when admin is loged" do
@@ -98,6 +99,19 @@ RSpec.describe Api::V1::StaffController, type: :controller do
       end
 
       it {expect(response.content_type).to eq("application/json")}
+    end
+
+    context "when attr is invalid" do
+      login_admin
+
+      before { post :create, :staff => invalid_staff, format: :json}
+
+      it "respond with a 422 status code" do
+        expect(response.status).to eq 422
+      end
+
+      it {expect(response.content_type).to eq("application/json")}
+
     end
 
     context "when user is loged" do
@@ -126,6 +140,7 @@ RSpec.describe Api::V1::StaffController, type: :controller do
   describe "action #update" do
     subject {create(:staff)}
     let(:valid_staff) {{ names: "other" }}
+    let(:invalid_staff) {{ names: "" }}
 
     context "when admin is loged" do
       login_admin
@@ -134,6 +149,22 @@ RSpec.describe Api::V1::StaffController, type: :controller do
 
       it "have access" do
         expect(response).to have_http_status(200)
+      end
+
+      it "not update row in db" do
+        expect(Staff.find(1)).to eq(subject)
+      end
+
+      it {expect(response.content_type).to eq("application/json")}
+    end
+
+    context "when attr is invalid" do
+      login_admin
+
+      before{ put :update, id: subject.id, staff: invalid_staff, format: :json }
+
+      it "have error status 422" do
+        expect(response).to have_http_status(422)
       end
 
       it "not update row in db" do

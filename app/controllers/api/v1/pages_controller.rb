@@ -9,8 +9,6 @@ class Api::V1::PagesController < Api::V1::CoreController
         render json: Page.all.sort_by {|page| page.priority }.reverse,
         status: :ok }
     end
-
-
   end
 
   def show
@@ -56,11 +54,7 @@ class Api::V1::PagesController < Api::V1::CoreController
   def destroy
     respond_to do |format|
       if authorized?
-        if @page.destroy
-          format.json { head :no_content, status: :ok }
-        else
-          format.json { render json: @page.errors, status: :unprocessable_entity }
-        end
+        format.json { head :no_content, status: :ok }
       else
         format.json { render json: unauthorized, status: :forbidden }
       end

@@ -27,4 +27,5 @@ group :development, :test do
   gem 'database_cleaner', '~> 1.5', '>= 1.5.1'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'simplecov', :require => false#, :group => :test
 end

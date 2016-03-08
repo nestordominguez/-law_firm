@@ -19,3 +19,5 @@
 # ignore modules installed whit npm
 /public/node_modules
 /public/bower_components
+
+coverage

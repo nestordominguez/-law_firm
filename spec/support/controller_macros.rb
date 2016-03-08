@@ -16,4 +16,10 @@ module ControllerMacros
     end
   end
 
+  def sign_up
+    before(:each) do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      user = FactoryGirl.create(:user)
+    end
+  end
 end

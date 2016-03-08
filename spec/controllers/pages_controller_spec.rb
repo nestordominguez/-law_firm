@@ -20,18 +20,23 @@ RSpec.describe Api::V1::PagesController, type: :controller do
       post :create, :page => valid_page, format: :json
     end
 
-    before { get :show, id: subject.link, format: :json }
+    it "respond with a 200 status code" do
+      sign_out controller.current_user
+      get :show, id: "undefined", format: :json
+      expect(response.status).to eq(200)
+    end
 
     it "respond with a 200 status code" do
       sign_out controller.current_user
+      get :show, id: subject.link, format: :json
       expect(response.status).to eq(200)
     end
 
     it "respond with show" do
       sign_out controller.current_user
+      get :show, id: subject.link, format: :json
       expect(response.body).to eq(subject.to_json)
     end
-
     it {expect(response.content_type).to eq("application/json")}
   end
 
