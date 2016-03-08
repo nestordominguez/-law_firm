@@ -3,22 +3,25 @@ class Api::V1::MessagesController < Api::V1::CoreController
   before_action :authenticate_user!, only: [:index, :show, :destroy]
 
   def index
-    # if authorized?
-      respond_with body: Message.all
-    # else
-    #   respond_with error: unauthorized
-    # end
+    respond_to do |format|
+      if authorized?
+        format.json { render json: Message.all, status: :ok }
+      else
+        format.json { render json: unauthorized, status: :forbidden}
+      end
+    end
   end
 
   def show
-    if authorized?
-      @message.read = "Si"
-      @message.save
-      respond_with body: @message
-    else
-      respond_with error: unauthorized
+    respond_to do |format|
+      if authorized?
+        @message.read = "Si"
+        @message.save
+        format.json { render json: @message, status: :ok }
+      else
+        format.json { render json: unauthorized, status: :forbidden }
+      end
     end
-
   end
 
   def create
@@ -33,18 +36,17 @@ class Api::V1::MessagesController < Api::V1::CoreController
   end
 
   def destroy
-    if authorized?
-      respond_to do |format|
-        if @message.destroy
-          format.json { head :no_content, status: :ok }
-        else
-          format.json { render json: @message.errors, status: :unprocessable_entity }
-        end
+    respond_to do |format|
+      if authorized?
+          if @message.destroy
+            format.json { head :no_content, status: :ok }
+          else
+            format.json { render json: @message.errors, status: :unprocessable_entity }
+          end
+      else
+        format.json { render json: unauthorized, status: :forbidden }
       end
-    else
-      respond_with error: unauthorized
     end
-
   end
 
   private

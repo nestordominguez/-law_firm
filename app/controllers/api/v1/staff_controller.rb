@@ -11,45 +11,45 @@ class Api::V1::StaffController < Api::V1::CoreController
   end
 
   def create
-    if authorized?
-      @staff = Staff.new(staff_params)
-        respond_to do |format|
-          if @staff.save
-            format.json { render json: @staff, status: :created }
-          else
-            format.json { render json: @staff.errors, status: :unprocessable_entity }
-          end
+    respond_to do |format|
+      if authorized?
+        @staff = Staff.new(staff_params)
+        if @staff.save
+          format.json { render json: @staff, status: :created }
+        else
+          format.json { render json: @staff.errors, status: :unprocessable_entity }
         end
-    else
-      respond_with error: unauthorized
+      else
+        format.json { render json: unauthorized, status: :forbidden}
+      end
     end
   end
 
   def update
-    if authorized?
-      respond_to do |format|
+    respond_to do |format|
+      if authorized?
         if @staff.update_attributes(staff_params)
           format.json { render json: @staff, status: :ok }
         else
           format.json { render json: @staff.errors, status: :unprocessable_entity }
         end
+      else
+        format.json { render json: unauthorized, status: :forbidden}
       end
-    else
-      respond_with error: unauthorized
     end
   end
 
   def destroy
-    if authorized?
-      respond_to do |format|
+    respond_to do |format|
+      if authorized?
         if @staff.destroy
           format.json { head :no_content, status: :ok }
         else
           format.json { render json: @staff.errors, status: :unprocessable_entity }
         end
+      else
+        format.json { render json: unauthorized, status: :forbidden}
       end
-    else
-      respond_with error: unauthorized
     end
   end
 

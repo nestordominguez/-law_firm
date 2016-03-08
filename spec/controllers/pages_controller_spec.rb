@@ -157,7 +157,7 @@ RSpec.describe Api::V1::PagesController, type: :controller do
       end
     end
 
-    context "when it's authorized user" do
+    context "when it's not authorized user" do
       login_user
       let(:valid_page) {{link: "asd", title: "asd", content: "asd", priority: 2}}
 
@@ -201,9 +201,7 @@ RSpec.describe Api::V1::PagesController, type: :controller do
       login_admin
       subject {create(:page)}
 
-      before do
-        delete :destroy, id: subject.id, format: :json
-      end
+      before { delete :destroy, id: subject.id, format: :json }
 
       it "have status 204" do
         expect(response.status).to eq 204
