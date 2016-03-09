@@ -33,7 +33,7 @@ end
   Message.create(
     name: "#{x}#{name}" ,
     email: "#{x}#{email}" ,
-    phone: "381432727#{x}",
+    phone: 3814327271,
     content: Lorem::Base.new('characters', 120).output
   )
 end
@@ -43,8 +43,8 @@ end
     names: Faker::Name.name,
     last_name: Faker::Name.last_name,
     email: email,
-    phone: "381-432727#{x}",
-    cel: "381-512345#{x}",
+    phone: 3814327271,
+    cel: 3815123451,
     address: Faker::Address.street_name,
     number: Faker::Address.building_number,
     code: "4000",

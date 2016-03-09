@@ -3,7 +3,7 @@ class CreateMessages < ActiveRecord::Migration
     create_table :messages do |t|
       t.string :name
       t.string :email
-      t.string :phone
+      t.integer :phone,:limit => 8
       t.text :content
       t.string :read, :default => "No"
 

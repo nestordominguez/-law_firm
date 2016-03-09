@@ -16,11 +16,11 @@ ActiveRecord::Schema.define(version: 20160302031222) do
   create_table "messages", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.string   "phone"
+    t.integer  "phone",      limit: 8
     t.text     "content"
-    t.string   "read",       default: "No"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "read",                 default: "No"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "pages", force: :cascade do |t|
@@ -39,14 +39,14 @@ ActiveRecord::Schema.define(version: 20160302031222) do
     t.string   "names"
     t.string   "last_name"
     t.string   "email"
-    t.string   "phone"
-    t.string   "cel"
+    t.integer  "phone",      limit: 8
+    t.integer  "cel",        limit: 8
     t.text     "address"
     t.integer  "number"
     t.integer  "code"
     t.text     "cv"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "users", force: :cascade do |t|

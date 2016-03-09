@@ -6,17 +6,13 @@ class Message < ActiveRecord::Base
     :too_short  => "Debe tener mas de %{count} letras",
     :too_long   => "Debe tener menos de %{count} letras"
   }
-  VALID_PHONE_REGEX = /(([0-9]{2})(-|)([0-9]{8}))|(([0-9]{3})(-|)([0-9]{7}))|
-    (([0-9]{4})(-|)([0-9]{6}))/
   VALID_EMAIL_REGEX = /((([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|
     ([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})/i
   validates :email, :format => { with: VALID_EMAIL_REGEX,
     :message => "Formato no válido"}
   validates :phone, :length => {
-    in: 10..11, :message => "No es un número válido"},
-    :format => { with: VALID_PHONE_REGEX,
-      :message => "Número inválido"}
+    is: 10, :message => "No es un número válido"}
   validates :content, :length => {
     :maximum => 500,
-    :too_long => "El mensaje tiene mas de 140 caractéres"}
+    :too_long => "El mensaje tiene mas de 500 caractéres"}
 end

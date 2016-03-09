@@ -110,14 +110,16 @@ describe Page do
   end
 
   context "before destroy" do
-    it "all priority haigher than destoyed" do
-      4.times do |x|
+    it "change all priority haigher than destoyed" do
+      5.times do |x|
         Page.create(link: "#{x}", title: "#{x}", content: "#{x}", priority: "#{x+1}")
       end
       Page.find(2).destroy
-      expect(Page.pluck(:priority)).to eq [1,2,3]
-      expect(Page.all.count).to eq 3
+      expect(Page.pluck(:priority)).to eq [1,2,3,4]
+      expect(Page.all.count).to eq 4
       Page.all.last.destroy
+      expect(Page.pluck(:priority)).to eq [1,2,3]
+      Page.find_by_priority(1).destroy
       expect(Page.pluck(:priority)).to eq [1,2]
     end
   end

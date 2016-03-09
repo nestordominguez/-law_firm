@@ -59,8 +59,31 @@ class Page < ActiveRecord::Base
   end
 
   def change_priority_to_all
-    all_priority = Page.pluck(:priority)
-    count = Page.all.count
+    run_change(search_priority, count, all_priority)
+  end
+
+  def all_priority
+    Page.pluck(:priority)
+  end
+
+  def count
+    all_priority.count
+  end
+
+  def run_change(priority, cuantity, list_priority)
+    unless priority == list_priority.max
+      pages_to_change(priority, cuantity).each do |page|
+        new_priority = page.priority - 1
+        page.update_columns(priority: new_priority)
+      end
+    end
+  end
+
+  def pages_to_change(priority, cuantity)
+    Page.where(priority: priority..cuantity+1)
+  end
+
+  def search_priority
     priority = 1
     test = false
     count.times do |x|
@@ -72,14 +95,6 @@ class Page < ActiveRecord::Base
     if !test
       priority = all_priority.max
     end
-    unless priority == all_priority.max
-      pages_to_change = Page.where(priority: priority..count+1)
-      pages_to_change.each do |page|
-        new_priority = page.priority - 1
-        page.update_columns(priority: new_priority)
-      end
-    end
-    return true
+    return priority
   end
-
 end
