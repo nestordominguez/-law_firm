@@ -10,7 +10,7 @@
   "dependencies": {
     "browser-sync": "^2.11.1",
     "express": "^4.13.4",
-    "gulp": "^3.9.0",
+    "gulp": "~3.9.1",
     "gulp-live-server": "0.0.29",
     "gulp-protractor": "^2.1.0",
     "istanbul": "^0.4.2",
