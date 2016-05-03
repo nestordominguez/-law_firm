@@ -144,6 +144,7 @@ angular.module('myApp.services', [])
   function setLink() {
     links = [];
     pageService.index().then(function(response) {
+      if (!response.data.body) return [];
       for (var i = response.data.body.length - 1; i >= 0; i--) {
         links.push(response.data.body[i]);
       };

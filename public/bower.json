@@ -19,10 +19,18 @@
     "mocha": "~2.3.4",
     "chai": "~3.4.2",
     "angular-mocks": "~1.4.9",
-    "AngularDevise": "angular-devise#^1.1.0",
+    "AngularDevise": "angular-devise#^1.3.0",
     "angular-ui-tinymce": "latest"
   },
   "resolutions": {
     "angular": "1.4.9"
+  },
+  "devDependencies": {
+    "bootstrap": "^3.3.6",
+    "malihu-custom-scrollbar-plugin": "^3.1.3",
+    "angular-route": "^1.5.5",
+    "angular-animate": "^1.5.5",
+    "AngularDevise": "angular-devise#^1.3.0",
+    "ng-scrollbars": "^0.0.10"
   }
 }
