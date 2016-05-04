@@ -37,7 +37,14 @@ angular.module('myApp.controllers', []).
       });
 
       $scope.$on("update:links", function() {
-        $scope.links = linksService.getLink();
+          pageService.index().then(function(response) {
+          var links = [];
+          for (var i = response.data.length - 1; i >= 0; i--) {
+            links.push(response.data[i]);
+          };
+          $scope.links = links;
+        });
+
       })
       $scope.page_link = $routeParams.page_link;
       $scope.select = function(link) {
@@ -49,10 +56,9 @@ angular.module('myApp.controllers', []).
 // page controller...
 
   .controller('indexPageController', ['$scope', '$route', 'pageService',
-    'linksService',
-    function($scope, $route, pageService, linksService) {
+    function($scope, $route, pageService) {
     pageService.index().then(function(response) {
-      $scope.pages = response.data.body;
+      $scope.pages = response.data;
     });
 
     $scope.id = function(id) {
@@ -61,8 +67,8 @@ angular.module('myApp.controllers', []).
       });
       $scope.destroy = function() {
         pageService.destroy(id).then(function(response) {
-          pageService.index().then(function(response) {
-            $scope.pages = response.data.body;
+          pageService.index().then(function(res) {
+            $scope.pages = res.data;
             $scope.$emit("update:links", function() {
             });
             $route.reload();
