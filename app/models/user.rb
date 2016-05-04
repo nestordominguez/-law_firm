@@ -41,6 +41,6 @@ class User < ActiveRecord::Base
 
   def not_update_superuser
     superuser = User.find_by_role(3)
-    return id != superuser.id
+    role_changed? && role != 3 && id != superuser.id
   end
 end
