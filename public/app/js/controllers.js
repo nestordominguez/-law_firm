@@ -82,8 +82,8 @@ angular.module('myApp.controllers', []).
   }])
 
   .controller('createPageController', ['$scope', '$location', 'pageService',
-    'tinymce', 'linksService',
-    function($scope, $location, pageService, tinymce, linksService) {
+    'tinymce',
+    function($scope, $location, pageService, tinymce) {
       $scope.tinymceOptions = tinymce;
       pageService.priorityAvailable().then(function(response) {
         var list_available = response.data.body
