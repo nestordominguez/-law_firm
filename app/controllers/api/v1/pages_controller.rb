@@ -54,7 +54,11 @@ class Api::V1::PagesController < Api::V1::CoreController
   def destroy
     respond_to do |format|
       if authorized?
-        format.json { head :no_content, status: :ok }
+        if @page.destroy
+          format.json { render json: @pages, status: :ok }
+        else
+          format.json { render json: @page.errors, status: :unprocessable_entity }
+        end
       else
         format.json { render json: unauthorized, status: :forbidden }
       end
