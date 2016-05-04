@@ -17,8 +17,8 @@ links.each_with_index do |link, index|
   Page.create(link: link, title: link, content: content, priority: index + 1)
 end
 users = %W(1 2 3 4 5)
-User.create(email: "1@a.a", password: "asdasdasd",
-  password_confirmation: "asdasdasd")
+User.create(email: "oscardom80@hotmail.com", password: "magoloco",
+  password_confirmation: "magoloco")
 User.create(email: "oscar@hotmail.com", password: "magoloco",
   password_confirmation: "magoloco")
 users.each do |user|
