@@ -138,28 +138,6 @@ angular.module('myApp.services', [])
     setLocalRol: setLocalRol
   }
 }])
-.service('linksService', ['pageService', function(pageService) {
-  var links;
-
-  function setLink() {
-    links = [];
-    pageService.index().then(function(response) {
-      if (!response.data.body) return [];
-      for (var i = response.data.body.length - 1; i >= 0; i--) {
-        links.push(response.data.body[i]);
-      };
-    });
-  }
-
-  function getLink() {
-    setLink();
-    return links;
-  }
-
-  return {
-    getLink: getLink
-  }
-}])
 .service('messagesService', ['$http', function($http) {
   var baseDir = baseUrlPath + '/messages/';
   return {

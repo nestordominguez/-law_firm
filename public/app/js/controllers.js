@@ -4,8 +4,9 @@
 
 angular.module('myApp.controllers', []).
   controller('appController', ['$scope', '$routeParams', 'Auth',
-    'sendMsjServices', 'linksService',
-    function($scope, $routeParams, Auth, sendMsjServices, linksService) {
+    'sendMsjServices', 'pageService',
+    function($scope, $routeParams, Auth, sendMsjServices,
+      pageService) {
 
       $scope.isAuthenticated = function() {
         return Auth.isAuthenticated();
@@ -27,7 +28,14 @@ angular.module('myApp.controllers', []).
         });
       }
 
-      $scope.links = linksService.getLink();
+      pageService.index().then(function(response) {
+        var links = [];
+        for (var i = response.data.length - 1; i >= 0; i--) {
+          links.push(response.data[i]);
+        };
+        $scope.links = links;
+      });
+
       $scope.$on("update:links", function() {
         $scope.links = linksService.getLink();
       })
@@ -213,7 +221,17 @@ angular.module('myApp.controllers', []).
               usersService.destroy(id).then(function(response) {
                 sendMsjServices.setSuccess(response.data.base[0]);
                 usersService.index().then(function(response) {
-                  $scope.users = response.data;
+                  if (!response.data.error) {
+                    var users = response.data;
+                    for (var i = 0; i < users.length; i++) {
+                      rolNameService.set(users[i].role);
+                      users[i].role = rolNameService.get();
+                    }
+                    $scope.users = users;
+                  } else {
+                    sendMsjServices.setHostError(response.data.error);
+                    $location.path("/users/pages");
+                  };
                 });
               }, function(error) {
                 sendMsjServices.setHostError(error.data.base[0]);

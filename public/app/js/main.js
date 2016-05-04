@@ -145,10 +145,11 @@ angular.module('myApp', [
 
       Auth.currentUser().then(function(user) {
         rolesService.setRol(user);
+        config();
       }, function(error) {
         rolesService.setLocalRol(0);
+        config();
       });
-      config();
     });
 
 }])
