@@ -2,7 +2,7 @@ class Message < ActiveRecord::Base
   validates :name, :email, :phone, :content,
     :presence => {:message => "no esta presente"}
   validates :name, :length => {
-    :in         => 3..15,
+    :in         => 3..25,
     :too_short  => "Debe tener mas de %{count} letras",
     :too_long   => "Debe tener menos de %{count} letras"
   }
