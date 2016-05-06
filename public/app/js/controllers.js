@@ -293,8 +293,8 @@ angular.module('myApp.controllers', []).
   .controller('indexMessageController', ['$scope', '$route', 'messagesService',
     function($scope, $route, messagesService) {
           messagesService.index().then(function(response) {
+              $scope.messages = response.data;
             if (!response.data.error) {
-              $scope.messages = response.data.body;
             } else {
               $location.path("/messages/index");
             };
@@ -302,12 +302,12 @@ angular.module('myApp.controllers', []).
 
           $scope.id = function(id) {
             messagesService.show(id).then(function(response) {
-              $scope.name = response.data.body.name;
+              $scope.name = response.data.name;
             });
             $scope.destroy = function() {
               messagesService.destroy(id).then(function(response) {
                 messagesService.index().then(function(response) {
-                  $scope.users = response.data.body;
+                  $scope.users = response.data;
                   $route.reload();
                 });
               }, function(error) {
@@ -321,7 +321,7 @@ angular.module('myApp.controllers', []).
     'messagesService',
     function($scope, $routeParams, messagesService) {
     messagesService.show($routeParams.id).then(function(response) {
-      $scope.message = response.data.body;
+      $scope.message = response.data;
     });
   }])
   .controller('createMessageController', ['$scope', 'messagesService', '$route',
