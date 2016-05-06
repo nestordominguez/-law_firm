@@ -42,9 +42,13 @@ class Api::V1::StaffController < Api::V1::CoreController
   def destroy
     respond_to do |format|
       if authorized?
-        format.json { head :no_content, status: :ok }
+        if @staff.destroy
+          format.json { head :no_content, status: :ok }
+        else
+          format.json { render json: @staff.errors, status: :unprocessable_entity }
+        end
       else
-        format.json { render json: unauthorized, status: :forbidden}
+        format.json { render json: unauthorized, status: :forbidden }
       end
     end
   end

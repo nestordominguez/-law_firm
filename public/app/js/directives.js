@@ -83,8 +83,8 @@ angular.module('myApp.directives', [])
 
   }
 }])
-.directive('staff', ['$timeout', 'staffService', 'rolesService', 'tinymce',
-  function($timeout, staffService, rolesService, tinymce) {
+.directive('staff', ['$route', '$timeout', 'staffService', 'rolesService', 'tinymce',
+  function($route, $timeout, staffService, rolesService, tinymce) {
   return {
     restrict: 'E',
     templateUrl: 'views/directives/staff.html',
@@ -133,7 +133,6 @@ angular.module('myApp.directives', [])
             }
         }
       };
-
       scope.delete = function(id_person) {
         staffService.show(id_person).then(function(response) {
           scope.name = response.data.body.names;
@@ -141,8 +140,8 @@ angular.module('myApp.directives', [])
         scope.destroy = function() {
           staffService.destroy(id_person).then(function(response) {
             staffService.index().then(function(response) {
-              scope.staff = response.data.body;
-              scope.leave();
+              scope.staff = response.data;
+              $route.reload();
             });
           });
         }
