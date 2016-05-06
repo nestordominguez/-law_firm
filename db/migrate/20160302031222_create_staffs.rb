@@ -4,8 +4,8 @@ class CreateStaffs < ActiveRecord::Migration
       t.string :names
       t.string :last_name
       t.string :email
-      t.integer :phone,:limit => 8
-      t.integer :cel,:limit => 8
+      t.integer :phone,:limit => 10
+      t.integer :cel,:limit => 10
       t.text :address
       t.integer :number
       t.integer :code
