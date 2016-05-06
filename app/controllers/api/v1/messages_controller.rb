@@ -38,7 +38,11 @@ class Api::V1::MessagesController < Api::V1::CoreController
   def destroy
     respond_to do |format|
       if authorized?
-        format.json { head :no_content, status: :ok }
+        if @message.destroy
+          format.json { head :no_content, status: :ok }
+        else
+          format.json { render json: @message.errors, status: :unprocessable_entity }
+        end
       else
         format.json { render json: unauthorized, status: :forbidden }
       end
