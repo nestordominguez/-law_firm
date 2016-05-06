@@ -4,7 +4,7 @@ class Api::V1::MessagesController < Api::V1::CoreController
 
   def index
     respond_to do |format|
-      if authorized?
+      if authorized? || admin?
         format.json { render json: Message.all, status: :ok }
       else
         format.json { render json: unauthorized, status: :forbidden}
@@ -14,7 +14,7 @@ class Api::V1::MessagesController < Api::V1::CoreController
 
   def show
     respond_to do |format|
-      if authorized?
+      if authorized? || admin?
         @message.read = "Si"
         @message.save
         format.json { render json: @message, status: :ok }
@@ -37,7 +37,7 @@ class Api::V1::MessagesController < Api::V1::CoreController
 
   def destroy
     respond_to do |format|
-      if authorized?
+      if authorized? || admin?
         if @message.destroy
           format.json { head :no_content, status: :ok }
         else

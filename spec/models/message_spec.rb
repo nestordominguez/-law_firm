@@ -36,8 +36,8 @@ describe Message do
 
   context "when invalid length name" do
 
-    it "have higher than 15 char" do
-      invalid = FactoryGirl.build(:message, name: "adasdasdasdasdaa")
+    it "have higher than 25 char" do
+      invalid = FactoryGirl.build(:message, name: "adasdasdasdasdaaasdfghjkiu")
       expect(invalid).to_not be_valid
     end
 

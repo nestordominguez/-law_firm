@@ -208,8 +208,8 @@ RSpec.describe Api::V1::PagesController, type: :controller do
 
       before { delete :destroy, id: subject.id, format: :json }
 
-      it "have status 204" do
-        expect(response.status).to eq 204
+      it "have status 200" do
+        expect(response.status).to eq 200
       end
     end
 
