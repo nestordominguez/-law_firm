@@ -17,8 +17,9 @@
     </ul>
   </div>
 
-  <div class="lawyer-background border-radius col-md-7" ng-scrollbars ng-scrollbars-config="config">
-    <ul ng-show="showing && !showUpdate" class="show-staff center" ng-mouseleave="leave()">
+  <div class="lawyer-background border-radius col-md-7" ng-scrollbars
+  ng-scrollbars-config="config" ng-mouseleave="leave()">
+    <ul ng-show="showing && !showUpdate" class="show-staff center" >
       <li>Dirección: {{lawyer.address}} {{lawyer.number}}</li>
       <li>Cp: {{lawyer.code}}</li>
       <li>Tel: {{lawyer.phone}}</li>
@@ -27,7 +28,8 @@
     </ul>
     <div ng-show="showUpdate">
       <form novalidate class="form" name="form">
-        <button type="button" class="btn btn-default" ng-click="create()">Crear nuevo integrante del Staff</button>
+        <button type="button" class="btn btn-default" ng-click="create()">
+          Crear nuevo integrante del Staff</button>
         <fieldset class="fieldset">
           <legend>Editar datos de {{person.names}}</legend>
           <div>
