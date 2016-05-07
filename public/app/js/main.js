@@ -101,6 +101,11 @@ angular.module('myApp', [
     controller: 'indexStaffController',
     data: {authorized: [3, 2, 1 ,0]}
   })
+  .when('/staff/create', {
+    templateUrl: 'views/staff/create.html',
+    controller: 'createStaffController',
+    data: {authorized: [3]}
+  })
   .otherwise({redirectTo: '/pages', data: {authorized: [0,1,2,3]}});
 }])
 .config(function(AuthProvider, AuthInterceptProvider) {

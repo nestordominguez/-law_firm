@@ -346,4 +346,13 @@ angular.module('myApp.controllers', []).
     }
   }])
   .controller('indexStaffController', ['$scope',function($scope) {
+  }])
+  .controller('createStaffController', ['$scope', '$location', 'tinymce',
+  'staffService', function($scope, $location, tinymce, staffService) {
+    $scope.tinymceOptions = tinymce;
+    $scope.create = function(person) {
+      staffService.create(person).then(function(response) {
+        $location.path("/staff/index");
+      })
+    }
   }]);
