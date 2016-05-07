@@ -4,14 +4,26 @@
 
 angular.module('myApp.controllers', []).
   controller('appController', ['$scope', '$routeParams', 'Auth',
-    'sendMsjServices', 'pageService',
-    function($scope, $routeParams, Auth, sendMsjServices,
-      pageService) {
+  'sendMsjServices', 'pageService', 'rolesService',
+    function($scope, $routeParams, Auth, sendMsjServices, pageService,
+      rolesService) {
 
       $scope.isAuthenticated = function() {
         return Auth.isAuthenticated();
       }
-
+      Auth.currentUser().then(function(user) {
+        rolesService.setRol(user);
+        $scope.role = rolesService.getRol();
+        $scope.admin = function(){
+          return rolesService.getRol() == 2;
+        };
+        $scope.superuser = function(){
+          return rolesService.getRol() == 3;
+        };
+      }, function(error) {
+        rolesService.setLocalRol(0);
+        $scope.role = rolesService.getRol();
+      });
       $scope.logout = function() {
         var config = {
           headers: {
@@ -23,6 +35,7 @@ angular.module('myApp.controllers', []).
           Auth.logout().then(function () {});
           $scope.$broadcast('send-msj', function() {
           });
+          $route.reload();
         }, function(error) {
           sendMsjServices.setHostError(error.data.error);
         });

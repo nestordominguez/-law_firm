@@ -36,14 +36,14 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
 
-        <li ng-show="isAuthenticated()" class="dropdown">
+        <li ng-show="isAuthenticated() && (admin() || superuser())" class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="">Panel de control
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#/users/index">Mostrar Usuarios</a></li>
-            <li><a href="#/pages/index">Mostrar Páginas</a></li>
-            <li><a href="#/pages/create">Crear Páginas</a></li>
-            <li><a href="#/messages/index">Mostrar Mensajes</a></li>
+            <li ng-show="superuser()"><a href="#/users/index">Mostrar Usuarios</a></li>
+            <li ng-show="superuser()"><a href="#/pages/index">Mostrar Páginas</a></li>
+            <li ng-show="superuser()"><a href="#/pages/create">Crear Páginas</a></li>
+            <li ng-show="superuser() || admin()"><a href="#/messages/index">Mostrar Mensajes</a></li>
           </ul>
         </li>
 
