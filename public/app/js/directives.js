@@ -83,8 +83,8 @@ angular.module('myApp.directives', [])
 
   }
 }])
-.directive('staff', ['$route', '$timeout', 'staffService', 'rolesService', 'tinymce',
-  function($route, $timeout, staffService, rolesService, tinymce) {
+.directive('staff', ['$route', '$timeout', '$sce', 'staffService', 'rolesService', 'tinymce',
+  function($route, $timeout, $sce, staffService, rolesService, tinymce) {
   return {
     restrict: 'E',
     templateUrl: 'views/directives/staff.html',
@@ -100,7 +100,14 @@ angular.module('myApp.directives', [])
         scope.showing = false;
         staffService.show(id).then(function(response) {
           scope.showing = true;
-          scope.lawyer = response.data.body;
+          if (response.data) {
+            scope.lawyer = response.data.body;
+            scope.lawyer_cv = $sce.trustAsHtml(response.data.body.cv);
+          } else {
+            scope.lawyer = "";
+            scope.lawyer_cv = "";
+          }
+
         });
       }
       scope.leave = function() {

@@ -96,6 +96,7 @@ angular.module('myApp.services', [])
     theme: 'modern',
     mode: 'textarea',
     language : "es",
+    trusted: true,
     plugins: [
       'advlist autolink lists link image charmap print preview hr anchor pagebreak',
       'searchreplace wordcount visualblocks visualchars code fullscreen',

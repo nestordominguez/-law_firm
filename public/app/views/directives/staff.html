@@ -23,133 +23,132 @@
       <li>Cp: {{lawyer.code}}</li>
       <li>Tel: {{lawyer.phone}}</li>
       <li>Cel: {{lawyer.cel}}</li>
-      Información: {{lawyer.cv}}
+      Información: <p ng-bind-html="lawyer_cv"></p>
     </ul>
     <div ng-show="showUpdate">
+      <form novalidate class="form" name="form">
+        <button type="button" class="btn btn-default" ng-click="create()">Crear nuevo integrante del Staff</button>
+        <fieldset class="fieldset">
+          <legend>Editar datos de {{person.names}}</legend>
+          <div>
+            <div class="col-md-12">
+            <ul>
+              <div class="col-md-4 padding_bottom">
+                <label for="uName">Nómbres:</label><br/>
+                <input type="name"
+                 ng-model="person.names"
+                 name="uName"
+                 placeholder="Nómbre"
+                 class="col-md-12"
+                 >
+              </div>
+              <div class="col-md-4 padding_bottom">
+                <label for="uLastName">Apellidos:</label>
+                <input type="text"
+                 ng-model="person.last_name"
+                 name="uLastName"
+                 placeholder="Apellidos"
+                 class="col-md-12"
+                 >
+              </div>
+              <div class="col-md-4 padding_bottom">
+                <label for="phone">Teléfono:</label>
+                <input type="phone"
+                 ng-model="person.phone"
+                 name="uPhone"
+                 placeholder="Teléfonfo ej: 381-4123123"
+                 class="col-md-12"
+                 >
+              </div>
+            </ul>
+            <ul>
+              <div class="col-md-4 padding_bottom">
+                <label for="uCel">Cel:</label>
+                <input type="text"
+                 ng-model="person.cel"
+                 name="uCel"
+                 placeholder="Cel ej: 381-5123123"
+                 class="col-md-12"
+                 >
+              </div>
+              <div class="col-md-4 padding_bottom">
+                <label for="uEmail">E-mail:</label>
+                <input type="email"
+                 ng-model="person.email"
+                 name="uEmail"
+                 placeholder="E-mail ej: ejemplo@ejemplo.com"
+                 class="col-md-12"
+                 >
+              </div>
+              <div class="col-md-4 padding_bottom">
+                <label for="uAddress">Dirección:</label>
+                <input type="text"
+                 ng-model="person.address"
+                 name="uAddress"
+                 placeholder="Dirección-calle"
+                 class="col-md-12"
+                 >
+              </div>
+            </ul>
+            <ul>
+              <div class="col-md-6 padding_bottom ">
+                <label for="uNumber">Número:</label>
+                <input type="text"
+                 ng-model="person.number"
+                 name="uNumber"
+                 placeholder="Dirección-numero"
+                 class="col-md-12"
+                 >
+              </div>
+              <div class="col-md-6 padding_bottom">
+                <label for="uCode">Código Postal:</label>
+                <input type="text"
+                 ng-model="person.code"
+                 name="uCode"
+                 placeholder="Código postal"
+                 class="col-md-12"
+                 >
+              </div>
+            </ul>
+            </div>
+            <div class="col-md-12">
+            <br/>
+            <label for="uCv">Ingrese informaçión adicional</label>
+            <textarea name="uCv" rows="10" cols="44" ng-model="person.cv" class="col-md-12" placeholder="Ingrese aquí información adicional" ui-tinymce="tinymceOptions"></textarea>
 
-<form novalidate class="form" name="form">
-  <button type="button" class="btn btn-default" ng-click="create()">Crear nuevo integrante del Staff</button>
-  <fieldset class="fieldset">
-    <legend>Editar datos de {{person.names}}</legend>
-    <div>
-      <div class="col-md-12">
-      <ul>
-        <div class="col-md-4 padding_bottom">
-          <label for="uName">Nómbres:</label><br/>
-          <input type="name"
-           ng-model="person.names"
-           name="uName"
-           placeholder="Nómbre"
-           class="col-md-12"
-           >
-        </div>
-        <div class="col-md-4 padding_bottom">
-          <label for="uLastName">Apellidos:</label>
-          <input type="text"
-           ng-model="person.last_name"
-           name="uLastName"
-           placeholder="Apellidos"
-           class="col-md-12"
-           >
-        </div>
-        <div class="col-md-4 padding_bottom">
-          <label for="phone">Teléfono:</label>
-          <input type="phone"
-           ng-model="person.phone"
-           name="uPhone"
-           placeholder="Teléfonfo ej: 381-4123123"
-           class="col-md-12"
-           >
-        </div>
-      </ul>
-      <ul>
-        <div class="col-md-4 padding_bottom">
-          <label for="uCel">Cel:</label>
-          <input type="text"
-           ng-model="person.cel"
-           name="uCel"
-           placeholder="Cel ej: 381-5123123"
-           class="col-md-12"
-           >
-        </div>
-        <div class="col-md-4 padding_bottom">
-          <label for="uEmail">E-mail:</label>
-          <input type="email"
-           ng-model="person.email"
-           name="uEmail"
-           placeholder="E-mail ej: ejemplo@ejemplo.com"
-           class="col-md-12"
-           >
-        </div>
-        <div class="col-md-4 padding_bottom">
-          <label for="uAddress">Dirección:</label>
-          <input type="text"
-           ng-model="person.address"
-           name="uAddress"
-           placeholder="Dirección-calle"
-           class="col-md-12"
-           >
-        </div>
-      </ul>
-      <ul>
-        <div class="col-md-6 padding_bottom ">
-          <label for="uNumber">Número:</label>
-          <input type="text"
-           ng-model="person.number"
-           name="uNumber"
-           placeholder="Dirección-numero"
-           class="col-md-12"
-           >
-        </div>
-        <div class="col-md-6 padding_bottom">
-          <label for="uCode">Código Postal:</label>
-          <input type="text"
-           ng-model="person.code"
-           name="uCode"
-           placeholder="Código postal"
-           class="col-md-12"
-           >
-        </div>
-      </ul>
-      </div>
-      <div class="col-md-12">
-      <br/>
-      <label for="uCv">Ingrese informaçión adicional</label>
-      <textarea name="uCv" rows="10" cols="44" ng-model="person.cv" class="col-md-12" placeholder="Ingrese aquí información adicional" ui-tinymce="tinymceOptions"></textarea>
-
-      </div>
-    </div>
-    <div class="col-md-offset-8">
-      <input type="submit" value="Cancelar" ng-click="leave()" class="btn col-md-6"/>
-      <input type="submit" value="Enviar" ng-click="updateAction(person); leave()" class="btn col-md-6"/>
-      <input type="submit" value="Eliminar" ng-click="delete(person.id)" class="btn col-md-6" data-toggle="modal" data-target="#myModal"/>
-          <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Alerta!!!</h4>
+            </div>
           </div>
-          <div class="modal-body">
-            <p>Seguro que quiere borrar los datos de {{name}}?.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="destroy()">Aceptar</button>
-          </div>
-        </div>
+          <div class="col-md-offset-8">
+            <input type="submit" value="Cancelar" ng-click="leave()" class="btn col-md-6"/>
+            <input type="submit" value="Enviar" ng-click="updateAction(person); leave()" class="btn col-md-6"/>
+            <input type="submit" value="Eliminar" ng-click="delete(person.id)" class="btn col-md-6" data-toggle="modal" data-target="#myModal"/>
+                <!-- Modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
 
-      </div>
-    </div>
-      <!-- finish modal -->
-    </div>
-    <br/>
-    <a class=" col-md" href="#/pages/index">Volver</a>
-  </fieldset>
-</form>
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Alerta!!!</h4>
+                </div>
+                <div class="modal-body">
+                  <p>Seguro que quiere borrar los datos de {{name}}?.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="destroy()">Aceptar</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+            <!-- finish modal -->
+          </div>
+          <br/>
+          <a class=" col-md" href="#/pages/index">Volver</a>
+        </fieldset>
+      </form>
     </div>
 
   </div>
