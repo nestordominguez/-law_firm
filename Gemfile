@@ -13,6 +13,8 @@ gem 'thin'
 gem 'angular_rails_csrf'
 gem 'lorem'
 gem 'rails-i18n', '~> 4.0.0'
+gem 'turbolinks'
+gem 'jquery-rails', "~> 2.3.0"
 
 group :production do
   gem 'pg',             '0.17.1'
